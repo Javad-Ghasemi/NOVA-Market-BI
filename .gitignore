@@ -1,0 +1,38 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# Raw and processed data
+01-Data/raw/*
+01-Data/staging/*
+01-Data/processed/*
+
+# Excel / temporary files
+~$*
+*.tmp
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# SQL Server local files
+*.mdf
+*.ndf
+*.ldf
+
+# Power BI temporary/cache files
+*.pbi
+*.tmp
