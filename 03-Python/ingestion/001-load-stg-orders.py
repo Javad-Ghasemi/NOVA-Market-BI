@@ -5,9 +5,9 @@ Target: stg.orders
 """
 
 from pathlib import Path
-import os
 import pandas as pd
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
+from utilities.db import get_engine
 
 PROJECT_ROOT = Path(r"D:\NOVA-Market-BI")
 SOURCE_FILE = PROJECT_ROOT / "01-Data" / "raw" / "olist" / "olist_orders_dataset.csv"
@@ -15,12 +15,6 @@ SOURCE_FILE = PROJECT_ROOT / "01-Data" / "raw" / "olist" / "olist_orders_dataset
 SERVER = r"GHASEMI\BOURSEDW"
 DATABASE = "NOVA_Market"
 
-CONNECTION_STRING = os.getenv("NOVA_SQLALCHEMY_URL")
-
-if not CONNECTION_STRING:
-    raise RuntimeError(
-        "Environment variable NOVA_SQLALCHEMY_URL is not set."
-    )
 
 EXPECTED_COLUMNS = [
     "order_id",
@@ -32,6 +26,7 @@ EXPECTED_COLUMNS = [
     "order_delivered_customer_date",
     "order_estimated_delivery_date",
 ]
+
 
 DATETIME_COLUMNS = [
     "order_purchase_timestamp",
@@ -68,7 +63,7 @@ def main():
     if df["order_id"].duplicated().any():
         raise ValueError("Duplicate order_id values detected.")
 
-    engine = create_engine(CONNECTION_STRING, fast_executemany=True)
+    engine = get_engine()
 
     with engine.begin() as connection:
         connection.execute(text("TRUNCATE TABLE stg.orders"))
