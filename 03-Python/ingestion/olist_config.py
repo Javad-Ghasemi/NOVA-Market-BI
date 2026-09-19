@@ -25,5 +25,35 @@ OLIST_TABLES = {
         "key_columns": [
             "order_id",
         ],
-    }
+    },
+
+    "order_items": {
+        "file_name": "olist_order_items_dataset.csv",
+        "schema": "stg",
+        "table": "order_items",
+        "expected_columns": [
+            "order_id",
+            "order_item_id",
+            "product_id",
+            "seller_id",
+            "shipping_limit_date",
+            "price",
+            "freight_value",
+        ],
+        "datetime_columns": [
+            "shipping_limit_date",
+        ],
+        "date_columns": [],
+        "integer_columns": [
+            "order_item_id",
+        ],
+        "decimal_columns": [
+            "price",
+            "freight_value",
+        ],
+        "key_columns": [
+            "order_id",
+            "order_item_id",
+        ],
+    },
 }
