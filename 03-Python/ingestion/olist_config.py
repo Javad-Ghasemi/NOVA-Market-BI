@@ -56,4 +56,36 @@ OLIST_TABLES = {
             "order_item_id",
         ],
     },
+    
+    "products": {
+    "file_name": "olist_products_dataset.csv",
+    "schema": "stg",
+    "table": "products",
+    "expected_columns": [
+        "product_id",
+        "product_category_name",
+        "product_name_lenght",
+        "product_description_lenght",
+        "product_photos_qty",
+        "product_weight_g",
+        "product_length_cm",
+        "product_height_cm",
+        "product_width_cm",
+    ],
+    "datetime_columns": [],
+    "date_columns": [],
+    "integer_columns": [
+        "product_name_lenght",
+        "product_description_lenght",
+        "product_photos_qty",
+        "product_weight_g",
+        "product_length_cm",
+        "product_height_cm",
+        "product_width_cm",
+    ],
+    "decimal_columns": [],
+    "key_columns": [
+        "product_id",
+    ],
+    },
 }
