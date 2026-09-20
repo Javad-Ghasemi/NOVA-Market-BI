@@ -8,7 +8,7 @@ GO
    ========================================================= */
 
 -- 1. Row count
-SELECT COUNT(*) AS RowCount
+SELECT COUNT(*) AS [RowCount]
 FROM stg.order_items;
 
 -- 2. Duplicate composite key
