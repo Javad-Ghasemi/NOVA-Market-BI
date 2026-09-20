@@ -7,7 +7,7 @@ GO
    ========================================================= */
 
 -- 1. Row count
-SELECT COUNT(*) AS 'RowCount'
+SELECT COUNT(*) AS [RowCount]
 FROM stg.orders;
 
 -- 2. Duplicate order_id
