@@ -56,7 +56,7 @@ OLIST_TABLES = {
             "order_item_id",
         ],
     },
-    
+
     "products": {
     "file_name": "olist_products_dataset.csv",
     "schema": "stg",
@@ -86,6 +86,23 @@ OLIST_TABLES = {
     "decimal_columns": [],
     "key_columns": [
         "product_id",
+    ],
+    },
+
+    "category_translation": {
+    "file_name": "product_category_name_translation.csv",
+    "schema": "stg",
+    "table": "category_translation",
+    "expected_columns": [
+        "product_category_name",
+        "product_category_name_english",
+    ],
+    "datetime_columns": [],
+    "date_columns": [],
+    "integer_columns": [],
+    "decimal_columns": [],
+    "key_columns": [
+        "product_category_name",
     ],
     },
 }
