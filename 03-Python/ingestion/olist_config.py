@@ -105,4 +105,24 @@ OLIST_TABLES = {
         "product_category_name",
     ],
     },
+
+    "customers": {
+    "file_name": "olist_customers_dataset.csv",
+    "schema": "stg",
+    "table": "customers",
+    "expected_columns": [
+        "customer_id",
+        "customer_unique_id",
+        "customer_zip_code_prefix",
+        "customer_city",
+        "customer_state",
+    ],
+    "datetime_columns": [],
+    "date_columns": [],
+    "integer_columns": [],
+    "decimal_columns": [],
+    "key_columns": [
+        "customer_id",
+    ],
+    },
 }
