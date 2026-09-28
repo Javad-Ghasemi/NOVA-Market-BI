@@ -2,6 +2,7 @@ from pathlib import Path
 import sys
 
 import pandas as pd
+from decimal import Decimal, InvalidOperation
 from sqlalchemy import text
 
 from ingestion.olist_config import OLIST_TABLES
@@ -75,27 +76,42 @@ def load_table(dataset_name: str) -> None:
             errors="raise",
         ).astype("Int64")
 
-    # Decimal / numeric conversions
+    # Decimal conversions
+    # Use Python Decimal instead of float to preserve source precision.
     for column in config.get("decimal_columns", []):
-        df[column] = pd.to_numeric(
-            df[column],
-            errors="raise",
-        )
 
-    # Validate business/source keys
-    if df[key_columns].isnull().any().any():
-        raise ValueError(
-            f"NULL value found in key columns: {key_columns}"
-        )
+        def convert_decimal(value):
+            if pd.isna(value) or str(value).strip() == "":
+                return None
 
-    duplicate_count = df.duplicated(
-        subset=key_columns
-    ).sum()
+            try:
+                return Decimal(str(value))
+            except InvalidOperation as exc:
+                raise ValueError(
+                    f"Invalid decimal value in column '{column}': {value}"
+                ) from exc
 
-    if duplicate_count > 0:
-        raise ValueError(
-            f"Duplicate key rows found: {duplicate_count:,}"
-        )
+        df[column] = df[column].apply(convert_decimal)
+
+    # Validate business/source keys when a source key is defined.
+    #
+    # Some source datasets, such as Olist geolocation, legitimately
+    # contain duplicate rows and do not expose a reliable row-level key.
+    if key_columns:
+
+        if df[key_columns].isnull().any().any():
+            raise ValueError(
+                f"NULL value found in key columns: {key_columns}"
+            )
+
+        duplicate_count = df.duplicated(
+            subset=key_columns
+        ).sum()
+
+        if duplicate_count > 0:
+            raise ValueError(
+                f"Duplicate key rows found: {duplicate_count:,}"
+            )
 
     source_rows = len(df)
 

@@ -198,4 +198,25 @@ OLIST_TABLES = {
         "order_id",
     ],
     },
+
+    "geolocation": {
+    "file_name": "olist_geolocation_dataset.csv",
+    "schema": "stg",
+    "table": "geolocation",
+    "expected_columns": [
+        "geolocation_zip_code_prefix",
+        "geolocation_lat",
+        "geolocation_lng",
+        "geolocation_city",
+        "geolocation_state",
+    ],
+    "datetime_columns": [],
+    "date_columns": [],
+    "integer_columns": [],
+    "decimal_columns": [
+        "geolocation_lat",
+        "geolocation_lng",
+    ],
+    "key_columns": [],
+    },
 }
