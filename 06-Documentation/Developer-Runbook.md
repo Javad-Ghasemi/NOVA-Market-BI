@@ -339,6 +339,23 @@ Planned DWH geography grain:
 1 row per ZIP prefix
 ```
 ---
+## Final Staging Validation
+
+Run the pipeline-level staging completeness validation:
+
+```text
+02-SQL/04-DQ/010-Validate-staging-completeness.sql
+```
+
+Expected result:
+
+```text
+All 9 staging datasets = PASS
+STAGING VALIDATION PASSED
+```
+
+This smoke test validates the expected row counts for all Olist staging datasets. Detailed data-quality rules remain in validation scripts 001 through 009.
+---
 
 # Metadata Validation
 
