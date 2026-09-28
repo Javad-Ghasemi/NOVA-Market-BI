@@ -303,7 +303,42 @@ Run the reviews data quality validation:
 
 ---
 
+## Load Geolocation
 
+Run the geolocation staging load:
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py geolocation
+```
+
+Expected:
+
+```text
+Target: stg.geolocation
+Rows: 1,000,163
+```
+
+Run the geolocation data quality validation:
+
+```text
+02-SQL/04-DQ/009-Validate-stg-geolocation.sql
+```
+
+Important source characteristics:
+
+- Distinct ZIP prefixes: 19,015
+- Exact duplicate source rows: 261,831
+- ZIP prefixes with multiple states: 8
+- ZIP prefixes with multiple city labels: 8,555
+- No deduplication is applied in staging
+- Geolocation does not expose a reliable row-level source key
+
+Planned DWH geography grain:
+
+```text
+1 row per ZIP prefix
+```
+---
 
 # Metadata Validation
 
