@@ -108,9 +108,9 @@ pip install -r requirements.txt
 
 ---
 
-# Olist Staging Ingestion
+# 9. Olist Staging Ingestion
 
-## 9. Generic Loader
+##  Generic Loader
 
 General syntax:
 
@@ -133,7 +133,7 @@ Read CSV
 
 ---
 
-## 10. Load Orders
+##  Load Orders
 
 ```powershell
 python .\03-Python\ingestion\load_olist_table.py orders
@@ -145,10 +145,15 @@ Expected:
 Target: stg.orders
 Rows:   99,441
 ```
+Run the orders data quality validation:
+
+```text
+02-SQL/04-DQ/001-Validate-stg-orders.sql
+```
 
 ---
 
-## 11. Load Order Items
+##  Load Order Items
 
 ```powershell
 python .\03-Python\ingestion\load_olist_table.py order_items
@@ -172,10 +177,14 @@ Source key:
 ```text
 (order_id, order_item_id)
 ```
+Run the order_items data quality validation:
 
+```text
+02-SQL/04-DQ/002-Validate-stg-order-items.sql
+```
 ---
 
-## 12. Load Products
+##  Load Products
 
 ```powershell
 python .\03-Python\ingestion\load_olist_table.py products
@@ -187,10 +196,15 @@ Expected:
 Target: stg.products
 Rows:   32,951
 ```
+Run the products data quality validation:
+
+```text
+02-SQL/04-DQ/003-Validate-stg-products.sql
+```
 
 ---
 
-## 13. Load Category Translation
+##  Load Category Translation
 
 ```powershell
 python .\03-Python\ingestion\load_olist_table.py category_translation
@@ -202,10 +216,14 @@ Expected:
 Target: stg.category_translation
 Rows:   71
 ```
+Run the category_translation data quality validation:
 
+```text
+02-SQL/04-DQ/004-Validate-stg-category-translation.sql
+```
 ---
 
-## 14. Load Customers
+##  Load Customers
 
 ```powershell
 python .\03-Python\ingestion\load_olist_table.py customers
@@ -217,10 +235,14 @@ Expected:
 Target: stg.customers
 Rows:   99,441
 ```
+Run the customers data quality validation:
 
+```text
+02-SQL/04-DQ/005-Validate-stg-customers.sql
+```
 ---
 
-## 15. Load Sellers
+##  Load Sellers
 
 ```powershell
 python .\03-Python\ingestion\load_olist_table.py sellers
@@ -232,12 +254,35 @@ Expected:
 Target: stg.sellers
 Rows:   3,095
 ```
+Run the sellers data quality validation:
 
+```text
+02-SQL/04-DQ/006-Validate-stg-sellers.sql
+```
+---
+## Load Payments
+
+Run the payments staging load:
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py payments
+```
+Expected:
+
+```text
+Target: stg.payments
+rows: 103,886
+```
+Run the payments data quality validation:
+
+```text
+02-SQL/04-DQ/007-Validate-stg-payments.sql
+```
 ---
 
 # Metadata Validation
 
-## 16. Inspect Dataset Metadata
+## 10. Inspect Dataset Metadata
 
 General pattern:
 
@@ -261,7 +306,7 @@ Metadata is stored in:
 
 # Git Workflow
 
-## 17. Check Git Status
+## 11. Check Git Status
 
 ```powershell
 git status
@@ -283,7 +328,7 @@ D  = Deleted
 
 ---
 
-## 18. Review File Changes
+## 12. Review File Changes
 
 ```powershell
 git diff -- <file-path>
@@ -297,7 +342,7 @@ git diff -- .\03-Python\ingestion\olist_config.py
 
 ---
 
-## 19. Stage a File
+## 13. Stage a File
 
 ```powershell
 git add <file-path>
@@ -311,7 +356,7 @@ git add .\03-Python\ingestion\olist_config.py
 
 ---
 
-## 20. Stage All Changes
+## 14. Stage All Changes
 
 ```powershell
 git add -A
@@ -325,7 +370,7 @@ git status
 
 ---
 
-## 21. Commit Changes
+## 15. Commit Changes
 
 ```powershell
 git commit -m "<commit-message>"
@@ -350,7 +395,7 @@ chore:    dependencies or maintenance
 
 ---
 
-## 22. Push to GitHub
+## 16. Push to GitHub
 
 ```powershell
 git push origin main
@@ -358,7 +403,7 @@ git push origin main
 
 ---
 
-## 23. Standard Git Workflow
+## 17. Standard Git Workflow
 
 ```powershell
 git status
@@ -376,7 +421,7 @@ nothing to commit, working tree clean
 
 ---
 
-## 24. Check the Latest Commit
+## 18. Check the Latest Commit
 
 ```powershell
 git log -1 --oneline
@@ -384,7 +429,7 @@ git log -1 --oneline
 
 ---
 
-## 25. Restore an Unwanted Local Change
+## 19. Restore an Unwanted Local Change
 
 Use only when the local change is definitely not needed.
 
@@ -402,7 +447,7 @@ git restore .\02-SQL\04-DQ\002-Validate-stg-order-items.sql
 
 # PowerShell Utilities
 
-## 26. View Current Session History
+## 20. View Current Session History
 
 ```powershell
 Get-History
@@ -410,7 +455,7 @@ Get-History
 
 ---
 
-## 27. Find the Persistent PowerShell History File
+## 21. Find the Persistent PowerShell History File
 
 ```powershell
 (Get-PSReadLineOption).HistorySavePath
@@ -418,7 +463,7 @@ Get-History
 
 ---
 
-## 28. Search Across Project Files
+## 22. Search Across Project Files
 
 ```powershell
 Get-ChildItem -Recurse -File | Select-String -Pattern "<search-text>"
@@ -432,7 +477,7 @@ Get-ChildItem -Recurse -File | Select-String -Pattern "orphan" -CaseSensitive:$f
 
 ---
 
-## 29. Check Whether a File Exists
+## 23. Check Whether a File Exists
 
 ```powershell
 Test-Path <file-path>
@@ -448,7 +493,7 @@ Test-Path .\02-SQL\04-DQ\003-Validate-stg-products.sql
 
 # SQL Server Troubleshooting
 
-## 30. Confirm SQL Server Instance Information
+## 24. Confirm SQL Server Instance Information
 
 Run in SSMS:
 
@@ -461,7 +506,7 @@ SELECT
 
 ---
 
-## 31. TCP/IP Requirement
+## 25. TCP/IP Requirement
 
 Python / ODBC connectivity requires TCP/IP to be enabled.
 
@@ -482,7 +527,7 @@ SQL Server (BOURSEDW)
 
 ---
 
-## 32. Dynamic Port Note
+## 26. Dynamic Port Note
 
 The current development environment uses a SQL Server TCP port.
 
@@ -500,7 +545,7 @@ Do not hard-code the local server or port in Python scripts.
 
 # Project Architecture Rules
 
-## 33. Staging Architecture
+## 27. Staging Architecture
 
 ```text
 Olist CSV
@@ -524,7 +569,7 @@ Do not apply unsupported business corrections or synthetic values in staging.
 
 ---
 
-## 34. Data Quality Standard
+## 28. Data Quality Standard
 
 Each staging dataset should be reviewed for:
 
@@ -545,7 +590,7 @@ Known source issues must be documented rather than silently corrected.
 
 ---
 
-## 35. Orders Modeling
+## 29. Orders Modeling
 
 Source:
 
@@ -578,7 +623,7 @@ On-Time Delivery
 
 ---
 
-## 36. Order Items Modeling
+## 30. Order Items Modeling
 
 Source:
 
@@ -611,7 +656,7 @@ Item Count
 
 ---
 
-## 37. Customer Modeling
+## 31. Customer Modeling
 
 Source-level key:
 
@@ -641,7 +686,7 @@ Future `DimCustomer` grain:
 
 ---
 
-## 38. Seller Modeling
+## 32. Seller Modeling
 
 Source:
 
@@ -661,7 +706,7 @@ Do not represent Olist sellers as branches.
 
 ---
 
-## 39. Product Modeling
+## 33. Product Modeling
 
 The source does not contain a reliable human-readable product name.
 
@@ -684,7 +729,7 @@ DimProduct
 
 ---
 
-## 40. Product Category Localization
+## 34. Product Category Localization
 
 The source category labels are Portuguese.
 
@@ -732,7 +777,7 @@ Curated translations must be added later in the DWH/localization layer, not in s
 
 ---
 
-## 41. Known Product Quality Issue
+## 35. Known Product Quality Issue
 
 Four products have:
 
@@ -748,7 +793,7 @@ A DWH data-quality flag may be added later.
 
 ---
 
-## 42. Geography Modeling
+## 36. Geography Modeling
 
 The Olist geolocation dataset contains more than one million rows.
 
@@ -770,7 +815,7 @@ Latitude and longitude will require controlled aggregation or representative coo
 
 ---
 
-## 43. Fact Architecture
+## 37. Fact Architecture
 
 Planned fact tables:
 
@@ -792,7 +837,7 @@ FactReview     = 1 row per review record
 
 ---
 
-## 44. Fan-Out Prevention
+## 38. Fan-Out Prevention
 
 Known source facts:
 
@@ -815,7 +860,7 @@ This can multiply sales values.
 
 ---
 
-## 45. Financial KPI Rule
+## 39. Financial KPI Rule
 
 Olist does not provide reliable product cost / COGS.
 
@@ -844,7 +889,7 @@ Delivery Metrics
 
 ---
 
-## 46. Sales Definition
+## 40. Sales Definition
 
 In Olist:
 
@@ -870,7 +915,7 @@ Freight should be analyzed separately.
 
 ---
 
-## 47. Raw Data Git Rule
+## 41. Raw Data Git Rule
 
 Raw and generated data must not be committed.
 
@@ -897,7 +942,7 @@ Public template:
 
 ---
 
-## 48. Python Cache Files
+## 42. Python Cache Files
 
 Python may create:
 
@@ -922,7 +967,7 @@ __pycache__/
 
 ---
 
-## 49. Source Integrity Principle
+## 43. Source Integrity Principle
 
 Olist is the real transactional source.
 
@@ -936,7 +981,7 @@ The dashboard interface may be Persian and English while the source remains Braz
 
 ---
 
-## 50. Date Rule
+## 44. Date Rule
 
 Actual order-purchase range:
 
@@ -952,7 +997,7 @@ Jalali date attributes may later be added to `DimDate` without changing source d
 
 ---
 
-## 51. SQL Alias Style
+## 45. SQL Alias Style
 
 For aliases that may conflict with T-SQL keywords, use brackets.
 
@@ -971,7 +1016,7 @@ AS 'RowCount'
 
 ---
 
-## 52. Standard Dataset Workflow
+## 46. Standard Dataset Workflow
 
 Each dataset should follow:
 
@@ -995,7 +1040,7 @@ Each dataset should follow:
 
 ---
 
-## 53. Development Principle
+## 47. Development Principle
 
 ```text
 Design
@@ -1017,7 +1062,7 @@ Only validated work should be committed to `main`.
 
 ---
 
-## 54. Final Git Check
+## 48. Final Git Check
 
 ```powershell
 git status
@@ -1034,7 +1079,7 @@ nothing to commit, working tree clean
 
 ---
 
-## 55. Runbook Maintenance
+## 49. Runbook Maintenance
 
 Add a command to this runbook when it is:
 
