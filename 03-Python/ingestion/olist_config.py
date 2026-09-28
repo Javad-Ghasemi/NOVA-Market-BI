@@ -170,4 +170,32 @@ OLIST_TABLES = {
         "payment_sequential",
     ],
     },
+
+    "reviews": {
+    "file_name": "olist_order_reviews_dataset.csv",
+    "schema": "stg",
+    "table": "reviews",
+    "expected_columns": [
+        "review_id",
+        "order_id",
+        "review_score",
+        "review_comment_title",
+        "review_comment_message",
+        "review_creation_date",
+        "review_answer_timestamp",
+    ],
+    "datetime_columns": [
+        "review_creation_date",
+        "review_answer_timestamp",
+    ],
+    "date_columns": [],
+    "integer_columns": [
+        "review_score",
+    ],
+    "decimal_columns": [],
+    "key_columns": [
+        "review_id",
+        "order_id",
+    ],
+    },
 }
