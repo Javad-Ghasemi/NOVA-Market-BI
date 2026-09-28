@@ -144,4 +144,30 @@ OLIST_TABLES = {
         "seller_id",
     ],
     },
+
+    "payments": {
+    "file_name": "olist_order_payments_dataset.csv",
+    "schema": "stg",
+    "table": "payments",
+    "expected_columns": [
+        "order_id",
+        "payment_sequential",
+        "payment_type",
+        "payment_installments",
+        "payment_value",
+    ],
+    "datetime_columns": [],
+    "date_columns": [],
+    "integer_columns": [
+        "payment_sequential",
+        "payment_installments",
+    ],
+    "decimal_columns": [
+        "payment_value",
+    ],
+    "key_columns": [
+        "order_id",
+        "payment_sequential",
+    ],
+    },
 }
