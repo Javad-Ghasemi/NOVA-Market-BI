@@ -280,6 +280,31 @@ Run the payments data quality validation:
 ```
 ---
 
+## Load Reviews
+
+Run the reviews staging load:
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py reviews
+```
+
+Expected:
+
+```text
+Target: stg.reviews
+Rows: 99,224
+```
+
+Run the reviews data quality validation:
+
+```text
+02-SQL/04-DQ/008-Validate-stg-reviews.sql
+```
+
+---
+
+
+
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata
