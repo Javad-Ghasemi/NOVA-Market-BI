@@ -1,0 +1,1049 @@
+# NOVA Market BI — Developer Runbook
+
+This runbook contains the main development, execution, validation, troubleshooting, and Git commands used in the NOVA Market BI project.
+
+---
+
+## 1. Project Root
+
+Move to the project root before running project commands.
+
+```powershell
+cd D:\NOVA-Market-BI
+```
+
+---
+
+## 2. Activate the Python Virtual Environment
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Expected terminal prefix:
+
+```text
+(.venv) PS D:\NOVA-Market-BI>
+```
+
+---
+
+## 3. Configure PYTHONPATH
+
+This allows Python to import modules from `03-Python`.
+
+```powershell
+$env:PYTHONPATH="$PWD\03-Python"
+```
+
+This variable applies to the current PowerShell session.
+
+---
+
+## 4. Configure the SQL Server Connection
+
+The real connection string must not be hard-coded in source code.
+
+```powershell
+$env:NOVA_SQLALCHEMY_URL="<LOCAL_SQLALCHEMY_CONNECTION_STRING>"
+```
+
+Example format:
+
+```text
+mssql+pyodbc://@SERVER_NAME:PORT/NOVA_Market?trusted_connection=yes&driver=ODBC+Driver+17+for+SQL+Server
+```
+
+Never commit the real local connection string, credentials, or passwords to GitHub.
+
+The repository contains `.env.example` only as a public template.
+
+---
+
+## 5. Check the Active SQL Connection Variable
+
+```powershell
+echo $env:NOVA_SQLALCHEMY_URL
+```
+
+If nothing is returned, configure the variable again before running ingestion.
+
+---
+
+## 6. Test Python → SQL Server Connectivity
+
+```powershell
+python -c "from utilities.db import get_engine; from sqlalchemy import text; e=get_engine(); c=e.connect(); print(c.execute(text('SELECT @@SERVERNAME, DB_NAME()')).fetchone()); c.close(); e.dispose()"
+```
+
+The result should identify the SQL Server instance and:
+
+```text
+NOVA_Market
+```
+
+---
+
+## 7. Check Python Package Versions
+
+```powershell
+python -c "import pandas, sqlalchemy, pyodbc; print('pandas=' + pandas.__version__); print('SQLAlchemy=' + sqlalchemy.__version__); print('pyodbc=' + pyodbc.version)"
+```
+
+Current tested versions:
+
+```text
+pandas=3.0.5
+SQLAlchemy=2.0.54
+pyodbc=5.3.0
+```
+
+---
+
+## 8. Install Project Dependencies
+
+```powershell
+pip install -r requirements.txt
+```
+
+---
+
+# Olist Staging Ingestion
+
+## 9. Generic Loader
+
+General syntax:
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py <dataset_name>
+```
+
+The generic loader performs:
+
+```text
+Read CSV
+→ Validate Columns
+→ Convert Data Types
+→ Validate Keys
+→ Detect Duplicates
+→ TRUNCATE Target
+→ Load SQL Server
+→ Validate Row Count
+```
+
+---
+
+## 10. Load Orders
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py orders
+```
+
+Expected:
+
+```text
+Target: stg.orders
+Rows:   99,441
+```
+
+---
+
+## 11. Load Order Items
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py order_items
+```
+
+Expected:
+
+```text
+Target: stg.order_items
+Rows:   112,650
+```
+
+Source grain:
+
+```text
+1 row = 1 order item
+```
+
+Source key:
+
+```text
+(order_id, order_item_id)
+```
+
+---
+
+## 12. Load Products
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py products
+```
+
+Expected:
+
+```text
+Target: stg.products
+Rows:   32,951
+```
+
+---
+
+## 13. Load Category Translation
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py category_translation
+```
+
+Expected:
+
+```text
+Target: stg.category_translation
+Rows:   71
+```
+
+---
+
+## 14. Load Customers
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py customers
+```
+
+Expected:
+
+```text
+Target: stg.customers
+Rows:   99,441
+```
+
+---
+
+## 15. Load Sellers
+
+```powershell
+python .\03-Python\ingestion\load_olist_table.py sellers
+```
+
+Expected:
+
+```text
+Target: stg.sellers
+Rows:   3,095
+```
+
+---
+
+# Metadata Validation
+
+## 16. Inspect Dataset Metadata
+
+General pattern:
+
+```powershell
+python -c "from ingestion.olist_config import OLIST_TABLES; c=OLIST_TABLES['<dataset_name>']; print(c)"
+```
+
+Example:
+
+```powershell
+python -c "from ingestion.olist_config import OLIST_TABLES; c=OLIST_TABLES['customers']; print(c['file_name']); print(c['schema'] + '.' + c['table']); print(c['key_columns']); print(c['expected_columns'])"
+```
+
+Metadata is stored in:
+
+```text
+03-Python\ingestion\olist_config.py
+```
+
+---
+
+# Git Workflow
+
+## 17. Check Git Status
+
+```powershell
+git status
+```
+
+Short version:
+
+```powershell
+git status --short
+```
+
+Common status codes:
+
+```text
+M  = Modified
+?? = Untracked
+D  = Deleted
+```
+
+---
+
+## 18. Review File Changes
+
+```powershell
+git diff -- <file-path>
+```
+
+Example:
+
+```powershell
+git diff -- .\03-Python\ingestion\olist_config.py
+```
+
+---
+
+## 19. Stage a File
+
+```powershell
+git add <file-path>
+```
+
+Example:
+
+```powershell
+git add .\03-Python\ingestion\olist_config.py
+```
+
+---
+
+## 20. Stage All Changes
+
+```powershell
+git add -A
+```
+
+Use this only after reviewing:
+
+```powershell
+git status
+```
+
+---
+
+## 21. Commit Changes
+
+```powershell
+git commit -m "<commit-message>"
+```
+
+Examples:
+
+```powershell
+git commit -m "feat: add customers staging pipeline and data quality checks"
+```
+
+Commit prefixes used in this project:
+
+```text
+feat:     new functionality
+fix:      bug fix
+refactor: structural improvement without changing intended behavior
+docs:     documentation
+test:     testing or data quality
+chore:    dependencies or maintenance
+```
+
+---
+
+## 22. Push to GitHub
+
+```powershell
+git push origin main
+```
+
+---
+
+## 23. Standard Git Workflow
+
+```powershell
+git status
+git add <file-path>
+git commit -m "<commit-message>"
+git push origin main
+git status
+```
+
+Expected final state:
+
+```text
+nothing to commit, working tree clean
+```
+
+---
+
+## 24. Check the Latest Commit
+
+```powershell
+git log -1 --oneline
+```
+
+---
+
+## 25. Restore an Unwanted Local Change
+
+Use only when the local change is definitely not needed.
+
+```powershell
+git restore <file-path>
+```
+
+Example:
+
+```powershell
+git restore .\02-SQL\04-DQ\002-Validate-stg-order-items.sql
+```
+
+---
+
+# PowerShell Utilities
+
+## 26. View Current Session History
+
+```powershell
+Get-History
+```
+
+---
+
+## 27. Find the Persistent PowerShell History File
+
+```powershell
+(Get-PSReadLineOption).HistorySavePath
+```
+
+---
+
+## 28. Search Across Project Files
+
+```powershell
+Get-ChildItem -Recurse -File | Select-String -Pattern "<search-text>"
+```
+
+Example:
+
+```powershell
+Get-ChildItem -Recurse -File | Select-String -Pattern "orphan" -CaseSensitive:$false
+```
+
+---
+
+## 29. Check Whether a File Exists
+
+```powershell
+Test-Path <file-path>
+```
+
+Example:
+
+```powershell
+Test-Path .\02-SQL\04-DQ\003-Validate-stg-products.sql
+```
+
+---
+
+# SQL Server Troubleshooting
+
+## 30. Confirm SQL Server Instance Information
+
+Run in SSMS:
+
+```sql
+SELECT
+    @@SERVERNAME AS ServerName,
+    SERVERPROPERTY('InstanceName') AS InstanceName,
+    SERVERPROPERTY('IsLocalDB') AS IsLocalDB;
+```
+
+---
+
+## 31. TCP/IP Requirement
+
+Python / ODBC connectivity requires TCP/IP to be enabled.
+
+Configuration path:
+
+```text
+SQL Server Configuration Manager
+→ SQL Server Network Configuration
+→ Protocols for BOURSEDW
+→ TCP/IP
+```
+
+After changing network configuration, restart:
+
+```text
+SQL Server (BOURSEDW)
+```
+
+---
+
+## 32. Dynamic Port Note
+
+The current development environment uses a SQL Server TCP port.
+
+A dynamic port may change after SQL Server configuration changes.
+
+Therefore, always provide the real connection string through:
+
+```text
+NOVA_SQLALCHEMY_URL
+```
+
+Do not hard-code the local server or port in Python scripts.
+
+---
+
+# Project Architecture Rules
+
+## 33. Staging Architecture
+
+```text
+Olist CSV
+    ↓
+Python Ingestion
+    ↓
+SQL Server / stg
+    ↓
+Data Quality
+    ↓
+SSIS / Transformation
+    ↓
+DWH
+    ↓
+Power BI
+```
+
+The staging layer should preserve source data as closely as possible.
+
+Do not apply unsupported business corrections or synthetic values in staging.
+
+---
+
+## 34. Data Quality Standard
+
+Each staging dataset should be reviewed for:
+
+```text
+Row Count
+Key Uniqueness
+NULL Values
+Blank Values
+Referential Integrity
+Numeric Validity
+Negative Values
+Reasonable Ranges
+Coverage Gaps
+Known Source Issues
+```
+
+Known source issues must be documented rather than silently corrected.
+
+---
+
+## 35. Orders Modeling
+
+Source:
+
+```text
+stg.orders
+```
+
+Grain:
+
+```text
+1 row = 1 order
+```
+
+Future fact:
+
+```text
+FactOrder
+```
+
+Suitable metrics include:
+
+```text
+Order Count
+Order Status
+Canceled Orders
+Delivered Orders
+Delivery Duration
+On-Time Delivery
+```
+
+---
+
+## 36. Order Items Modeling
+
+Source:
+
+```text
+stg.order_items
+```
+
+Grain:
+
+```text
+1 row = 1 order item
+```
+
+Future fact:
+
+```text
+FactOrderItem
+```
+
+Suitable metrics include:
+
+```text
+Item Sales
+Product Sales
+Category Sales
+Seller Sales
+Freight
+Item Count
+```
+
+---
+
+## 37. Customer Modeling
+
+Source-level key:
+
+```text
+customer_id
+```
+
+Analytical customer identity:
+
+```text
+customer_unique_id
+```
+
+Known source facts:
+
+```text
+Customer rows                 = 99,441
+Distinct customer_unique_id   = 96,096
+Returning customer identities = 2,997
+```
+
+Future `DimCustomer` grain:
+
+```text
+1 row = 1 customer_unique_id
+```
+
+---
+
+## 38. Seller Modeling
+
+Source:
+
+```text
+stg.sellers
+```
+
+Future dimension:
+
+```text
+DimSeller
+```
+
+A seller is not a physical retail branch.
+
+Do not represent Olist sellers as branches.
+
+---
+
+## 39. Product Modeling
+
+The source does not contain a reliable human-readable product name.
+
+Do not create synthetic product names.
+
+Product analysis should use:
+
+```text
+product_id
+product category
+seller
+category translation
+```
+
+Future dimension:
+
+```text
+DimProduct
+```
+
+---
+
+## 40. Product Category Localization
+
+The source category labels are Portuguese.
+
+Staging preserves the original Portuguese values.
+
+Future localization model:
+
+```text
+CategoryNameSourcePT
+CategoryNameEN
+CategoryNameFA
+TranslationStatus
+```
+
+English source:
+
+```text
+product_category_name_translation.csv
+```
+
+Known coverage:
+
+```text
+Non-null product categories = 73
+Source English translations = 71
+Missing translations        = 2
+```
+
+Missing categories:
+
+```text
+pc_gamer
+portateis_cozinha_e_preparadores_de_alimentos
+```
+
+Affected products:
+
+```text
+pc_gamer                                      = 3
+portateis_cozinha_e_preparadores_de_alimentos = 10
+Total                                         = 13
+```
+
+Curated translations must be added later in the DWH/localization layer, not in staging.
+
+---
+
+## 41. Known Product Quality Issue
+
+Four products have:
+
+```text
+product_weight_g = 0
+```
+
+The source values are preserved.
+
+Do not invent replacement weights.
+
+A DWH data-quality flag may be added later.
+
+---
+
+## 42. Geography Modeling
+
+The Olist geolocation dataset contains more than one million rows.
+
+Do not directly join it to facts using only ZIP prefix without first controlling the grain.
+
+Future target grain:
+
+```text
+1 row = 1 zip_code_prefix
+```
+
+Future dimension:
+
+```text
+DimGeography
+```
+
+Latitude and longitude will require controlled aggregation or representative coordinates.
+
+---
+
+## 43. Fact Architecture
+
+Planned fact tables:
+
+```text
+FactOrder
+FactOrderItem
+FactPayment
+FactReview
+```
+
+Grains:
+
+```text
+FactOrder      = 1 row per order
+FactOrderItem  = 1 row per order item
+FactPayment    = 1 row per payment record
+FactReview     = 1 row per review record
+```
+
+---
+
+## 44. Fan-Out Prevention
+
+Known source facts:
+
+```text
+Orders with multiple payment rows = 2,961
+Orders with multiple review rows  = 547
+```
+
+Do not directly combine:
+
+```text
+OrderItems
+JOIN Payments
+JOIN Reviews
+```
+
+into one sales fact.
+
+This can multiply sales values.
+
+---
+
+## 45. Financial KPI Rule
+
+Olist does not provide reliable product cost / COGS.
+
+Do not create unsupported KPIs such as:
+
+```text
+Gross Profit
+Net Profit
+Profit Margin
+COGS
+```
+
+Source-supported measures include:
+
+```text
+Item Price
+Freight Value
+Payment Value
+Order Count
+Item Count
+Average Order Value
+Category Sales
+Seller Sales
+Delivery Metrics
+```
+
+---
+
+## 46. Sales Definition
+
+In Olist:
+
+```text
+price
+```
+
+represents the item price.
+
+```text
+freight_value
+```
+
+represents shipping/freight.
+
+Current analytical definition:
+
+```text
+ItemSalesAmount = price
+```
+
+Freight should be analyzed separately.
+
+---
+
+## 47. Raw Data Git Rule
+
+Raw and generated data must not be committed.
+
+Ignored paths include:
+
+```text
+01-Data/raw/*
+01-Data/staging/*
+01-Data/processed/*
+```
+
+Secrets are also ignored:
+
+```text
+.env
+.env.*
+```
+
+Public template:
+
+```text
+.env.example
+```
+
+---
+
+## 48. Python Cache Files
+
+Python may create:
+
+```text
+__pycache__
+```
+
+and files such as:
+
+```text
+olist_config.cpython-312.pyc
+```
+
+These are normal and should not be committed.
+
+Relevant `.gitignore` rules:
+
+```text
+__pycache__/
+*.py[cod]
+```
+
+---
+
+## 49. Source Integrity Principle
+
+Olist is the real transactional source.
+
+NOVA is the business intelligence and data warehouse layer.
+
+Do not mix old synthetic NOVA transactions with real Olist facts.
+
+Do not present Brazilian Olist transactions as Iranian retail transactions.
+
+The dashboard interface may be Persian and English while the source remains Brazilian e-commerce data.
+
+---
+
+## 50. Date Rule
+
+Actual order-purchase range:
+
+```text
+2016-09-04 21:15:19
+to
+2018-10-17 17:30:18
+```
+
+Do not artificially expand the source to five years.
+
+Jalali date attributes may later be added to `DimDate` without changing source dates.
+
+---
+
+## 51. SQL Alias Style
+
+For aliases that may conflict with T-SQL keywords, use brackets.
+
+Preferred:
+
+```sql
+SELECT COUNT(*) AS [RowCount]
+FROM stg.orders;
+```
+
+Avoid:
+
+```sql
+AS 'RowCount'
+```
+
+---
+
+## 52. Standard Dataset Workflow
+
+Each dataset should follow:
+
+```text
+1. Design staging table
+2. Create staging table
+3. Validate SQL structure
+4. Add metadata to olist_config.py
+5. Validate metadata
+6. Run generic loader
+7. Validate row count
+8. Run DQ checks
+9. Investigate known issues
+10. Document findings
+11. Review git status
+12. Review unexpected diffs
+13. Commit
+14. Push
+15. Confirm clean working tree
+```
+
+---
+
+## 53. Development Principle
+
+```text
+Design
+    ↓
+Create
+    ↓
+Load
+    ↓
+Validate
+    ↓
+Document
+    ↓
+Commit
+    ↓
+Push
+```
+
+Only validated work should be committed to `main`.
+
+---
+
+## 54. Final Git Check
+
+```powershell
+git status
+```
+
+Expected:
+
+```text
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+---
+
+## 55. Runbook Maintenance
+
+Add a command to this runbook when it is:
+
+```text
+Reusable
+Required for setup
+Part of the pipeline
+Important for troubleshooting
+Important for project maintenance
+```
+
+Do not add temporary commands containing secrets.
