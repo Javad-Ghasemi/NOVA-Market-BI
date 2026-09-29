@@ -356,7 +356,36 @@ STAGING VALIDATION PASSED
 
 This smoke test validates the expected row counts for all Olist staging datasets. Detailed data-quality rules remain in validation scripts 001 through 009.
 ---
+## Build DimDate
 
+Create and populate the bilingual Gregorian / Persian date dimension:
+
+```text
+02-SQL/03-DWH/001-Create-DimDate.sql
+```
+
+The script creates:
+
+```text
+dwh.fn_GregorianToPersianDate
+dwh.DimDate
+```
+
+Expected validation:
+
+```text
+Rows: 1,828
+Gregorian range: 2016-01-01 to 2020-12-31
+Known Nowruz conversion tests: 5 PASS
+MissingSourceDatesInDimDate: 0
+```
+
+The dimension contains both Gregorian and Persian calendar attributes while all fact tables use the same Gregorian-based `DateKey`.
+
+Important source characteristic:
+
+Four order-item source rows across three orders contain `shipping_limit_date` values in 2020, approximately 1,052 to 1,056 days after their 2017 purchase dates. These source values are preserved and are treated as temporal data-quality anomalies rather than corrected values.
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata
@@ -1169,3 +1198,4 @@ Important for project maintenance
 ```
 
 Do not add temporary commands containing secrets.
+
