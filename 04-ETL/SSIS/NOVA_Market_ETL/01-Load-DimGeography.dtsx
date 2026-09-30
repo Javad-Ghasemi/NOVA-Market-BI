@@ -1,0 +1,797 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/30/2026 2:16:30 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="GHASEMI"
+  DTS:CreatorName="GHASEMI\j-ghasemi"
+  DTS:DTSID="{E532AE37-2F90-4FB4-8B50-0ACBEC0CC517}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{928B645F-0508-442D-B2CB-44DC9432C0A7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Load DimGeography"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{9EBFB2E0-36A6-48E4-ABFB-741AFD6855DE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Load DimGeography"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Load DimGeography\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dwh].[DimGeography]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load DimGeography\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ZipCodePrefix]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="ZipCodePrefix"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ZipCodePrefix]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[ZipCodePrefix]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CityName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CityName"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CityName]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityName]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StateCode]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="StateCode"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateCode]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateCode]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RepresentativeLatitude]"
+                      cachedDataType="numeric"
+                      cachedName="RepresentativeLatitude"
+                      cachedPrecision="28"
+                      cachedScale="20"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RepresentativeLatitude]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[RepresentativeLatitude]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RepresentativeLongitude]"
+                      cachedDataType="numeric"
+                      cachedName="RepresentativeLongitude"
+                      cachedPrecision="28"
+                      cachedScale="20"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RepresentativeLongitude]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[RepresentativeLongitude]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[HasCoordinates]"
+                      cachedDataType="bool"
+                      cachedName="HasCoordinates"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HasCoordinates]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[HasCoordinates]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MissingFromGeolocationFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingFromGeolocationFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MissingFromGeolocationFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[MissingFromGeolocationFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StateConflictFlag]"
+                      cachedDataType="bool"
+                      cachedName="StateConflictFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateConflictFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateConflictFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StateAmbiguousFlag]"
+                      cachedDataType="bool"
+                      cachedName="StateAmbiguousFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateAmbiguousFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateAmbiguousFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StateResolvedByReferenceFlag]"
+                      cachedDataType="bool"
+                      cachedName="StateResolvedByReferenceFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateResolvedByReferenceFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateResolvedByReferenceFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CityAmbiguousFlag]"
+                      cachedDataType="bool"
+                      cachedName="CityAmbiguousFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CityAmbiguousFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityAmbiguousFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CityResolvedByReferenceFlag]"
+                      cachedDataType="bool"
+                      cachedName="CityResolvedByReferenceFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CityResolvedByReferenceFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityResolvedByReferenceFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ReferenceFallbackFlag]"
+                      cachedDataType="bool"
+                      cachedName="ReferenceFallbackFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ReferenceFallbackFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[ReferenceFallbackFlag]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GeographyKey]"
+                      dataType="i4"
+                      name="GeographyKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ZipCodePrefix]"
+                      dataType="wstr"
+                      length="5"
+                      name="ZipCodePrefix" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CityName]"
+                      dataType="wstr"
+                      length="100"
+                      name="CityName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateCode]"
+                      dataType="wstr"
+                      length="2"
+                      name="StateCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RepresentativeLatitude]"
+                      dataType="numeric"
+                      name="RepresentativeLatitude"
+                      precision="28"
+                      scale="20" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RepresentativeLongitude]"
+                      dataType="numeric"
+                      name="RepresentativeLongitude"
+                      precision="28"
+                      scale="20" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HasCoordinates]"
+                      dataType="bool"
+                      name="HasCoordinates" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MissingFromGeolocationFlag]"
+                      dataType="bool"
+                      name="MissingFromGeolocationFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateConflictFlag]"
+                      dataType="bool"
+                      name="StateConflictFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateAmbiguousFlag]"
+                      dataType="bool"
+                      name="StateAmbiguousFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StateResolvedByReferenceFlag]"
+                      dataType="bool"
+                      name="StateResolvedByReferenceFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CityAmbiguousFlag]"
+                      dataType="bool"
+                      name="CityAmbiguousFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CityResolvedByReferenceFlag]"
+                      dataType="bool"
+                      name="CityResolvedByReferenceFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ReferenceFallbackFlag]"
+                      dataType="bool"
+                      name="ReferenceFallbackFlag" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimGeography\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load DimGeography\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    ZipCodePrefix,
+    CityName,
+    StateCode,
+
+    RepresentativeLatitude,
+    RepresentativeLongitude,
+
+    CASE
+        WHEN RepresentativeLatitude IS NOT NULL
+         AND RepresentativeLongitude IS NOT NULL
+        THEN CAST(1 AS BIT)
+        ELSE CAST(0 AS BIT)
+    END AS HasCoordinates,
+
+    MissingFromGeolocationFlag,
+    StateConflictFlag,
+    StateAmbiguousFlag,
+    StateResolvedByReferenceFlag,
+
+    CityAmbiguousFlag,
+    CityResolvedByReferenceFlag,
+
+    ReferenceFallbackFlag
+
+FROM conformed.Geography;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load DimGeography\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[ZipCodePrefix]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ZipCodePrefix]"
+                      length="5"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[ZipCodePrefix]"
+                      name="ZipCodePrefix"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CityName]"
+                      length="100"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityName]"
+                      name="CityName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateCode]"
+                      length="2"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateCode]"
+                      name="StateCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[RepresentativeLatitude]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RepresentativeLatitude]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[RepresentativeLatitude]"
+                      name="RepresentativeLatitude"
+                      precision="28"
+                      scale="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[RepresentativeLongitude]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RepresentativeLongitude]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[RepresentativeLongitude]"
+                      name="RepresentativeLongitude"
+                      precision="28"
+                      scale="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[HasCoordinates]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[HasCoordinates]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[HasCoordinates]"
+                      name="HasCoordinates"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[MissingFromGeolocationFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MissingFromGeolocationFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[MissingFromGeolocationFlag]"
+                      name="MissingFromGeolocationFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateConflictFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateConflictFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateConflictFlag]"
+                      name="StateConflictFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateAmbiguousFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateAmbiguousFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateAmbiguousFlag]"
+                      name="StateAmbiguousFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateResolvedByReferenceFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateResolvedByReferenceFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[StateResolvedByReferenceFlag]"
+                      name="StateResolvedByReferenceFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityAmbiguousFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CityAmbiguousFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityAmbiguousFlag]"
+                      name="CityAmbiguousFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityResolvedByReferenceFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CityResolvedByReferenceFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[CityResolvedByReferenceFlag]"
+                      name="CityResolvedByReferenceFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[ReferenceFallbackFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ReferenceFallbackFlag]"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].Columns[ReferenceFallbackFlag]"
+                      name="ReferenceFallbackFlag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ZipCodePrefix]"
+                      dataType="wstr"
+                      length="5"
+                      name="ZipCodePrefix" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CityName]"
+                      dataType="wstr"
+                      length="100"
+                      name="CityName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateCode]"
+                      dataType="wstr"
+                      length="2"
+                      name="StateCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RepresentativeLatitude]"
+                      dataType="numeric"
+                      name="RepresentativeLatitude"
+                      precision="28"
+                      scale="20" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RepresentativeLongitude]"
+                      dataType="numeric"
+                      name="RepresentativeLongitude"
+                      precision="28"
+                      scale="20" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[HasCoordinates]"
+                      dataType="bool"
+                      name="HasCoordinates" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MissingFromGeolocationFlag]"
+                      dataType="bool"
+                      name="MissingFromGeolocationFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateConflictFlag]"
+                      dataType="bool"
+                      name="StateConflictFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateAmbiguousFlag]"
+                      dataType="bool"
+                      name="StateAmbiguousFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[StateResolvedByReferenceFlag]"
+                      dataType="bool"
+                      name="StateResolvedByReferenceFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CityAmbiguousFlag]"
+                      dataType="bool"
+                      name="CityAmbiguousFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CityResolvedByReferenceFlag]"
+                      dataType="bool"
+                      name="CityResolvedByReferenceFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ReferenceFallbackFlag]"
+                      dataType="bool"
+                      name="ReferenceFallbackFlag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ZipCodePrefix]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ZipCodePrefix]"
+                      name="ZipCodePrefix" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CityName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CityName]"
+                      name="CityName" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateCode]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateCode]"
+                      name="StateCode" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RepresentativeLatitude]"
+                      dataType="numeric"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RepresentativeLatitude]"
+                      name="RepresentativeLatitude"
+                      precision="28"
+                      scale="20" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RepresentativeLongitude]"
+                      dataType="numeric"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RepresentativeLongitude]"
+                      name="RepresentativeLongitude"
+                      precision="28"
+                      scale="20" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[HasCoordinates]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[HasCoordinates]"
+                      name="HasCoordinates" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MissingFromGeolocationFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MissingFromGeolocationFlag]"
+                      name="MissingFromGeolocationFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateConflictFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateConflictFlag]"
+                      name="StateConflictFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateAmbiguousFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateAmbiguousFlag]"
+                      name="StateAmbiguousFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateResolvedByReferenceFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[StateResolvedByReferenceFlag]"
+                      name="StateResolvedByReferenceFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CityAmbiguousFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CityAmbiguousFlag]"
+                      name="CityAmbiguousFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CityResolvedByReferenceFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CityResolvedByReferenceFlag]"
+                      name="CityResolvedByReferenceFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ReferenceFallbackFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ReferenceFallbackFlag]"
+                      name="ReferenceFallbackFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Load DimGeography.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Load DimGeography\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Load DimGeography\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Prepare DimGeography"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0FD318BB-7FD1-44DB-B027-EE74A5A1DD3E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Prepare DimGeography"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.DimGeography;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimGeography ON;&#xA;&#xA;INSERT INTO dwh.DimGeography&#xA;(&#xA;    GeographyKey,&#xA;    ZipCodePrefix,&#xA;    CityName,&#xA;    StateCode,&#xA;    RepresentativeLatitude,&#xA;    RepresentativeLongitude,&#xA;    HasCoordinates,&#xA;    MissingFromGeolocationFlag,&#xA;    StateConflictFlag,&#xA;    StateAmbiguousFlag,&#xA;    StateResolvedByReferenceFlag,&#xA;    CityAmbiguousFlag,&#xA;    CityResolvedByReferenceFlag,&#xA;    ReferenceFallbackFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    N'Unknown',&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimGeography OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{EBCDD89A-FBEA-4275-B621-07747114596F}"
+      DTS:From="Package\SQL - Prepare DimGeography"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - Load DimGeography" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="227,42"
+          Id="Package\SQL - Prepare DimGeography"
+          TopLeft="285,80" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - Load DimGeography"
+          TopLeft="296,208" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="400,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,86"
+              Start="0,0"
+              End="0,78.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,78.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - Load DimGeography">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DFT - Load DimGeography\OLE DB Source"
+          TopLeft="399,156" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\DFT - Load DimGeography\OLE DB Destination"
+          TopLeft="383,271" />
+        <EdgeLayout
+          Id="Package\DFT - Load DimGeography.Paths[OLE DB Source Output]"
+          TopLeft="474.5,198">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,73"
+              Start="0,0"
+              End="0,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimGeography\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimGeography\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

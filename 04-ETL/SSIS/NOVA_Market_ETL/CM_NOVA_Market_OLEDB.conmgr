@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="tcp_GHASEMI,53965.NOVA_Market"
+  DTS:DTSID="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=tcp:GHASEMI,53965;Initial Catalog=NOVA_Market;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-NOVA_Market_ETL-{55243E60-4806-418B-9E2C-693FE1AB8592}tcp:GHASEMI,53965.NOVA_Market;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

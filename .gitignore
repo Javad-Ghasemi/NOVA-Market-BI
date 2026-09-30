@@ -36,3 +36,10 @@ Desktop.ini
 # Power BI temporary/cache files
 *.pbi
 *.tmp
+
+# Visual Studio / SSIS build artifacts
+**/.vs/
+**/bin/
+**/obj/
+*.ispac
+*.dtproj.user
