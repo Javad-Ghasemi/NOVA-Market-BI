@@ -386,6 +386,49 @@ Important source characteristic:
 
 Four order-item source rows across three orders contain `shipping_limit_date` values in 2020, approximately 1,052 to 1,056 days after their 2017 purchase dates. These source values are preserved and are treated as temporal data-quality anomalies rather than corrected values.
 ---
+## Build Conformed Geography
+
+Build the conformed ZIP-level geography layer:
+
+```text
+02-SQL/02-Conformed/002-Build-conformed-geography.sql
+```
+
+Run the geography data-quality validation:
+
+```text
+02-SQL/04-DQ/011-Validate-conformed-geography.sql
+```
+
+Expected validation:
+
+```text
+Rows: 19,177
+Distinct ZIP prefixes: 19,177
+Required ZIPs missing: 0
+
+Missing from geolocation: 162
+State conflicts: 8
+State ambiguities: 0
+
+City ambiguities: 20
+Cities resolved by customer/seller reference data: 12
+
+ZIPs without coordinates: 162
+
+CONFORMED GEOGRAPHY VALIDATION PASSED
+```
+
+Design notes:
+
+- Grain is one row per ZIP code prefix.
+- All ZIPs referenced by customers or sellers are included even when absent from the geolocation source.
+- Missing geolocation ZIPs use customer/seller City and State values when they are consistent.
+- Latitude and longitude are never fabricated.
+- Representative coordinates use the median of distinct source coordinate pairs.
+- Conflicting State values are resolved using source frequency and customer/seller reference support.
+- Ambiguous City values are not selected arbitrarily; unresolved City values remain NULL and are flagged.
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata
