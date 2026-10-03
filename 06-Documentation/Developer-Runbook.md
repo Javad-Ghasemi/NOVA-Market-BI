@@ -488,6 +488,49 @@ DWH rows missing or different in source: 0
 DIM GEOGRAPHY VALIDATION PASSED
 ```
 ---
+## Build Conformed Customer
+
+Build the customer conformance layer:
+
+```text
+02-SQL/02-Conformed/003-Build-conformed-customer.sql
+```
+
+Grain:
+
+```text
+1 row per customer_unique_id
+```
+
+Representative customer geography is taken from the latest purchase.
+
+If multiple orders share the same latest purchase timestamp, `order_id` is used only as a deterministic technical tie-breaker. Data-quality analysis confirmed that these timestamp ties do not contain conflicting ZIP, City, or State values.
+
+Expected characteristics:
+
+```text
+Customers: 96,096
+Returning customers: 2,997
+Customers with multiple ZIPs: 250
+Customers with multiple states: 39
+Customers with multiple cities: 122
+Latest purchase timestamp ties: 269
+Latest-tie geography conflicts: 0
+Customer ZIPs missing from conformed geography: 0
+```
+
+Run the conformed customer data-quality validation:
+
+```text
+02-SQL/04-DQ/013-Validate-conformed-customer.sql
+```
+
+Expected:
+
+```text
+CONFORMED CUSTOMER VALIDATION PASSED
+```
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata
