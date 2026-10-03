@@ -531,6 +531,72 @@ Expected:
 CONFORMED CUSTOMER VALIDATION PASSED
 ```
 ---
+## Load DimCustomer
+
+Create the DimCustomer target table:
+
+```text
+02-SQL/03-DWH/003-Create-DimCustomer.sql
+```
+
+The table is created empty. Population is performed by SSIS.
+
+SSIS package:
+
+```text
+04-ETL/SSIS/NOVA_Market_ETL/02-Load-DimCustomer.dtsx
+```
+
+ETL flow:
+
+```text
+conformed.Customer
+        ↓
+SSIS OLE DB Source
+        ↓
+Lookup: dwh.DimGeography
+        ↓
+dwh.DimCustomer
+```
+
+`ZipCodePrefix` is resolved to `RepresentativeGeographyKey` through a full-cache SSIS Lookup against `dwh.DimGeography`.
+
+The package first:
+
+- truncates `dwh.DimCustomer`
+- inserts the Unknown member with `CustomerKey = 0`
+- loads business customers with SQL Server-generated surrogate keys
+
+Expected load result:
+
+```text
+Total rows: 96,097
+Business rows: 96,096
+Unknown members: 1
+Minimum CustomerKey: 0
+Maximum CustomerKey: 96,096
+```
+
+Run the DimCustomer data-quality validation:
+
+```text
+02-SQL/04-DQ/014-Validate-DimCustomer.sql
+```
+
+Expected:
+
+```text
+Invalid business GeographyKeys: 0
+Source rows missing or different in DWH: 0
+DWH rows missing or different in source: 0
+
+DIM CUSTOMER VALIDATION PASSED
+```
+
+Important modeling note:
+
+`RepresentativeGeographyKey` is a customer-profile attribute based on the latest purchase geography. Historical order geography will be stored separately on FactOrder so earlier orders are not incorrectly attributed to a customer's latest location.
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata
