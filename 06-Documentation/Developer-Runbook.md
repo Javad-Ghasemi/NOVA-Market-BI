@@ -1578,6 +1578,238 @@ Final result:
 
 `FACTORDERITEM VALIDATION PASSED.`
 ---
+## FactPayment ETL
+
+`dwh.FactPayment` stores one row per source payment record.
+
+### Grain
+
+The natural transaction grain is:
+
+`OrderID + PaymentSequential`
+
+Source audit results:
+
+- Source payment rows: `103,886`
+- Distinct orders with payments: `99,440`
+- Duplicate natural-grain rows: `0`
+- NULL Order IDs: `0`
+- NULL payment sequence values: `0`
+- Minimum payment sequence: `1`
+- Maximum payment sequence: `29`
+
+Multi-payment behavior is preserved exactly as supplied by the source.
+
+Validated profile:
+
+- Orders with more than one payment row: `2,961`
+- Maximum payment rows for one order: `29`
+
+Payment rows are never joined directly to order-item rows during warehouse
+loading because that would create a fact-to-fact fan-out.
+
+### Dimension relationships
+
+Each payment row carries the following conformed surrogate keys directly:
+
+- `CustomerKey`
+- `CustomerGeographyKey`
+- `PurchaseDateKey`
+
+`CustomerGeographyKey` represents the customer geography associated with the
+specific order.
+
+Validated dimension resolution:
+
+- Missing expected Customer keys: `0`
+- Missing expected Geography keys: `0`
+- Invalid Customer keys: `0`
+- Invalid Geography keys: `0`
+- Invalid PurchaseDate keys: `0`
+
+### Order relationship
+
+`OrderID` is retained as a degenerate business key.
+
+Every payment row must correspond to an existing `FactOrder`.
+
+Validated missing FactOrder matches:
+
+`0`
+
+The source contains one real order without any payment row.
+
+Validated no-payment behavior:
+
+- Source orders without payments: `1`
+- Warehouse orders without payments: `1`
+
+No synthetic payment row is generated for this order.
+
+### Payment attributes and measure
+
+The fact preserves these source attributes:
+
+- `PaymentType`
+- `PaymentInstallments`
+- `PaymentAmount`
+
+`PaymentAmount` is stored as `DECIMAL(18,2)`.
+
+Validated total:
+
+`16,008,872.12`
+
+No assumptions are made about interest, financing cost, fees, profit, margin,
+or any other unsupported financial concept.
+
+### PaymentCount
+
+Each payment fact row contains:
+
+`PaymentCount = 1`
+
+Validated:
+
+- Fact rows: `103,886`
+- `SUM(PaymentCount)`: `103,886`
+
+### Payment sequence anomalies
+
+The source contains payment sequences that do not always start at `1` or form a
+contiguous sequence.
+
+Validated results:
+
+- Orders with sequence anomaly: `80`
+- Payment rows belonging to those orders: `82`
+
+The source `payment_sequential` value is preserved exactly and is never
+renumbered.
+
+`PaymentSequenceAnomalyFlag = 1` is applied to every payment row belonging to
+an order whose sequence profile is anomalous.
+
+### Additional payment quality flags
+
+The fact stores these diagnostic flags:
+
+- `UndefinedPaymentTypeFlag`
+- `ZeroInstallmentFlag`
+- `ZeroPaymentValueFlag`
+
+Validated results:
+
+- `payment_type = 'not_defined'`: `3` rows
+- Zero-installment rows: `2`
+- Zero-payment-value rows: `9`
+- Negative installment rows: `0`
+- Negative payment values: `0`
+
+Source values are preserved and are not corrected.
+
+### FactPayment
+
+DDL script:
+
+`02-SQL/03-DWH/009-Create-FactPayment.sql`
+
+Main columns:
+
+- `PaymentKey`
+- `OrderID`
+- `PaymentSequential`
+- `CustomerKey`
+- `CustomerGeographyKey`
+- `PurchaseDateKey`
+- `OrderStatus`
+- `PaymentType`
+- `PaymentInstallments`
+- `PaymentAmount`
+- `PaymentCount`
+- `PaymentSequenceAnomalyFlag`
+- `UndefinedPaymentTypeFlag`
+- `ZeroInstallmentFlag`
+- `ZeroPaymentValueFlag`
+
+`PaymentKey` is the warehouse surrogate key.
+
+A unique index enforces the natural grain:
+
+`OrderID + PaymentSequential`
+
+### Referential integrity strategy
+
+Physical foreign key constraints are intentionally not added to the fact at
+this stage.
+
+Current dimension packages use full-refresh preparation with `TRUNCATE TABLE`.
+
+Referential integrity is instead enforced through:
+
+- SSIS full-cache lookups,
+- fail-on-no-match behavior,
+- explicit DQ validation,
+- surrogate-key coverage checks,
+- source-to-target reconciliation.
+
+### SSIS package
+
+Package:
+
+`04-ETL/SSIS/NOVA_Market_ETL/08-Load-FactPayment.dtsx`
+
+Control Flow:
+
+`SQL - Prepare FactPayment`
+→ `DFT - Load FactPayment`
+
+Data Flow:
+
+`SRC - Payments`
+→ `LKP - Customer`
+→ `LKP - Customer Geography`
+→ `DST - FactPayment`
+
+Required dimension lookups use full cache and fail the component when a
+business key cannot be resolved.
+
+### FactPayment validation
+
+Validation script:
+
+`02-SQL/04-DQ/022-Validate-FactPayment.sql`
+
+Validated results:
+
+- Expected rows: `103,886`
+- Actual rows: `103,886`
+- Distinct orders: `99,440`
+- Duplicate natural grain: `0`
+- NULL Order IDs: `0`
+- Invalid payment sequence values: `0`
+- Missing expected Customer keys: `0`
+- Missing expected Geography keys: `0`
+- Invalid Customer keys: `0`
+- Invalid Geography keys: `0`
+- Invalid Date keys: `0`
+- Invalid PaymentCount values: `0`
+- Missing FactOrder matches: `0`
+- Source orders without payments: `1`
+- Warehouse orders without payments: `1`
+- Sequence-anomaly orders: `80`
+- Sequence-anomaly payment rows: `82`
+- Undefined payment-type rows: `3`
+- Zero-installment rows: `2`
+- Zero-payment-value rows: `9`
+- Total payment amount: `16,008,872.12`
+- Source-to-target differences: `0`
+- Target-to-source differences: `0`
+
+Final result:
+
+`FACTPAYMENT VALIDATION PASSED.`
+---
 
 # Metadata Validation
 

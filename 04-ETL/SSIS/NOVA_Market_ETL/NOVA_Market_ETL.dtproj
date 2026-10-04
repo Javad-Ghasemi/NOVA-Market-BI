@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">GHASEMI</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAPwWlQZ66zUW39lqYSU9F7wAAAAACAAAAAAAQZgAAAAEAACAAAAAgNSxJxfb/M4R0oceCkEj9KvK+rP1sovXxG+rQRZwD/gAAAAAOgAAAAAIAACAAAADGeHQQVmRGRcStVXCHfkv6k25+BMD8ip3kA5FibTCT+ZAAAABFuNLAS9NerA0kObNO0P/TXtl+l8RrMCyvEGS6X6JW31LjYvnoK5YYx4bU+sRPnG1Z9g6oLqjhX8QE3Scmn3O+czl+MXB7o8DOCptk5VvqzNHrflgpZGXL0Oqb0+hk9+/ZSPrQOEorP8GhOj5IjjHLyroTeLBLDNnL2Ww7uI3W25iYzv60i2WJjjwnV21kIKRAAAAAl8WOWuZxChdr/IudZ83b0kiwS0Jlzj0wBLVUfgmelF5H74aKgHXEhIK8SZ6k6sLYWNRpGOEMMM3zl0H5614pcg==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAPwWlQZ66zUW39lqYSU9F7wAAAAACAAAAAAAQZgAAAAEAACAAAAD+r5HChsRRUvim8Aab5q/cR/X2foqw2Ol/vwNhCTVs4AAAAAAOgAAAAAIAACAAAACg325iheNmkqLDdpM9eIiOXOcpcukBApHnUvRx9UOIsZAAAABevr3rExOa2na68ddVmlYGg0aJa9N/SizGpqirkg9uKdwg3rplWhz7LlvjPtrbpkPklEH+saP8gikL2ZKwkmr4TVrUyJcWtjuRNuw2Q7SgiUlrJPpbfUfDvMrUR8OXrNYzazXCHZv1Cfm0zesipj1CFJ2F/AvRlcc2R3kImcnfjCej5fLQZ+h5zGmo6262HX1AAAAAorUL1v3T+//U1t0dlETEZynHnUC1MF3qfguxk8nxq0er1Mxsl1z9XY1qOayCiuokczvoCgCMy+2sHHsYIjSN+Q==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -37,6 +37,7 @@
           <SSIS:Package SSIS:Name="05-Load-DimProduct.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="06-Load-FactOrder.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="07-Load-FactOrderItem.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="08-Load-FactPayment.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="CM_NOVA_Market_OLEDB.conmgr" />
@@ -301,10 +302,27 @@
                 <SSIS:Property SSIS:Name="Name">07-Load-FactOrderItem</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">4</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{9B50E0BA-9905-419A-ABB9-1CCD32E759CD}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="08-Load-FactPayment.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{C199572C-300B-40FB-BE96-F6107B5AEEC0}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">08-Load-FactPayment</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{C4B2EA2E-4F1B-40A8-A96A-F65270E21DD7}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{B922C2E3-69E8-4A55-9F79-5932D34CE869}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
