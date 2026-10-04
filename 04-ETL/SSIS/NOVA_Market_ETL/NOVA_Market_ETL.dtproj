@@ -26,12 +26,13 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">GHASEMI</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAPwWlQZ66zUW39lqYSU9F7wAAAAACAAAAAAAQZgAAAAEAACAAAACLK9xca1fvwo0kPsMimKXwuj7zcqFilAqENejR7fa31wAAAAAOgAAAAAIAACAAAACL6EGDMnpLDz8m7o5/DbgazO/IEITO/jvmHpqtRfLxzZAAAADd0E7ZLL1lM5OZBTZcoImmDtMx55lRXBSKwJjg4mhYauj8zd/kAyfTx5obBvYWHsO4xKPLo8dDNJgJwHWseQK/cV7xLYQXm1vu+Q44oIogyhn19amKgYiYXzUL4SHpIis2HcrYWTFAZxD4xm2DGi0Qb55sgIp3uIRpUexqtogjcQs36QfsoJK9ruomYZDaCtlAAAAAaVj/0Bxa2cRvEXgHTmzG+QOAgPZuErNWzoz3Om6yV5CCvy3M+bYrikkX4xiF0Q9dGcXTP3yodFOGtrqJNAEdWw==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAPwWlQZ66zUW39lqYSU9F7wAAAAACAAAAAAAQZgAAAAEAACAAAADmo0dOa/8eqZeLK7wWdiNGW4IWtgcodEuZJF27UXrhaAAAAAAOgAAAAAIAACAAAABf0OngZcZysnnlANPOlHvJpkd0Y46qzWjHcLgVwu6GRpAAAACyWfdIU65XRNvukkJtolhnUUMKzsFQ2Caof5WGHNOfWDK11E5wc4pD/nuOPzAfsrz2tcesSAHAaCMAngQ6fXvIKYlxGl3a5o1d5n/4Jq1/BrjViZIOCNdLQ6LnPsJRv2rrFJ4t9dJE0o2iQuijqJYq2LG49xPoZIcEHwdi9P8X7jbvYFSZj+yBQ8wMpHZbVHlAAAAA+scgdbwauSePb2w0tinfrKSWqbmhVxE6TQS5O86TQcM+c4v27vhRav2ZamPEoq0v0PQm0KhnTkWw/h4opaeRnQ==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
           <SSIS:Package SSIS:Name="01-Load-DimGeography.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="02-Load-DimCustomer.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="03-Load-DimSeller.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="CM_NOVA_Market_OLEDB.conmgr" />
@@ -191,13 +192,13 @@
             <SSIS:PackageMetaData SSIS:Name="01-Load-DimGeography.dtsx">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">{E532AE37-2F90-4FB4-8B50-0ACBEC0CC517}</SSIS:Property>
-                <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">01-Load-DimGeography</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">9</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">10</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{928B645F-0508-442D-B2CB-44DC9432C0A7}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{4A7B8A9F-996D-4CCA-8BC6-9E4F9A479BA8}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -211,10 +212,27 @@
                 <SSIS:Property SSIS:Name="Name">02-Load-DimCustomer</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">2</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">7</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{6FD4AB0C-87EC-4783-A755-B8FC826DA93B}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{3C225D73-337C-4FFC-840C-5F0952F4A229}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="03-Load-DimSeller.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{2779CB3B-3F6E-4475-B899-648DF85443D1}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">03-Load-DimSeller</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">3</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{804B2E2A-1323-4399-AFB0-AC08AEE37A8A}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
