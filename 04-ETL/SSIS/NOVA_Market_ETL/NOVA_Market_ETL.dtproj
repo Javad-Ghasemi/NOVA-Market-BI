@@ -26,13 +26,14 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">GHASEMI</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAPwWlQZ66zUW39lqYSU9F7wAAAAACAAAAAAAQZgAAAAEAACAAAADmo0dOa/8eqZeLK7wWdiNGW4IWtgcodEuZJF27UXrhaAAAAAAOgAAAAAIAACAAAABf0OngZcZysnnlANPOlHvJpkd0Y46qzWjHcLgVwu6GRpAAAACyWfdIU65XRNvukkJtolhnUUMKzsFQ2Caof5WGHNOfWDK11E5wc4pD/nuOPzAfsrz2tcesSAHAaCMAngQ6fXvIKYlxGl3a5o1d5n/4Jq1/BrjViZIOCNdLQ6LnPsJRv2rrFJ4t9dJE0o2iQuijqJYq2LG49xPoZIcEHwdi9P8X7jbvYFSZj+yBQ8wMpHZbVHlAAAAA+scgdbwauSePb2w0tinfrKSWqbmhVxE6TQS5O86TQcM+c4v27vhRav2ZamPEoq0v0PQm0KhnTkWw/h4opaeRnQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAPwWlQZ66zUW39lqYSU9F7wAAAAACAAAAAAAQZgAAAAEAACAAAADBZPGDcmLR/0sLtc2uoekXAN3PwoBzmlyE0eS5gmjmawAAAAAOgAAAAAIAACAAAACzuALEYe2b6eNECfd6KGmVKsr+TLaSckd+1Hz5Ah01rpAAAAAXhqFfQSaaiXVKcnn+AxcARAtBYBL1dWlpNwB8Li56Uf7ZIuyy8HcKbhZlR8AUp3nh4LeMEdqDJGpcLe7Dph4XyW5eC2ylLdKciknYVVC/UJnIcd6e8cnuzeejVaQlWEifLSWdqT4hKR5uAby2RLX7/DFCatOue88OUKuhPMgkKgLPw8mpnUSc+Oe6juWpb4xAAAAAFxw7iBeUrE9SbgZGc+K27hAnSuOQfFdkMHHAJAtlNjH0u3DfnCNJtNMnNeYVHLQw+gUcD9ZR7i5sss/Sdm70lA==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
           <SSIS:Package SSIS:Name="01-Load-DimGeography.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="02-Load-DimCustomer.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="03-Load-DimSeller.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="04-Load-DimProductCategory.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="CM_NOVA_Market_OLEDB.conmgr" />
@@ -229,10 +230,27 @@
                 <SSIS:Property SSIS:Name="Name">03-Load-DimSeller</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">10</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{769CE91C-530D-44E8-B4F3-E629F6609023}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="04-Load-DimProductCategory.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{83B50B7C-FCE7-42A1-97BE-A31C36A78837}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">04-Load-DimProductCategory</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionBuild">3</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{804B2E2A-1323-4399-AFB0-AC08AEE37A8A}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{F3BA9F6D-6ABC-4DDC-8ACB-262FDE21F100}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
