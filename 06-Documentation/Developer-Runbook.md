@@ -1364,6 +1364,220 @@ Final result:
 
 `FACTORDER VALIDATION PASSED.`
 ---
+## FactOrderItem ETL
+
+`dwh.FactOrderItem` stores one row per source order item.
+
+### Grain
+
+The natural transaction grain is:
+
+`OrderID + OrderItemID`
+
+Source audit results:
+
+- Source order-item rows: `112,650`
+- Distinct natural-grain rows: `112,650`
+- Duplicate natural-grain rows: `0`
+- NULL Order IDs: `0`
+- NULL Order Item IDs: `0`
+- Minimum Order Item ID: `1`
+- Maximum Order Item ID: `21`
+- Orders whose item sequence does not start at `1`: `0`
+- Orders with item-sequence gaps: `0`
+
+### Dimension relationships
+
+Each item row carries the following surrogate keys directly:
+
+- `CustomerKey`
+- `CustomerGeographyKey`
+- `ProductKey`
+- `SellerKey`
+- `PurchaseDateKey`
+- `ShippingLimitDateKey`
+
+These keys are stored directly on the item fact so reporting does not depend on
+fact-to-fact relationships through `FactOrder`.
+
+`CustomerGeographyKey` represents the customer geography associated with the
+specific order, not the customer's latest representative geography.
+
+Validated SSIS lookup results:
+
+- Product lookup misses: `0`
+- Seller lookup misses: `0`
+- Customer lookup misses: `0`
+- Customer geography lookup misses: `0`
+
+### Order relationship
+
+`OrderID` is retained as a degenerate business key.
+
+Every `FactOrderItem.OrderID` must also exist in `dwh.FactOrder`.
+
+Validated missing FactOrder matches:
+
+`0`
+
+No physical fact-to-fact foreign key is created.
+
+### Measures
+
+The fact contains only monetary measures supported by the source dataset:
+
+- `PriceAmount`
+- `FreightAmount`
+
+No cost, COGS, profit, margin, or other unsupported financial measures are
+fabricated.
+
+Validated source totals:
+
+- Total price amount: `13,591,643.70`
+- Total freight amount: `2,251,909.54`
+- Zero-price rows: `0`
+- Zero-freight rows: `383`
+- Negative-price rows: `0`
+- Negative-freight rows: `0`
+
+### OrderItemCount
+
+Each fact row contains:
+
+`OrderItemCount = 1`
+
+This provides a simple additive item-count measure.
+
+Validated:
+
+- Fact rows: `112,650`
+- `SUM(OrderItemCount)`: `112,650`
+
+### Shipping limit date
+
+The source `shipping_limit_date` is preserved as:
+
+- `ShippingLimitTimestamp`
+- `ShippingLimitDateKey`
+
+The source contains shipping-limit values extending into `2020`.
+These values are preserved as source data and are not corrected.
+
+Validated results:
+
+- NULL shipping-limit dates: `0`
+- Shipping-limit dates before purchase: `0`
+- Shipping-limit dates missing from `DimDate`: `0`
+
+### Order status
+
+`OrderStatus` is replicated from the order source onto `FactOrderItem`.
+
+This allows item-level price and freight analysis by order status without
+requiring a fact-to-fact relationship with `FactOrder`.
+
+### FactOrderItem
+
+DDL script:
+
+`02-SQL/03-DWH/008-Create-FactOrderItem.sql`
+
+Main columns:
+
+- `OrderItemKey`
+- `OrderID`
+- `OrderItemID`
+- `CustomerKey`
+- `CustomerGeographyKey`
+- `ProductKey`
+- `SellerKey`
+- `PurchaseDateKey`
+- `ShippingLimitDateKey`
+- `OrderStatus`
+- `ShippingLimitTimestamp`
+- `PriceAmount`
+- `FreightAmount`
+- `OrderItemCount`
+
+`OrderItemKey` is the warehouse surrogate key.
+
+A unique index enforces the natural grain:
+
+`OrderID + OrderItemID`
+
+### Referential integrity strategy
+
+Physical foreign key constraints are intentionally not added to the fact at
+this stage.
+
+Current dimension packages use full-refresh preparation with `TRUNCATE TABLE`.
+Referential integrity is instead enforced through:
+
+- SSIS full-cache lookups,
+- fail-on-no-match behavior,
+- explicit DQ validation,
+- surrogate-key coverage checks,
+- source-to-target reconciliation.
+
+### SSIS package
+
+Package:
+
+`04-ETL/SSIS/NOVA_Market_ETL/07-Load-FactOrderItem.dtsx`
+
+Control Flow:
+
+`SQL - Prepare FactOrderItem`
+→ `DFT - Load FactOrderItem`
+
+Data Flow:
+
+`SRC - Order Items`
+→ `LKP - Product`
+→ `LKP - Seller`
+→ `LKP - Customer`
+→ `LKP - Customer Geography`
+→ `DST - FactOrderItem`
+
+All required dimension lookups use full cache and fail the component if a
+business key cannot be resolved.
+
+### FactOrderItem validation
+
+Validation script:
+
+`02-SQL/04-DQ/021-Validate-FactOrderItem.sql`
+
+Validated results:
+
+- Expected rows: `112,650`
+- Actual rows: `112,650`
+- Duplicate natural grain: `0`
+- NULL Order IDs: `0`
+- Invalid Order Item IDs: `0`
+- Missing expected Product keys: `0`
+- Missing expected Seller keys: `0`
+- Missing expected Customer keys: `0`
+- Missing expected Geography keys: `0`
+- Invalid Product keys: `0`
+- Invalid Seller keys: `0`
+- Invalid Customer keys: `0`
+- Invalid Geography keys: `0`
+- Invalid Date keys: `0`
+- Invalid OrderItemCount values: `0`
+- Missing FactOrder matches: `0`
+- Source-to-target differences: `0`
+- Target-to-source differences: `0`
+- Total price amount: `13,591,643.70`
+- Total freight amount: `2,251,909.54`
+- Zero-price rows: `0`
+- Zero-freight rows: `383`
+
+Final result:
+
+`FACTORDERITEM VALIDATION PASSED.`
+---
 
 # Metadata Validation
 
