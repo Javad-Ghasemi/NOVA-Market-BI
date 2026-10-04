@@ -1810,7 +1810,317 @@ Final result:
 
 `FACTPAYMENT VALIDATION PASSED.`
 ---
+## FactReview ETL
 
+`dwh.FactReview` stores one row per source review record.
+
+### Grain
+
+The natural transaction grain is:
+
+`ReviewID + OrderID`
+
+Source audit results:
+
+- Source review rows: `99,224`
+- Distinct Review IDs: `98,410`
+- Distinct orders with reviews: `98,673`
+- Duplicate Review ID groups: `789`
+- Extra rows caused by duplicate Review IDs: `814`
+- Rows whose Review ID occurs more than once: `1,603`
+- Duplicate `ReviewID + OrderID` rows: `0`
+- Orders with multiple review rows: `547`
+- Maximum review rows for one order: `3`
+- Orders without reviews: `768`
+
+`ReviewID` alone is not unique in the source.
+
+No duplicate Review IDs are removed, merged, or corrected.
+
+The unique warehouse grain is enforced as:
+
+`ReviewID + OrderID`
+
+Review rows are never joined directly to order-item rows because an order can
+contain multiple items and multiple reviews, which would create fact-to-fact
+fan-out.
+
+### Dimension relationships
+
+Each review row carries:
+
+- `CustomerKey`
+- `CustomerGeographyKey`
+- `PurchaseDateKey`
+- `ReviewCreationDateKey`
+- `ReviewAnswerDateKey`
+
+`CustomerGeographyKey` represents the customer geography associated with the
+specific order.
+
+Validated dimension resolution:
+
+- Missing expected Customer keys: `0`
+- Missing expected Geography keys: `0`
+- Missing expected Date keys: `0`
+- Invalid Customer keys: `0`
+- Invalid Geography keys: `0`
+- Invalid Date keys: `0`
+
+All review creation and answer dates are covered by `DimDate`.
+
+### Order relationship
+
+`OrderID` is retained as a degenerate business key.
+
+Every review row must correspond to an existing `FactOrder`.
+
+Validated missing FactOrder matches:
+
+`0`
+
+The source contains:
+
+`768`
+
+orders without any review row.
+
+The warehouse preserves the same set:
+
+`768`
+
+No synthetic review row is generated for those orders.
+
+### Review score
+
+`ReviewScore` is preserved directly from the source.
+
+Validated score domain:
+
+- Minimum score: `1`
+- Maximum score: `5`
+- NULL scores: `0`
+- Invalid scores outside `1..5`: `0`
+
+Validated total review score:
+
+`405,471`
+
+### Review text
+
+The source review text columns are preserved without synthetic replacement:
+
+- `ReviewCommentTitle`
+- `ReviewCommentMessage`
+
+Source profile:
+
+- NULL comment titles: `87,656`
+- NULL comment messages: `58,247`
+- Reviews with neither title nor message: `56,518`
+- Non-NULL empty titles: `2`
+- Non-NULL empty messages: `9`
+
+NULL and empty values are preserved as supplied by the source.
+
+### Review timestamps
+
+The source provides:
+
+- `review_creation_date`
+- `review_answer_timestamp`
+
+Both source values are preserved in the fact as:
+
+- `ReviewCreationTimestamp`
+- `ReviewAnswerTimestamp`
+
+`review_creation_date` behaves primarily as a business date:
+
+- Rows with non-midnight creation time: `85`
+- Rows with non-midnight answer time: `99,223`
+
+Because creation time-of-day is mostly not meaningful, creation-related
+anomaly rules use date-to-date comparison.
+
+Answer timestamps contain meaningful time-of-day and therefore use full
+timestamp comparison.
+
+### Temporal quality flags
+
+The fact stores:
+
+- `ReviewCreatedBeforePurchaseFlag`
+- `ReviewCreatedBeforeDeliveryFlag`
+- `ReviewAnsweredBeforePurchaseFlag`
+- `ReviewAnsweredBeforeDeliveryFlag`
+- `ReviewAnsweredBeforeCreationFlag`
+
+Validated results:
+
+- Reviews created before purchase using date semantics: `64`
+- Reviews created before delivery using date semantics: `5,127`
+- Reviews answered before purchase using timestamp semantics: `63`
+- Reviews answered before delivery using timestamp semantics: `4,795`
+- Reviews answered before creation: `0`
+
+There are:
+
+`2,865`
+
+review rows associated with orders that have no customer-delivery timestamp.
+
+For those rows:
+
+- `ReviewCreatedBeforeDeliveryFlag = NULL`
+- `ReviewAnsweredBeforeDeliveryFlag = NULL`
+
+`NULL` means the delivery-relative condition cannot be evaluated.
+
+It does not mean that the anomaly is false.
+
+Validated invalid delivery-flag NULL semantics:
+
+`0`
+
+### Duplicate Review ID flag
+
+Because `ReviewID` alone is not unique, the fact stores:
+
+`DuplicateReviewIDFlag`
+
+The flag is set to `1` on every row whose `ReviewID` appears more than once in
+the source.
+
+Validated flagged rows:
+
+`1,603`
+
+The source Review ID is always preserved unchanged.
+
+### ReviewCount
+
+Each fact row contains:
+
+`ReviewCount = 1`
+
+Validated:
+
+- Fact rows: `99,224`
+- `SUM(ReviewCount)`: `99,224`
+
+### FactReview
+
+DDL script:
+
+`02-SQL/03-DWH/010-Create-FactReview.sql`
+
+Main columns:
+
+- `ReviewKey`
+- `ReviewID`
+- `OrderID`
+- `CustomerKey`
+- `CustomerGeographyKey`
+- `PurchaseDateKey`
+- `ReviewCreationDateKey`
+- `ReviewAnswerDateKey`
+- `OrderStatus`
+- `ReviewScore`
+- `ReviewCommentTitle`
+- `ReviewCommentMessage`
+- `ReviewCreationTimestamp`
+- `ReviewAnswerTimestamp`
+- `ReviewCount`
+- `DuplicateReviewIDFlag`
+- `ReviewCreatedBeforePurchaseFlag`
+- `ReviewCreatedBeforeDeliveryFlag`
+- `ReviewAnsweredBeforePurchaseFlag`
+- `ReviewAnsweredBeforeDeliveryFlag`
+- `ReviewAnsweredBeforeCreationFlag`
+
+`ReviewKey` is the warehouse surrogate key.
+
+A unique index enforces the natural grain:
+
+`ReviewID + OrderID`
+
+### Referential integrity strategy
+
+Physical foreign key constraints are intentionally not added to the fact at
+this stage.
+
+Current dimension packages use full-refresh preparation with `TRUNCATE TABLE`.
+
+Referential integrity is instead enforced through:
+
+- SSIS full-cache lookups,
+- fail-on-no-match behavior,
+- explicit DQ validation,
+- surrogate-key coverage checks,
+- source-to-target reconciliation.
+
+### SSIS package
+
+Package:
+
+`04-ETL/SSIS/NOVA_Market_ETL/09-Load-FactReview.dtsx`
+
+Control Flow:
+
+`SQL - Prepare FactReview`
+→ `DFT - Load FactReview`
+
+Data Flow:
+
+`SRC - Reviews`
+→ `LKP - Customer`
+→ `LKP - Customer Geography`
+→ `DST - FactReview`
+
+Required dimension lookups use full cache and fail the component when a
+business key cannot be resolved.
+
+### FactReview validation
+
+Validation script:
+
+`02-SQL/04-DQ/023-Validate-FactReview.sql`
+
+Validated results:
+
+- Expected rows: `99,224`
+- Actual rows: `99,224`
+- Distinct orders: `98,673`
+- Duplicate natural grain: `0`
+- Invalid review scores: `0`
+- Invalid ReviewCount values: `0`
+- Missing expected Customer keys: `0`
+- Missing expected Geography keys: `0`
+- Missing expected Date keys: `0`
+- Invalid Customer keys: `0`
+- Invalid Geography keys: `0`
+- Invalid Date keys: `0`
+- Missing FactOrder matches: `0`
+- Invalid delivery-relative NULL semantics: `0`
+- Source orders without reviews: `768`
+- Warehouse orders without reviews: `768`
+- Duplicate Review ID rows: `1,603`
+- Created-before-purchase rows: `64`
+- Created-before-delivery rows: `5,127`
+- Delivery-relative creation NULL rows: `2,865`
+- Answered-before-purchase rows: `63`
+- Answered-before-delivery rows: `4,795`
+- Delivery-relative answer NULL rows: `2,865`
+- Answered-before-creation rows: `0`
+- Total review score: `405,471`
+- Source-to-target differences: `0`
+- Target-to-source differences: `0`
+
+Final result:
+
+`FACTREVIEW VALIDATION PASSED.`
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata

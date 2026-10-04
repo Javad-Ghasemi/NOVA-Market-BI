@@ -1,0 +1,1609 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/4/2026 12:52:54 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="GHASEMI"
+  DTS:CreatorName="GHASEMI\j-ghasemi"
+  DTS:DTSID="{A9E2EF62-E908-4897-83BD-73EB23DE05DA}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="09-Load-FactReview"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{56399205-7E87-4008-8BDE-CA376E0D9790}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Load FactReview"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{DF470F45-7CE7-4284-BDF4-507BB773E6FF}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Load FactReview"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Load FactReview\DST - FactReview"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DST - FactReview"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dwh].[FactReview]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactReview\DST - FactReview.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ReviewID"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewID]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewID]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[OrderID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="OrderID"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[OrderID]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[OrderID]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[PurchaseDateKey]"
+                      cachedDataType="i4"
+                      cachedName="PurchaseDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[PurchaseDateKey]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[PurchaseDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewCreationDateKey]"
+                      cachedDataType="i4"
+                      cachedName="ReviewCreationDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreationDateKey]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreationDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewAnswerDateKey]"
+                      cachedDataType="i4"
+                      cachedName="ReviewAnswerDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnswerDateKey]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnswerDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[OrderStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="OrderStatus"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[OrderStatus]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[OrderStatus]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewScore]"
+                      cachedDataType="i4"
+                      cachedName="ReviewScore"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewScore]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewScore]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewCommentTitle]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="ReviewCommentTitle"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCommentTitle]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCommentTitle]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewCommentMessage]"
+                      cachedDataType="wstr"
+                      cachedLength="1000"
+                      cachedName="ReviewCommentMessage"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCommentMessage]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCommentMessage]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewCreationTimestamp]"
+                      cachedDataType="wstr"
+                      cachedLength="27"
+                      cachedName="ReviewCreationTimestamp"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreationTimestamp]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreationTimestamp]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewAnswerTimestamp]"
+                      cachedDataType="wstr"
+                      cachedLength="27"
+                      cachedName="ReviewAnswerTimestamp"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnswerTimestamp]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnswerTimestamp]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewCount]"
+                      cachedDataType="ui1"
+                      cachedName="ReviewCount"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCount]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCount]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[DuplicateReviewIDFlag]"
+                      cachedDataType="bool"
+                      cachedName="DuplicateReviewIDFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[DuplicateReviewIDFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[DuplicateReviewIDFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewCreatedBeforePurchaseFlag]"
+                      cachedDataType="bool"
+                      cachedName="ReviewCreatedBeforePurchaseFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreatedBeforePurchaseFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreatedBeforePurchaseFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewCreatedBeforeDeliveryFlag]"
+                      cachedDataType="bool"
+                      cachedName="ReviewCreatedBeforeDeliveryFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreatedBeforeDeliveryFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreatedBeforeDeliveryFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewAnsweredBeforePurchaseFlag]"
+                      cachedDataType="bool"
+                      cachedName="ReviewAnsweredBeforePurchaseFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnsweredBeforePurchaseFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforePurchaseFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewAnsweredBeforeDeliveryFlag]"
+                      cachedDataType="bool"
+                      cachedName="ReviewAnsweredBeforeDeliveryFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnsweredBeforeDeliveryFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforeDeliveryFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[ReviewAnsweredBeforeCreationFlag]"
+                      cachedDataType="bool"
+                      cachedName="ReviewAnsweredBeforeCreationFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnsweredBeforeCreationFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforeCreationFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[CustomerKey]"
+                      cachedDataType="i4"
+                      cachedName="CustomerKey"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Match Output].Columns[CustomerKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].Columns[CustomerGeographyKey]"
+                      cachedDataType="i4"
+                      cachedName="CustomerGeographyKey"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[CustomerGeographyKey]"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Match Output].Columns[CustomerGeographyKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewKey]"
+                      dataType="i4"
+                      name="ReviewKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewID]"
+                      dataType="wstr"
+                      length="50"
+                      name="ReviewID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[OrderID]"
+                      dataType="wstr"
+                      length="50"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                      dataType="i4"
+                      name="CustomerKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[CustomerGeographyKey]"
+                      dataType="i4"
+                      name="CustomerGeographyKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[PurchaseDateKey]"
+                      dataType="i4"
+                      name="PurchaseDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreationDateKey]"
+                      dataType="i4"
+                      name="ReviewCreationDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnswerDateKey]"
+                      dataType="i4"
+                      name="ReviewAnswerDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[OrderStatus]"
+                      dataType="wstr"
+                      length="20"
+                      name="OrderStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewScore]"
+                      dataType="i4"
+                      name="ReviewScore" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCommentTitle]"
+                      dataType="wstr"
+                      length="100"
+                      name="ReviewCommentTitle" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCommentMessage]"
+                      dataType="wstr"
+                      length="1000"
+                      name="ReviewCommentMessage" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreationTimestamp]"
+                      dataType="wstr"
+                      length="27"
+                      name="ReviewCreationTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnswerTimestamp]"
+                      dataType="wstr"
+                      length="27"
+                      name="ReviewAnswerTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCount]"
+                      dataType="ui1"
+                      name="ReviewCount" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[DuplicateReviewIDFlag]"
+                      dataType="bool"
+                      name="DuplicateReviewIDFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreatedBeforePurchaseFlag]"
+                      dataType="bool"
+                      name="ReviewCreatedBeforePurchaseFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewCreatedBeforeDeliveryFlag]"
+                      dataType="bool"
+                      name="ReviewCreatedBeforeDeliveryFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnsweredBeforePurchaseFlag]"
+                      dataType="bool"
+                      name="ReviewAnsweredBeforePurchaseFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnsweredBeforeDeliveryFlag]"
+                      dataType="bool"
+                      name="ReviewAnsweredBeforeDeliveryFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input].ExternalColumns[ReviewAnsweredBeforeCreationFlag]"
+                      dataType="bool"
+                      name="ReviewAnsweredBeforeCreationFlag" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactReview\DST - FactReview.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\DST - FactReview.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\DST - FactReview.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\DST - FactReview.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load FactReview\LKP - Customer"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP - Customer"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    CustomerKey,
+    CustomerUniqueID
+FROM dwh.DimCustomer
+WHERE CustomerKey &lt;&gt; 0;</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
+    CustomerKey,
+    CustomerUniqueID
+FROM dwh.DimCustomer
+WHERE CustomerKey &lt;&gt; 0;) [refTable]
+where [refTable].[CustomerUniqueID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CustomerKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerUniqueID" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactReview\LKP - Customer.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load FactReview\LKP - Customer.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer.Inputs[Lookup Input].Columns[CustomerUniqueID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="CustomerUniqueID"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">CustomerUniqueID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - Load FactReview\LKP - Customer.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Match Output].Columns[CustomerKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Match Output].Columns[CustomerKey]"
+                      name="CustomerKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">CustomerKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - Load FactReview\LKP - Customer.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - Load FactReview\LKP - Customer.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load FactReview\LKP - Customer Geography"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP - Customer Geography"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    GeographyKey,
+    ZipCodePrefix
+FROM dwh.DimGeography
+WHERE GeographyKey &lt;&gt; 0;</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
+    GeographyKey,
+    ZipCodePrefix
+FROM dwh.DimGeography
+WHERE GeographyKey &lt;&gt; 0;) [refTable]
+where [refTable].[ZipCodePrefix] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GeographyKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ZipCodePrefix" dataType="DT_WSTR" length="5" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactReview\LKP - Customer Geography.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load FactReview\LKP - Customer Geography.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer Geography.Inputs[Lookup Input].Columns[CustomerZipCodePrefix]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CustomerZipCodePrefix"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">ZipCodePrefix</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - Load FactReview\LKP - Customer Geography.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Match Output].Columns[CustomerGeographyKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Match Output].Columns[CustomerGeographyKey]"
+                      name="CustomerGeographyKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">GeographyKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - Load FactReview\LKP - Customer Geography.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - Load FactReview\LKP - Customer Geography.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load FactReview\SRC - Reviews"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - Reviews"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">WITH ReviewProfile AS
+(
+    SELECT
+        r.review_id,
+        r.order_id,
+        r.review_score,
+        r.review_comment_title,
+        r.review_comment_message,
+        r.review_creation_date,
+        r.review_answer_timestamp,
+
+        COUNT(*) OVER
+        (
+            PARTITION BY r.review_id
+        ) AS ReviewIDRowCount
+
+    FROM stg.reviews AS r
+)
+SELECT
+    r.review_id AS ReviewID,
+    r.order_id AS OrderID,
+
+    c.customer_unique_id AS CustomerUniqueID,
+    c.customer_zip_code_prefix AS CustomerZipCodePrefix,
+
+    CONVERT(
+        INT,
+        CONVERT(
+            CHAR(8),
+            CAST(o.order_purchase_timestamp AS DATE),
+            112
+        )
+    ) AS PurchaseDateKey,
+
+    CONVERT(
+        INT,
+        CONVERT(
+            CHAR(8),
+            CAST(r.review_creation_date AS DATE),
+            112
+        )
+    ) AS ReviewCreationDateKey,
+
+    CONVERT(
+        INT,
+        CONVERT(
+            CHAR(8),
+            CAST(r.review_answer_timestamp AS DATE),
+            112
+        )
+    ) AS ReviewAnswerDateKey,
+
+    o.order_status AS OrderStatus,
+
+    r.review_score AS ReviewScore,
+
+    r.review_comment_title AS ReviewCommentTitle,
+    r.review_comment_message AS ReviewCommentMessage,
+
+    r.review_creation_date AS ReviewCreationTimestamp,
+    r.review_answer_timestamp AS ReviewAnswerTimestamp,
+
+    CAST(1 AS TINYINT) AS ReviewCount,
+
+    CAST(
+        CASE
+            WHEN r.ReviewIDRowCount &gt; 1
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS DuplicateReviewIDFlag,
+
+    /* Creation date is evaluated as DATE, not full timestamp */
+    CAST(
+        CASE
+            WHEN CAST(r.review_creation_date AS DATE)
+               &lt; CAST(o.order_purchase_timestamp AS DATE)
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS ReviewCreatedBeforePurchaseFlag,
+
+    /* NULL means delivery did not occur / cannot be evaluated */
+    CAST(
+        CASE
+            WHEN o.order_delivered_customer_date IS NULL
+            THEN NULL
+
+            WHEN CAST(r.review_creation_date AS DATE)
+               &lt; CAST(o.order_delivered_customer_date AS DATE)
+            THEN 1
+
+            ELSE 0
+        END
+        AS BIT
+    ) AS ReviewCreatedBeforeDeliveryFlag,
+
+    /* Answer timestamp has meaningful time-of-day */
+    CAST(
+        CASE
+            WHEN r.review_answer_timestamp
+               &lt; o.order_purchase_timestamp
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS ReviewAnsweredBeforePurchaseFlag,
+
+    /* NULL means delivery did not occur / cannot be evaluated */
+    CAST(
+        CASE
+            WHEN o.order_delivered_customer_date IS NULL
+            THEN NULL
+
+            WHEN r.review_answer_timestamp
+               &lt; o.order_delivered_customer_date
+            THEN 1
+
+            ELSE 0
+        END
+        AS BIT
+    ) AS ReviewAnsweredBeforeDeliveryFlag,
+
+    CAST(
+        CASE
+            WHEN r.review_answer_timestamp
+               &lt; r.review_creation_date
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS ReviewAnsweredBeforeCreationFlag
+
+FROM ReviewProfile AS r
+
+INNER JOIN stg.orders AS o
+    ON r.order_id = o.order_id
+
+INNER JOIN stg.customers AS c
+    ON o.customer_id = c.customer_id;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactReview\SRC - Reviews.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewID]"
+                      length="50"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewID]"
+                      name="ReviewID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[OrderID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[OrderID]"
+                      length="50"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[OrderID]"
+                      name="OrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[CustomerUniqueID]"
+                      length="50"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]"
+                      name="CustomerUniqueID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[CustomerZipCodePrefix]"
+                      length="5"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]"
+                      name="CustomerZipCodePrefix"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[PurchaseDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[PurchaseDateKey]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[PurchaseDateKey]"
+                      name="PurchaseDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreationDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreationDateKey]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreationDateKey]"
+                      name="ReviewCreationDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnswerDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnswerDateKey]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnswerDateKey]"
+                      name="ReviewAnswerDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[OrderStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[OrderStatus]"
+                      length="20"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[OrderStatus]"
+                      name="OrderStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewScore]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewScore]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewScore]"
+                      name="ReviewScore"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCommentTitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCommentTitle]"
+                      length="100"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCommentTitle]"
+                      name="ReviewCommentTitle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCommentMessage]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCommentMessage]"
+                      length="1000"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCommentMessage]"
+                      name="ReviewCommentMessage"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreationTimestamp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreationTimestamp]"
+                      length="27"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreationTimestamp]"
+                      name="ReviewCreationTimestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnswerTimestamp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnswerTimestamp]"
+                      length="27"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnswerTimestamp]"
+                      name="ReviewAnswerTimestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCount]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCount]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCount]"
+                      name="ReviewCount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[DuplicateReviewIDFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[DuplicateReviewIDFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[DuplicateReviewIDFlag]"
+                      name="DuplicateReviewIDFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreatedBeforePurchaseFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreatedBeforePurchaseFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreatedBeforePurchaseFlag]"
+                      name="ReviewCreatedBeforePurchaseFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreatedBeforeDeliveryFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreatedBeforeDeliveryFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewCreatedBeforeDeliveryFlag]"
+                      name="ReviewCreatedBeforeDeliveryFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforePurchaseFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnsweredBeforePurchaseFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforePurchaseFlag]"
+                      name="ReviewAnsweredBeforePurchaseFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforeDeliveryFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnsweredBeforeDeliveryFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforeDeliveryFlag]"
+                      name="ReviewAnsweredBeforeDeliveryFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforeCreationFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnsweredBeforeCreationFlag]"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].Columns[ReviewAnsweredBeforeCreationFlag]"
+                      name="ReviewAnsweredBeforeCreationFlag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewID]"
+                      dataType="wstr"
+                      length="50"
+                      name="ReviewID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[OrderID]"
+                      dataType="wstr"
+                      length="50"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[CustomerUniqueID]"
+                      dataType="wstr"
+                      length="50"
+                      name="CustomerUniqueID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[CustomerZipCodePrefix]"
+                      dataType="wstr"
+                      length="5"
+                      name="CustomerZipCodePrefix" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[PurchaseDateKey]"
+                      dataType="i4"
+                      name="PurchaseDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreationDateKey]"
+                      dataType="i4"
+                      name="ReviewCreationDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnswerDateKey]"
+                      dataType="i4"
+                      name="ReviewAnswerDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[OrderStatus]"
+                      dataType="wstr"
+                      length="20"
+                      name="OrderStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewScore]"
+                      dataType="i4"
+                      name="ReviewScore" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCommentTitle]"
+                      dataType="wstr"
+                      length="100"
+                      name="ReviewCommentTitle" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCommentMessage]"
+                      dataType="wstr"
+                      length="1000"
+                      name="ReviewCommentMessage" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreationTimestamp]"
+                      dataType="wstr"
+                      length="27"
+                      name="ReviewCreationTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnswerTimestamp]"
+                      dataType="wstr"
+                      length="27"
+                      name="ReviewAnswerTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCount]"
+                      dataType="ui1"
+                      name="ReviewCount" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[DuplicateReviewIDFlag]"
+                      dataType="bool"
+                      name="DuplicateReviewIDFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreatedBeforePurchaseFlag]"
+                      dataType="bool"
+                      name="ReviewCreatedBeforePurchaseFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewCreatedBeforeDeliveryFlag]"
+                      dataType="bool"
+                      name="ReviewCreatedBeforeDeliveryFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnsweredBeforePurchaseFlag]"
+                      dataType="bool"
+                      name="ReviewAnsweredBeforePurchaseFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnsweredBeforeDeliveryFlag]"
+                      dataType="bool"
+                      name="ReviewAnsweredBeforeDeliveryFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output].ExternalColumns[ReviewAnsweredBeforeCreationFlag]"
+                      dataType="bool"
+                      name="ReviewAnsweredBeforeCreationFlag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewID]"
+                      name="ReviewID" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[OrderID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[OrderID]"
+                      name="OrderID" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[CustomerUniqueID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[CustomerUniqueID]"
+                      name="CustomerUniqueID" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[CustomerZipCodePrefix]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[CustomerZipCodePrefix]"
+                      name="CustomerZipCodePrefix" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[PurchaseDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[PurchaseDateKey]"
+                      name="PurchaseDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreationDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreationDateKey]"
+                      name="ReviewCreationDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnswerDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnswerDateKey]"
+                      name="ReviewAnswerDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[OrderStatus]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[OrderStatus]"
+                      name="OrderStatus" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewScore]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewScore]"
+                      name="ReviewScore" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCommentTitle]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCommentTitle]"
+                      name="ReviewCommentTitle" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCommentMessage]"
+                      dataType="wstr"
+                      length="1000"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCommentMessage]"
+                      name="ReviewCommentMessage" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreationTimestamp]"
+                      dataType="wstr"
+                      length="27"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreationTimestamp]"
+                      name="ReviewCreationTimestamp" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnswerTimestamp]"
+                      dataType="wstr"
+                      length="27"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnswerTimestamp]"
+                      name="ReviewAnswerTimestamp" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCount]"
+                      dataType="ui1"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCount]"
+                      name="ReviewCount" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[DuplicateReviewIDFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[DuplicateReviewIDFlag]"
+                      name="DuplicateReviewIDFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreatedBeforePurchaseFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreatedBeforePurchaseFlag]"
+                      name="ReviewCreatedBeforePurchaseFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreatedBeforeDeliveryFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewCreatedBeforeDeliveryFlag]"
+                      name="ReviewCreatedBeforeDeliveryFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnsweredBeforePurchaseFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnsweredBeforePurchaseFlag]"
+                      name="ReviewAnsweredBeforePurchaseFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnsweredBeforeDeliveryFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnsweredBeforeDeliveryFlag]"
+                      name="ReviewAnsweredBeforeDeliveryFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnsweredBeforeCreationFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ReviewAnsweredBeforeCreationFlag]"
+                      name="ReviewAnsweredBeforeCreationFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Load FactReview.Paths[Lookup Match Output]"
+              endId="Package\DFT - Load FactReview\LKP - Customer Geography.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - Load FactReview\LKP - Customer.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - Load FactReview.Paths[Lookup Match Output1]"
+              endId="Package\DFT - Load FactReview\DST - FactReview.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - Load FactReview\LKP - Customer Geography.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - Load FactReview.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Load FactReview\LKP - Customer.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Load FactReview\SRC - Reviews.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Prepare FactReview"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{55AE136C-FF4E-43DB-BB8E-37C9E07ED28E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Prepare FactReview"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.FactReview;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{0D2F21C5-4048-427B-B32A-F19257FBFB89}"
+      DTS:From="Package\SQL - Prepare FactReview"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - Load FactReview" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="210,42"
+          Id="Package\SQL - Prepare FactReview"
+          TopLeft="511,64" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\DFT - Load FactReview"
+          TopLeft="624,183" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="616,106">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="105.5,77"
+              Start="0,0"
+              End="105.5,69.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.5"
+                    Point2="0,38.5"
+                    Point3="4,38.5" />
+                  <mssgle:LineSegment
+                    End="101.5,38.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="101.5,38.5"
+                    Point2="105.5,38.5"
+                    Point3="105.5,42.5" />
+                  <mssgle:LineSegment
+                    End="105.5,69.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - Load FactReview">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="153,42"
+          Id="Package\DFT - Load FactReview\SRC - Reviews"
+          TopLeft="456,80" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DFT - Load FactReview\LKP - Customer"
+          TopLeft="514,185" />
+        <EdgeLayout
+          Id="Package\DFT - Load FactReview.Paths[OLE DB Source Output]"
+          TopLeft="532.5,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="60,63"
+              Start="0,0"
+              End="60,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.5"
+                    Point2="0,31.5"
+                    Point3="4,31.5" />
+                  <mssgle:LineSegment
+                    End="56,31.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="56,31.5"
+                    Point2="60,31.5"
+                    Point3="60,35.5" />
+                  <mssgle:LineSegment
+                    End="60,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="214,42"
+          Id="Package\DFT - Load FactReview\LKP - Customer Geography"
+          TopLeft="597,315" />
+        <EdgeLayout
+          Id="Package\DFT - Load FactReview.Paths[Lookup Match Output]"
+          TopLeft="592.5,227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="111.5,88"
+              Start="0,0"
+              End="111.5,80.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40"
+                    Point2="0,44"
+                    Point3="4,44" />
+                  <mssgle:LineSegment
+                    End="107.5,44" />
+                  <mssgle:CubicBezierSegment
+                    Point1="107.5,44"
+                    Point2="111.5,44"
+                    Point3="111.5,48" />
+                  <mssgle:LineSegment
+                    End="111.5,80.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="7.55861328125,49,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="168,42"
+          Id="Package\DFT - Load FactReview\DST - FactReview"
+          TopLeft="688,445" />
+        <EdgeLayout
+          Id="Package\DFT - Load FactReview.Paths[Lookup Match Output1]"
+          TopLeft="704,357">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="68,88"
+              Start="0,0"
+              End="68,80.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40"
+                    Point2="0,44"
+                    Point3="4,44" />
+                  <mssgle:LineSegment
+                    End="64,44" />
+                  <mssgle:CubicBezierSegment
+                    Point1="64,44"
+                    Point2="68,44"
+                    Point3="68,48" />
+                  <mssgle:LineSegment
+                    End="68,80.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-14.19138671875,49,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactReview\SRC - Reviews">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactReview\LKP - Customer">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactReview\LKP - Customer Geography">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactReview\DST - FactReview">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
