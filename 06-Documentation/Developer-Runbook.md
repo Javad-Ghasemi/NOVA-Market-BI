@@ -1128,6 +1128,242 @@ Final result:
 
 `DIMPRODUCT VALIDATION PASSED.`
 ---
+## FactOrder ETL
+
+`dwh.FactOrder` stores one row per source order.
+
+A separate `conformed.Order` table is intentionally not created because the
+source order grain is already deterministic:
+
+- Source order rows: `99,441`
+- Distinct `order_id` values: `99,441`
+- NULL `order_id` values: `0`
+- Duplicate `order_id` values: `0`
+
+### Grain
+
+One row per source `order_id`.
+
+`OrderID` is stored as a degenerate business key in the fact.
+
+### Customer modeling
+
+Each order stores both:
+
+- `CustomerKey`
+- `CustomerGeographyKey`
+
+`CustomerKey` represents the conformed customer identity.
+
+`CustomerGeographyKey` represents the customer ZIP code recorded on the
+specific order through the source `customer_id`.
+
+This is intentionally different from the representative geography stored in
+`DimCustomer`, which reflects the customer's latest representative profile.
+
+This design preserves historical order geography and prevents older orders
+from being attributed to a customer's later location.
+
+Validated resolution results:
+
+- Orders without source customer match: `0`
+- Orders without `DimCustomer` match: `0`
+- Orders without `DimGeography` match: `0`
+
+### Date keys
+
+The fact stores the following role-playing `DimDate` keys:
+
+- `PurchaseDateKey`
+- `ApprovedDateKey`
+- `CarrierDateKey`
+- `DeliveredDateKey`
+- `EstimatedDeliveryDateKey`
+
+Source timestamps are also preserved separately.
+
+When an optional source event timestamp is NULL, its corresponding date key is
+assigned:
+
+`DateKey = 0`
+
+The raw timestamp remains NULL.
+
+Validated Unknown date counts:
+
+- Approved date: `160`
+- Carrier date: `1,783`
+- Delivered date: `2,965`
+- Estimated delivery date: `0`
+
+All non-zero date keys resolve to `dwh.DimDate`.
+
+### Source timestamps
+
+The following source values are preserved:
+
+- `PurchaseTimestamp`
+- `ApprovedTimestamp`
+- `DeliveredCarrierTimestamp`
+- `DeliveredCustomerTimestamp`
+- `EstimatedDeliveryDate`
+
+Source temporal anomalies are not corrected.
+
+### Temporal data quality flags
+
+The fact stores the following source-quality flags:
+
+- `CarrierBeforePurchaseFlag`
+- `CarrierBeforeApprovalFlag`
+- `DeliveredBeforeCarrierFlag`
+
+Validated counts:
+
+- Carrier before purchase: `166`
+- Carrier before approval: `1,359`
+- Delivered before carrier: `23`
+
+These values are preserved as source anomalies and are not rewritten.
+
+### Late delivery KPI
+
+`DeliveredLateFlag` is a business KPI, not a data quality correction.
+
+The correct comparison is date-to-date:
+
+`CAST(order_delivered_customer_date AS DATE) > order_estimated_delivery_date`
+
+This prevents orders delivered later during the estimated delivery date from
+being incorrectly classified as late.
+
+Audit results showed:
+
+- Timestamp-based late count: `7,827`
+- Date-based late count: `6,535`
+- Delivered exactly on estimated date: `1,292`
+
+The warehouse therefore uses the date-based rule.
+
+`DeliveredLateFlag` semantics:
+
+- `1` = delivered after the estimated delivery date
+- `0` = delivered on or before the estimated delivery date
+- `NULL` = no actual customer delivery timestamp
+
+Validated results:
+
+- Late deliveries: `6,535`
+- NULL late status: `2,965`
+
+### OrderCount measure
+
+Each fact row stores:
+
+`OrderCount = 1`
+
+This provides a simple additive order-count measure.
+
+Validated:
+
+- Fact rows: `99,441`
+- `SUM(OrderCount)`: `99,441`
+
+### FactOrder
+
+DDL script:
+
+`02-SQL/03-DWH/007-Create-FactOrder.sql`
+
+Main columns:
+
+- `OrderKey`
+- `OrderID`
+- `CustomerKey`
+- `CustomerGeographyKey`
+- `PurchaseDateKey`
+- `ApprovedDateKey`
+- `CarrierDateKey`
+- `DeliveredDateKey`
+- `EstimatedDeliveryDateKey`
+- `OrderStatus`
+- source timestamps
+- `OrderCount`
+- temporal DQ flags
+- `DeliveredLateFlag`
+
+`OrderKey` is the warehouse surrogate key.
+
+### Referential integrity strategy
+
+Physical foreign key constraints are intentionally not added to the fact at
+this stage.
+
+Current dimension packages use full-refresh preparation with `TRUNCATE TABLE`.
+SQL Server does not allow truncating a table that is referenced by a foreign
+key, even when the referencing fact table is empty.
+
+Instead, referential integrity is enforced through:
+
+- SSIS dimension lookups,
+- fail-on-no-match behavior,
+- explicit DQ validation,
+- surrogate-key coverage checks.
+
+If the refresh strategy later moves from `TRUNCATE` to `DELETE` or incremental
+loading, physical foreign keys can be reconsidered.
+
+### SSIS package
+
+Package:
+
+`04-ETL/SSIS/NOVA_Market_ETL/06-Load-FactOrder.dtsx`
+
+Control Flow:
+
+`SQL - Prepare FactOrder`
+→ `DFT - Load FactOrder`
+
+Data Flow:
+
+`SRC - Orders`
+→ `LKP - Customer`
+→ `LKP - Customer Geography`
+→ `DST - FactOrder`
+
+Both lookups use full cache and fail the component when a required dimension
+member cannot be resolved.
+
+Date keys are generated deterministically from the source dates and do not
+require separate SSIS Lookup components because `DimDate.DateKey` uses the
+same `YYYYMMDD` key convention.
+
+### FactOrder validation
+
+Validation script:
+
+`02-SQL/04-DQ/020-Validate-FactOrder.sql`
+
+Validated results:
+
+- Expected rows: `99,441`
+- Actual rows: `99,441`
+- Distinct Order IDs: `99,441`
+- Duplicate Order IDs: `0`
+- NULL Order IDs: `0`
+- Missing expected customer keys: `0`
+- Missing expected geography keys: `0`
+- Invalid customer keys: `0`
+- Invalid geography keys: `0`
+- Invalid date keys: `0`
+- Invalid OrderCount values: `0`
+- Source-to-target differences: `0`
+- Target-to-source differences: `0`
+
+Final result:
+
+`FACTORDER VALIDATION PASSED.`
+---
 
 # Metadata Validation
 

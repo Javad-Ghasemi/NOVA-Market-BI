@@ -1,0 +1,1545 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/4/2026 11:22:38 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="GHASEMI"
+  DTS:CreatorName="GHASEMI\j-ghasemi"
+  DTS:DTSID="{639675B3-E9DE-4DA5-AE70-A98594459832}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="06-Load-FactOrder"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{A5D6DD32-0EE6-4FE4-8D61-D9FD14759F59}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Load FactOrder"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7D0F87A6-DAB3-4600-89C1-9D721830E0A0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Load FactOrder"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Load FactOrder\DST - FactOrder"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DST - FactOrder"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dwh].[FactOrder]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactOrder\DST - FactOrder.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[OrderID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="OrderID"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[OrderID]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderID]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[PurchaseDateKey]"
+                      cachedDataType="i4"
+                      cachedName="PurchaseDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[PurchaseDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[PurchaseDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[ApprovedDateKey]"
+                      cachedDataType="i4"
+                      cachedName="ApprovedDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[ApprovedDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[ApprovedDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[CarrierDateKey]"
+                      cachedDataType="i4"
+                      cachedName="CarrierDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CarrierDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[DeliveredDateKey]"
+                      cachedDataType="i4"
+                      cachedName="DeliveredDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[EstimatedDeliveryDateKey]"
+                      cachedDataType="i4"
+                      cachedName="EstimatedDeliveryDateKey"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[EstimatedDeliveryDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[EstimatedDeliveryDateKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[OrderStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="OrderStatus"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[OrderStatus]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderStatus]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[PurchaseTimestamp]"
+                      cachedDataType="wstr"
+                      cachedLength="19"
+                      cachedName="PurchaseTimestamp"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[PurchaseTimestamp]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[PurchaseTimestamp]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[ApprovedTimestamp]"
+                      cachedDataType="wstr"
+                      cachedLength="19"
+                      cachedName="ApprovedTimestamp"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[ApprovedTimestamp]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[ApprovedTimestamp]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[DeliveredCarrierTimestamp]"
+                      cachedDataType="wstr"
+                      cachedLength="19"
+                      cachedName="DeliveredCarrierTimestamp"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredCarrierTimestamp]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredCarrierTimestamp]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[DeliveredCustomerTimestamp]"
+                      cachedDataType="wstr"
+                      cachedLength="19"
+                      cachedName="DeliveredCustomerTimestamp"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredCustomerTimestamp]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredCustomerTimestamp]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[EstimatedDeliveryDate]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="EstimatedDeliveryDate"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[EstimatedDeliveryDate]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[EstimatedDeliveryDate]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[OrderCount]"
+                      cachedDataType="ui1"
+                      cachedName="OrderCount"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[OrderCount]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderCount]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[CarrierBeforePurchaseFlag]"
+                      cachedDataType="bool"
+                      cachedName="CarrierBeforePurchaseFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CarrierBeforePurchaseFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierBeforePurchaseFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[CarrierBeforeApprovalFlag]"
+                      cachedDataType="bool"
+                      cachedName="CarrierBeforeApprovalFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CarrierBeforeApprovalFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierBeforeApprovalFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[DeliveredBeforeCarrierFlag]"
+                      cachedDataType="bool"
+                      cachedName="DeliveredBeforeCarrierFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredBeforeCarrierFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredBeforeCarrierFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[DeliveredLateFlag]"
+                      cachedDataType="bool"
+                      cachedName="DeliveredLateFlag"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredLateFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredLateFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[CustomerKey]"
+                      cachedDataType="i4"
+                      cachedName="CustomerKey"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Match Output].Columns[CustomerKey]" />
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].Columns[CustomerGeographyKey]"
+                      cachedDataType="i4"
+                      cachedName="CustomerGeographyKey"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CustomerGeographyKey]"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Match Output].Columns[CustomerGeographyKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[OrderKey]"
+                      dataType="i4"
+                      name="OrderKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[OrderID]"
+                      dataType="wstr"
+                      length="50"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                      dataType="i4"
+                      name="CustomerKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CustomerGeographyKey]"
+                      dataType="i4"
+                      name="CustomerGeographyKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[PurchaseDateKey]"
+                      dataType="i4"
+                      name="PurchaseDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[ApprovedDateKey]"
+                      dataType="i4"
+                      name="ApprovedDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CarrierDateKey]"
+                      dataType="i4"
+                      name="CarrierDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredDateKey]"
+                      dataType="i4"
+                      name="DeliveredDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[EstimatedDeliveryDateKey]"
+                      dataType="i4"
+                      name="EstimatedDeliveryDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[OrderStatus]"
+                      dataType="wstr"
+                      length="20"
+                      name="OrderStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[PurchaseTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="PurchaseTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[ApprovedTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="ApprovedTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredCarrierTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="DeliveredCarrierTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredCustomerTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="DeliveredCustomerTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[EstimatedDeliveryDate]"
+                      dataType="wstr"
+                      length="10"
+                      name="EstimatedDeliveryDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[OrderCount]"
+                      dataType="ui1"
+                      name="OrderCount" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CarrierBeforePurchaseFlag]"
+                      dataType="bool"
+                      name="CarrierBeforePurchaseFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[CarrierBeforeApprovalFlag]"
+                      dataType="bool"
+                      name="CarrierBeforeApprovalFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredBeforeCarrierFlag]"
+                      dataType="bool"
+                      name="DeliveredBeforeCarrierFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input].ExternalColumns[DeliveredLateFlag]"
+                      dataType="bool"
+                      name="DeliveredLateFlag" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactOrder\DST - FactOrder.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\DST - FactOrder.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\DST - FactOrder.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\DST - FactOrder.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load FactOrder\LKP - Customer"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP - Customer"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    CustomerKey,
+    CustomerUniqueID
+FROM dwh.DimCustomer
+WHERE CustomerKey &lt;&gt; 0;</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
+    CustomerKey,
+    CustomerUniqueID
+FROM dwh.DimCustomer
+WHERE CustomerKey &lt;&gt; 0;) [refTable]
+where [refTable].[CustomerUniqueID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CustomerKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerUniqueID" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactOrder\LKP - Customer.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load FactOrder\LKP - Customer.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer.Inputs[Lookup Input].Columns[CustomerUniqueID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="CustomerUniqueID"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">CustomerUniqueID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - Load FactOrder\LKP - Customer.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Match Output].Columns[CustomerKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Match Output].Columns[CustomerKey]"
+                      name="CustomerKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">CustomerKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - Load FactOrder\LKP - Customer.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - Load FactOrder\LKP - Customer.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load FactOrder\LKP - Customer Geography"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP - Customer Geography"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    GeographyKey,
+    ZipCodePrefix
+FROM dwh.DimGeography
+WHERE GeographyKey &lt;&gt; 0;</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
+    GeographyKey,
+    ZipCodePrefix
+FROM dwh.DimGeography
+WHERE GeographyKey &lt;&gt; 0;) [refTable]
+where [refTable].[ZipCodePrefix] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GeographyKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ZipCodePrefix" dataType="DT_WSTR" length="5" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Inputs[Lookup Input].Columns[CustomerZipCodePrefix]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CustomerZipCodePrefix"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">ZipCodePrefix</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - Load FactOrder\LKP - Customer Geography.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Match Output].Columns[CustomerGeographyKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Match Output].Columns[CustomerGeographyKey]"
+                      name="CustomerGeographyKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">GeographyKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - Load FactOrder\LKP - Customer Geography.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - Load FactOrder\LKP - Customer Geography.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load FactOrder\SRC - Orders"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - Orders"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    o.order_id AS OrderID,
+
+    /* Business keys needed for SSIS dimension lookups */
+    c.customer_unique_id AS CustomerUniqueID,
+    c.customer_zip_code_prefix AS CustomerZipCodePrefix,
+
+    /* Deterministic DimDate keys */
+    CONVERT(
+        INT,
+        CONVERT(
+            CHAR(8),
+            CAST(o.order_purchase_timestamp AS DATE),
+            112
+        )
+    ) AS PurchaseDateKey,
+
+    CASE
+        WHEN o.order_approved_at IS NULL
+            THEN 0
+        ELSE CONVERT(
+            INT,
+            CONVERT(
+                CHAR(8),
+                CAST(o.order_approved_at AS DATE),
+                112
+            )
+        )
+    END AS ApprovedDateKey,
+
+    CASE
+        WHEN o.order_delivered_carrier_date IS NULL
+            THEN 0
+        ELSE CONVERT(
+            INT,
+            CONVERT(
+                CHAR(8),
+                CAST(o.order_delivered_carrier_date AS DATE),
+                112
+            )
+        )
+    END AS CarrierDateKey,
+
+    CASE
+        WHEN o.order_delivered_customer_date IS NULL
+            THEN 0
+        ELSE CONVERT(
+            INT,
+            CONVERT(
+                CHAR(8),
+                CAST(o.order_delivered_customer_date AS DATE),
+                112
+            )
+        )
+    END AS DeliveredDateKey,
+
+    CASE
+        WHEN o.order_estimated_delivery_date IS NULL
+            THEN 0
+        ELSE CONVERT(
+            INT,
+            CONVERT(
+                CHAR(8),
+                o.order_estimated_delivery_date,
+                112
+            )
+        )
+    END AS EstimatedDeliveryDateKey,
+
+    o.order_status AS OrderStatus,
+
+    o.order_purchase_timestamp
+        AS PurchaseTimestamp,
+
+    o.order_approved_at
+        AS ApprovedTimestamp,
+
+    o.order_delivered_carrier_date
+        AS DeliveredCarrierTimestamp,
+
+    o.order_delivered_customer_date
+        AS DeliveredCustomerTimestamp,
+
+    o.order_estimated_delivery_date
+        AS EstimatedDeliveryDate,
+
+    CAST(1 AS TINYINT)
+        AS OrderCount,
+
+    CAST(
+        CASE
+            WHEN o.order_delivered_carrier_date IS NOT NULL
+             AND o.order_delivered_carrier_date
+                 &lt; o.order_purchase_timestamp
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS CarrierBeforePurchaseFlag,
+
+    CAST(
+        CASE
+            WHEN o.order_approved_at IS NOT NULL
+             AND o.order_delivered_carrier_date IS NOT NULL
+             AND o.order_delivered_carrier_date
+                 &lt; o.order_approved_at
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS CarrierBeforeApprovalFlag,
+
+    CAST(
+        CASE
+            WHEN o.order_delivered_carrier_date IS NOT NULL
+             AND o.order_delivered_customer_date IS NOT NULL
+             AND o.order_delivered_customer_date
+                 &lt; o.order_delivered_carrier_date
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS DeliveredBeforeCarrierFlag,
+
+    CAST(
+        CASE
+            WHEN o.order_delivered_customer_date IS NULL
+                THEN NULL
+
+            WHEN CAST(o.order_delivered_customer_date AS DATE)
+                 &gt; o.order_estimated_delivery_date
+                THEN 1
+
+            ELSE 0
+        END
+        AS BIT
+    ) AS DeliveredLateFlag
+
+FROM stg.orders AS o
+
+INNER JOIN stg.customers AS c
+    ON o.customer_id = c.customer_id;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load FactOrder\SRC - Orders.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderID]"
+                      length="50"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderID]"
+                      name="OrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CustomerUniqueID]"
+                      length="50"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerUniqueID]"
+                      name="CustomerUniqueID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CustomerZipCodePrefix]"
+                      length="5"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CustomerZipCodePrefix]"
+                      name="CustomerZipCodePrefix"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[PurchaseDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[PurchaseDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[PurchaseDateKey]"
+                      name="PurchaseDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[ApprovedDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[ApprovedDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[ApprovedDateKey]"
+                      name="ApprovedDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CarrierDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierDateKey]"
+                      name="CarrierDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredDateKey]"
+                      name="DeliveredDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[EstimatedDeliveryDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[EstimatedDeliveryDateKey]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[EstimatedDeliveryDateKey]"
+                      name="EstimatedDeliveryDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderStatus]"
+                      length="20"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderStatus]"
+                      name="OrderStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[PurchaseTimestamp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[PurchaseTimestamp]"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[PurchaseTimestamp]"
+                      name="PurchaseTimestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[ApprovedTimestamp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[ApprovedTimestamp]"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[ApprovedTimestamp]"
+                      name="ApprovedTimestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredCarrierTimestamp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredCarrierTimestamp]"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredCarrierTimestamp]"
+                      name="DeliveredCarrierTimestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredCustomerTimestamp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredCustomerTimestamp]"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredCustomerTimestamp]"
+                      name="DeliveredCustomerTimestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[EstimatedDeliveryDate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[EstimatedDeliveryDate]"
+                      length="10"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[EstimatedDeliveryDate]"
+                      name="EstimatedDeliveryDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderCount]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderCount]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[OrderCount]"
+                      name="OrderCount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierBeforePurchaseFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CarrierBeforePurchaseFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierBeforePurchaseFlag]"
+                      name="CarrierBeforePurchaseFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierBeforeApprovalFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CarrierBeforeApprovalFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[CarrierBeforeApprovalFlag]"
+                      name="CarrierBeforeApprovalFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredBeforeCarrierFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredBeforeCarrierFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredBeforeCarrierFlag]"
+                      name="DeliveredBeforeCarrierFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredLateFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredLateFlag]"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].Columns[DeliveredLateFlag]"
+                      name="DeliveredLateFlag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderID]"
+                      dataType="wstr"
+                      length="50"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CustomerUniqueID]"
+                      dataType="wstr"
+                      length="50"
+                      name="CustomerUniqueID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CustomerZipCodePrefix]"
+                      dataType="wstr"
+                      length="5"
+                      name="CustomerZipCodePrefix" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[PurchaseDateKey]"
+                      dataType="i4"
+                      name="PurchaseDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[ApprovedDateKey]"
+                      dataType="i4"
+                      name="ApprovedDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CarrierDateKey]"
+                      dataType="i4"
+                      name="CarrierDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredDateKey]"
+                      dataType="i4"
+                      name="DeliveredDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[EstimatedDeliveryDateKey]"
+                      dataType="i4"
+                      name="EstimatedDeliveryDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderStatus]"
+                      dataType="wstr"
+                      length="20"
+                      name="OrderStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[PurchaseTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="PurchaseTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[ApprovedTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="ApprovedTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredCarrierTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="DeliveredCarrierTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredCustomerTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      name="DeliveredCustomerTimestamp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[EstimatedDeliveryDate]"
+                      dataType="wstr"
+                      length="10"
+                      name="EstimatedDeliveryDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderCount]"
+                      dataType="ui1"
+                      name="OrderCount" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CarrierBeforePurchaseFlag]"
+                      dataType="bool"
+                      name="CarrierBeforePurchaseFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[CarrierBeforeApprovalFlag]"
+                      dataType="bool"
+                      name="CarrierBeforeApprovalFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredBeforeCarrierFlag]"
+                      dataType="bool"
+                      name="DeliveredBeforeCarrierFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output].ExternalColumns[DeliveredLateFlag]"
+                      dataType="bool"
+                      name="DeliveredLateFlag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[OrderID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[OrderID]"
+                      name="OrderID" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CustomerUniqueID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CustomerUniqueID]"
+                      name="CustomerUniqueID" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CustomerZipCodePrefix]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CustomerZipCodePrefix]"
+                      name="CustomerZipCodePrefix" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[PurchaseDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[PurchaseDateKey]"
+                      name="PurchaseDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ApprovedDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ApprovedDateKey]"
+                      name="ApprovedDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CarrierDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CarrierDateKey]"
+                      name="CarrierDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredDateKey]"
+                      name="DeliveredDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[EstimatedDeliveryDateKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[EstimatedDeliveryDateKey]"
+                      name="EstimatedDeliveryDateKey" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[OrderStatus]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[OrderStatus]"
+                      name="OrderStatus" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[PurchaseTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[PurchaseTimestamp]"
+                      name="PurchaseTimestamp" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ApprovedTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ApprovedTimestamp]"
+                      name="ApprovedTimestamp" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredCarrierTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredCarrierTimestamp]"
+                      name="DeliveredCarrierTimestamp" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredCustomerTimestamp]"
+                      dataType="wstr"
+                      length="19"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredCustomerTimestamp]"
+                      name="DeliveredCustomerTimestamp" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[EstimatedDeliveryDate]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[EstimatedDeliveryDate]"
+                      name="EstimatedDeliveryDate" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[OrderCount]"
+                      dataType="ui1"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[OrderCount]"
+                      name="OrderCount" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CarrierBeforePurchaseFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CarrierBeforePurchaseFlag]"
+                      name="CarrierBeforePurchaseFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CarrierBeforeApprovalFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[CarrierBeforeApprovalFlag]"
+                      name="CarrierBeforeApprovalFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredBeforeCarrierFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredBeforeCarrierFlag]"
+                      name="DeliveredBeforeCarrierFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredLateFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[DeliveredLateFlag]"
+                      name="DeliveredLateFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Load FactOrder.Paths[Lookup Match Output]"
+              endId="Package\DFT - Load FactOrder\LKP - Customer Geography.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - Load FactOrder\LKP - Customer.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - Load FactOrder.Paths[Lookup Match Output1]"
+              endId="Package\DFT - Load FactOrder\DST - FactOrder.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - Load FactOrder\LKP - Customer Geography.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - Load FactOrder.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Load FactOrder\LKP - Customer.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Load FactOrder\SRC - Orders.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Prepare FactOrder"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C1DC7EE8-99D9-4B30-8B9D-C142EBAAB180}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Prepare FactOrder"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.FactOrder;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{3D2C7FAC-76B0-4AA4-A746-3A3F66C1017B}"
+      DTS:From="Package\SQL - Prepare FactOrder"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - Load FactOrder" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="202,42"
+          Id="Package\SQL - Prepare FactOrder"
+          TopLeft="374,51" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\DFT - Load FactOrder"
+          TopLeft="388,159" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="478.25,93">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66"
+              Start="0,0"
+              End="0,58.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - Load FactOrder">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="145,42"
+          Id="Package\DFT - Load FactOrder\SRC - Orders"
+          TopLeft="480,59" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DFT - Load FactOrder\LKP - Customer"
+          TopLeft="496,154" />
+        <EdgeLayout
+          Id="Package\DFT - Load FactOrder.Paths[OLE DB Source Output]"
+          TopLeft="552.5,101">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22,53"
+              Start="0,0"
+              End="22,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.5"
+                    Point2="0,26.5"
+                    Point3="4,26.5" />
+                  <mssgle:LineSegment
+                    End="18,26.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18,26.5"
+                    Point2="22,26.5"
+                    Point3="22,30.5" />
+                  <mssgle:LineSegment
+                    End="22,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="214,42"
+          Id="Package\DFT - Load FactOrder\LKP - Customer Geography"
+          TopLeft="462,292" />
+        <EdgeLayout
+          Id="Package\DFT - Load FactOrder.Paths[Lookup Match Output]"
+          TopLeft="571.75,196">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,96"
+              Start="0,0"
+              End="0,88.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,88.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,38.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="160,42"
+          Id="Package\DFT - Load FactOrder\DST - FactOrder"
+          TopLeft="495,416" />
+        <EdgeLayout
+          Id="Package\DFT - Load FactOrder.Paths[Lookup Match Output1]"
+          TopLeft="572,334">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,82"
+              Start="0,0"
+              End="0,74.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,31.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactOrder\SRC - Orders">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactOrder\LKP - Customer">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactOrder\LKP - Customer Geography">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactOrder\DST - FactOrder">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
