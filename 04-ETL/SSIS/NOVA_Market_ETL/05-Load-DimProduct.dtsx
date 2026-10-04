@@ -1,0 +1,1880 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/4/2026 10:41:27 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="GHASEMI"
+  DTS:CreatorName="GHASEMI\j-ghasemi"
+  DTS:DTSID="{584916AA-0DCB-41FB-8704-64DE1E42DB6C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="05-Load-DimProduct"
+  DTS:PackageType="5"
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{82BB2C34-9FD3-4076-A533-DDB2C844C951}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Load DimProduct"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{AAD6344D-7FDE-4B44-B1C5-1C0F2CC0324D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Load DimProduct"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Load DimProduct\CS - Product Category Route"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="CS - Product Category Route"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - Load DimProduct\CS - Product Category Route.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\CS - Product Category Route.Inputs[Conditional Split Input].Columns[SourceCategoryName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="SourceCategoryName"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[HasCategory]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="HasCategory"
+                  synchronousInputId="Package\DFT - Load DimProduct\CS - Product Category Route.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">![ISNULL](#{Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">!ISNULL(SourceCategoryName)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[MissingCategory]"
+                  description="Output 2 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="MissingCategory"
+                  synchronousInputId="Package\DFT - Load DimProduct\CS - Product Category Route.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(SourceCategoryName)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">1</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\CS - Product Category Route.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\CS - Product Category Route.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load DimProduct\DER - Unknown Product Category"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="DER - Unknown Product Category"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Output].Columns[ProductCategoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Output].Columns[ProductCategoryKey]"
+                      name="ProductCategoryKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load DimProduct\DST - DimProduct"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DST - DimProduct"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dwh].[DimProduct]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load DimProduct\DST - DimProduct.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ProductID"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductNameLength]"
+                      cachedDataType="i4"
+                      cachedName="ProductNameLength"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductNameLength]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductNameLength]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductDescriptionLength]"
+                      cachedDataType="i4"
+                      cachedName="ProductDescriptionLength"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductDescriptionLength]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductDescriptionLength]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductPhotosQty]"
+                      cachedDataType="i4"
+                      cachedName="ProductPhotosQty"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductPhotosQty]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductPhotosQty]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductWeightG]"
+                      cachedDataType="i4"
+                      cachedName="ProductWeightG"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductWeightG]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWeightG]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductLengthCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductLengthCm"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductLengthCm]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductLengthCm]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductHeightCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductHeightCm"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductHeightCm]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductHeightCm]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductWidthCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductWidthCm"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductWidthCm]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWidthCm]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[MissingSourceCategoryFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingSourceCategoryFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[MissingSourceCategoryFlag]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingSourceCategoryFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[MissingDescriptiveAttributesFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingDescriptiveAttributesFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[MissingDescriptiveAttributesFlag]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingDescriptiveAttributesFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[MissingPhysicalAttributesFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingPhysicalAttributesFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[MissingPhysicalAttributesFlag]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingPhysicalAttributesFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ZeroWeightFlag]"
+                      cachedDataType="bool"
+                      cachedName="ZeroWeightFlag"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ZeroWeightFlag]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ZeroWeightFlag]" />
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].Columns[ProductCategoryKey]"
+                      cachedDataType="i4"
+                      cachedName="ProductCategoryKey"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategoryKey]"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductCategoryKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                      dataType="i4"
+                      name="ProductKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      dataType="wstr"
+                      length="50"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategoryKey]"
+                      dataType="i4"
+                      name="ProductCategoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductNameLength]"
+                      dataType="i4"
+                      name="ProductNameLength" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductDescriptionLength]"
+                      dataType="i4"
+                      name="ProductDescriptionLength" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductPhotosQty]"
+                      dataType="i4"
+                      name="ProductPhotosQty" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductWeightG]"
+                      dataType="i4"
+                      name="ProductWeightG" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductLengthCm]"
+                      dataType="i4"
+                      name="ProductLengthCm" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductHeightCm]"
+                      dataType="i4"
+                      name="ProductHeightCm" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ProductWidthCm]"
+                      dataType="i4"
+                      name="ProductWidthCm" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[MissingSourceCategoryFlag]"
+                      dataType="bool"
+                      name="MissingSourceCategoryFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[MissingDescriptiveAttributesFlag]"
+                      dataType="bool"
+                      name="MissingDescriptiveAttributesFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[MissingPhysicalAttributesFlag]"
+                      dataType="bool"
+                      name="MissingPhysicalAttributesFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input].ExternalColumns[ZeroWeightFlag]"
+                      dataType="bool"
+                      name="ZeroWeightFlag" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimProduct\DST - DimProduct.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\DST - DimProduct.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\DST - DimProduct.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\DST - DimProduct.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load DimProduct\LKP - Product Category"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP - Product Category"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    ProductCategoryKey,
+    SourceCategoryName
+FROM dwh.DimProductCategory
+WHERE ProductCategoryKey &lt;&gt; 0;</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
+    ProductCategoryKey,
+    SourceCategoryName
+FROM dwh.DimProductCategory
+WHERE ProductCategoryKey &lt;&gt; 0;) [refTable]
+where [refTable].[SourceCategoryName] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ProductCategoryKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SourceCategoryName" dataType="DT_WSTR" length="100" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load DimProduct\LKP - Product Category.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Load DimProduct\LKP - Product Category.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\LKP - Product Category.Inputs[Lookup Input].Columns[SourceCategoryName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="SourceCategoryName"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">SourceCategoryName</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\LKP - Product Category.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Match Output].Columns[ProductCategoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Match Output].Columns[ProductCategoryKey]"
+                      name="ProductCategoryKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ProductCategoryKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\LKP - Product Category.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - Load DimProduct\LKP - Product Category.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load DimProduct\SRC - Products"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - Products"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    product_id AS ProductID,
+
+    CAST(product_category_name AS VARCHAR(100))
+        AS SourceCategoryName,
+
+    product_name_lenght
+        AS ProductNameLength,
+
+    product_description_lenght
+        AS ProductDescriptionLength,
+
+    product_photos_qty
+        AS ProductPhotosQty,
+
+    product_weight_g
+        AS ProductWeightG,
+
+    product_length_cm
+        AS ProductLengthCm,
+
+    product_height_cm
+        AS ProductHeightCm,
+
+    product_width_cm
+        AS ProductWidthCm,
+
+    CAST(
+        CASE
+            WHEN product_category_name IS NULL
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS MissingSourceCategoryFlag,
+
+    CAST(
+        CASE
+            WHEN product_name_lenght IS NULL
+              OR product_description_lenght IS NULL
+              OR product_photos_qty IS NULL
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS MissingDescriptiveAttributesFlag,
+
+    CAST(
+        CASE
+            WHEN product_weight_g IS NULL
+              OR product_length_cm IS NULL
+              OR product_height_cm IS NULL
+              OR product_width_cm IS NULL
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS MissingPhysicalAttributesFlag,
+
+    CAST(
+        CASE
+            WHEN product_weight_g = 0
+            THEN 1
+            ELSE 0
+        END
+        AS BIT
+    ) AS ZeroWeightFlag
+
+FROM stg.products;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Load DimProduct\SRC - Products.Connections[OleDbConnection]"
+                  connectionManagerID="{55243E60-4806-418B-9E2C-693FE1AB8592}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[tcp_GHASEMI,53965.NOVA_Market]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      length="50"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[SourceCategoryName]"
+                      length="100"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]"
+                      name="SourceCategoryName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductNameLength]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductNameLength]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductNameLength]"
+                      name="ProductNameLength"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductDescriptionLength]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductDescriptionLength]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductDescriptionLength]"
+                      name="ProductDescriptionLength"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductPhotosQty]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductPhotosQty]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductPhotosQty]"
+                      name="ProductPhotosQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWeightG]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductWeightG]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWeightG]"
+                      name="ProductWeightG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductLengthCm]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductLengthCm]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductLengthCm]"
+                      name="ProductLengthCm"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductHeightCm]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductHeightCm]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductHeightCm]"
+                      name="ProductHeightCm"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWidthCm]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductWidthCm]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWidthCm]"
+                      name="ProductWidthCm"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingSourceCategoryFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[MissingSourceCategoryFlag]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingSourceCategoryFlag]"
+                      name="MissingSourceCategoryFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingDescriptiveAttributesFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[MissingDescriptiveAttributesFlag]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingDescriptiveAttributesFlag]"
+                      name="MissingDescriptiveAttributesFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingPhysicalAttributesFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[MissingPhysicalAttributesFlag]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingPhysicalAttributesFlag]"
+                      name="MissingPhysicalAttributesFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ZeroWeightFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ZeroWeightFlag]"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ZeroWeightFlag]"
+                      name="ZeroWeightFlag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="wstr"
+                      length="50"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[SourceCategoryName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SourceCategoryName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductNameLength]"
+                      dataType="i4"
+                      name="ProductNameLength" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductDescriptionLength]"
+                      dataType="i4"
+                      name="ProductDescriptionLength" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductPhotosQty]"
+                      dataType="i4"
+                      name="ProductPhotosQty" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductWeightG]"
+                      dataType="i4"
+                      name="ProductWeightG" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductLengthCm]"
+                      dataType="i4"
+                      name="ProductLengthCm" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductHeightCm]"
+                      dataType="i4"
+                      name="ProductHeightCm" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ProductWidthCm]"
+                      dataType="i4"
+                      name="ProductWidthCm" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[MissingSourceCategoryFlag]"
+                      dataType="bool"
+                      name="MissingSourceCategoryFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[MissingDescriptiveAttributesFlag]"
+                      dataType="bool"
+                      name="MissingDescriptiveAttributesFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[MissingPhysicalAttributesFlag]"
+                      dataType="bool"
+                      name="MissingPhysicalAttributesFlag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].ExternalColumns[ZeroWeightFlag]"
+                      dataType="bool"
+                      name="ZeroWeightFlag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[SourceCategoryName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[SourceCategoryName]"
+                      name="SourceCategoryName" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductNameLength]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductNameLength]"
+                      name="ProductNameLength" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductDescriptionLength]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductDescriptionLength]"
+                      name="ProductDescriptionLength" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductPhotosQty]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductPhotosQty]"
+                      name="ProductPhotosQty" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductWeightG]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductWeightG]"
+                      name="ProductWeightG" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductLengthCm]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductLengthCm]"
+                      name="ProductLengthCm" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductHeightCm]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductHeightCm]"
+                      name="ProductHeightCm" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductWidthCm]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ProductWidthCm]"
+                      name="ProductWidthCm" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[MissingSourceCategoryFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[MissingSourceCategoryFlag]"
+                      name="MissingSourceCategoryFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[MissingDescriptiveAttributesFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[MissingDescriptiveAttributesFlag]"
+                      name="MissingDescriptiveAttributesFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[MissingPhysicalAttributesFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[MissingPhysicalAttributesFlag]"
+                      name="MissingPhysicalAttributesFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ZeroWeightFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ZeroWeightFlag]"
+                      name="ZeroWeightFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Load DimProduct\UA - Product Category Routes"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="UA - Product Category Routes"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ProductID"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductID]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[SourceCategoryName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="SourceCategoryName"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[SourceCategoryName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductNameLength]"
+                      cachedDataType="i4"
+                      cachedName="ProductNameLength"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductNameLength]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductNameLength]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductDescriptionLength]"
+                      cachedDataType="i4"
+                      cachedName="ProductDescriptionLength"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductDescriptionLength]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductDescriptionLength]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductPhotosQty]"
+                      cachedDataType="i4"
+                      cachedName="ProductPhotosQty"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductPhotosQty]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductPhotosQty]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductWeightG]"
+                      cachedDataType="i4"
+                      cachedName="ProductWeightG"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWeightG]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWeightG]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductLengthCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductLengthCm"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductLengthCm]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductLengthCm]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductHeightCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductHeightCm"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductHeightCm]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductHeightCm]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductWidthCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductWidthCm"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWidthCm]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWidthCm]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[MissingSourceCategoryFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingSourceCategoryFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingSourceCategoryFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingSourceCategoryFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[MissingDescriptiveAttributesFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingDescriptiveAttributesFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingDescriptiveAttributesFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingDescriptiveAttributesFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[MissingPhysicalAttributesFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingPhysicalAttributesFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingPhysicalAttributesFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingPhysicalAttributesFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ZeroWeightFlag]"
+                      cachedDataType="bool"
+                      cachedName="ZeroWeightFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ZeroWeightFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ZeroWeightFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1].Columns[ProductCategoryKey]"
+                      cachedDataType="i4"
+                      cachedName="ProductCategoryKey"
+                      lineageId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Match Output].Columns[ProductCategoryKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductCategoryKey]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ProductID"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductID]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[SourceCategoryName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="SourceCategoryName"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[SourceCategoryName]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[SourceCategoryName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductNameLength]"
+                      cachedDataType="i4"
+                      cachedName="ProductNameLength"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductNameLength]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductNameLength]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductDescriptionLength]"
+                      cachedDataType="i4"
+                      cachedName="ProductDescriptionLength"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductDescriptionLength]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductDescriptionLength]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductPhotosQty]"
+                      cachedDataType="i4"
+                      cachedName="ProductPhotosQty"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductPhotosQty]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductPhotosQty]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductWeightG]"
+                      cachedDataType="i4"
+                      cachedName="ProductWeightG"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWeightG]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWeightG]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductLengthCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductLengthCm"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductLengthCm]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductLengthCm]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductHeightCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductHeightCm"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductHeightCm]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductHeightCm]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductWidthCm]"
+                      cachedDataType="i4"
+                      cachedName="ProductWidthCm"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ProductWidthCm]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWidthCm]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[MissingSourceCategoryFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingSourceCategoryFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingSourceCategoryFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingSourceCategoryFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[MissingDescriptiveAttributesFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingDescriptiveAttributesFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingDescriptiveAttributesFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingDescriptiveAttributesFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[MissingPhysicalAttributesFlag]"
+                      cachedDataType="bool"
+                      cachedName="MissingPhysicalAttributesFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[MissingPhysicalAttributesFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingPhysicalAttributesFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ZeroWeightFlag]"
+                      cachedDataType="bool"
+                      cachedName="ZeroWeightFlag"
+                      lineageId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output].Columns[ZeroWeightFlag]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ZeroWeightFlag]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2].Columns[ProductCategoryKey]"
+                      cachedDataType="i4"
+                      cachedName="ProductCategoryKey"
+                      lineageId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Output].Columns[ProductCategoryKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductCategoryKey]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[SourceCategoryName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[SourceCategoryName]"
+                      name="SourceCategoryName" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductNameLength]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductNameLength]"
+                      name="ProductNameLength" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductDescriptionLength]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductDescriptionLength]"
+                      name="ProductDescriptionLength" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductPhotosQty]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductPhotosQty]"
+                      name="ProductPhotosQty" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWeightG]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWeightG]"
+                      name="ProductWeightG" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductLengthCm]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductLengthCm]"
+                      name="ProductLengthCm" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductHeightCm]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductHeightCm]"
+                      name="ProductHeightCm" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWidthCm]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductWidthCm]"
+                      name="ProductWidthCm" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingSourceCategoryFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingSourceCategoryFlag]"
+                      name="MissingSourceCategoryFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingDescriptiveAttributesFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingDescriptiveAttributesFlag]"
+                      name="MissingDescriptiveAttributesFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingPhysicalAttributesFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[MissingPhysicalAttributesFlag]"
+                      name="MissingPhysicalAttributesFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ZeroWeightFlag]"
+                      dataType="bool"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ZeroWeightFlag]"
+                      name="ZeroWeightFlag" />
+                    <outputColumn
+                      refId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductCategoryKey]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1].Columns[ProductCategoryKey]"
+                      name="ProductCategoryKey" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Load DimProduct.Paths[Derived Column Output]"
+              endId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 2]"
+              name="Derived Column Output"
+              startId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT - Load DimProduct.Paths[HasCategory]"
+              endId="Package\DFT - Load DimProduct\LKP - Product Category.Inputs[Lookup Input]"
+              name="HasCategory"
+              startId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[HasCategory]" />
+            <path
+              refId="Package\DFT - Load DimProduct.Paths[Lookup Match Output]"
+              endId="Package\DFT - Load DimProduct\UA - Product Category Routes.Inputs[Union All Input 1]"
+              name="Lookup Match Output"
+              startId="Package\DFT - Load DimProduct\LKP - Product Category.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - Load DimProduct.Paths[MissingCategory]"
+              endId="Package\DFT - Load DimProduct\DER - Unknown Product Category.Inputs[Derived Column Input]"
+              name="MissingCategory"
+              startId="Package\DFT - Load DimProduct\CS - Product Category Route.Outputs[MissingCategory]" />
+            <path
+              refId="Package\DFT - Load DimProduct.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Load DimProduct\CS - Product Category Route.Inputs[Conditional Split Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Load DimProduct\SRC - Products.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - Load DimProduct.Paths[Union All Output 1]"
+              endId="Package\DFT - Load DimProduct\DST - DimProduct.Inputs[OLE DB Destination Input]"
+              name="Union All Output 1"
+              startId="Package\DFT - Load DimProduct\UA - Product Category Routes.Outputs[Union All Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Prepare DimProduct"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1912682B-1CB9-4DD4-A9B4-22891E9767C8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Prepare DimProduct"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.DimProduct;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProduct ON;&#xA;&#xA;INSERT INTO dwh.DimProduct&#xA;(&#xA;    ProductKey,&#xA;    ProductID,&#xA;    ProductCategoryKey,&#xA;    ProductNameLength,&#xA;    ProductDescriptionLength,&#xA;    ProductPhotosQty,&#xA;    ProductWeightG,&#xA;    ProductLengthCm,&#xA;    ProductHeightCm,&#xA;    ProductWidthCm,&#xA;    MissingSourceCategoryFlag,&#xA;    MissingDescriptiveAttributesFlag,&#xA;    MissingPhysicalAttributesFlag,&#xA;    ZeroWeightFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    0,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProduct OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2F42A909-13C7-40CA-89F2-18871519CECE}"
+      DTS:From="Package\SQL - Prepare DimProduct"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - Load DimProduct" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="210,42"
+          Id="Package\SQL - Prepare DimProduct"
+          TopLeft="418,61" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\DFT - Load DimProduct"
+          TopLeft="450,192" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="523,103">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="24.5,89"
+              Start="0,0"
+              End="24.5,81.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40.5"
+                    Point2="0,44.5"
+                    Point3="4,44.5" />
+                  <mssgle:LineSegment
+                    End="20.5,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="20.5,44.5"
+                    Point2="24.5,44.5"
+                    Point3="24.5,48.5" />
+                  <mssgle:LineSegment
+                    End="24.5,81.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - Load DimProduct">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="155,42"
+          Id="Package\DFT - Load DimProduct\SRC - Products"
+          TopLeft="436,86" />
+        <NodeLayout
+          Size="222,42"
+          Id="Package\DFT - Load DimProduct\CS - Product Category Route"
+          TopLeft="403,173" />
+        <EdgeLayout
+          Id="Package\DFT - Load DimProduct.Paths[OLE DB Source Output]"
+          TopLeft="513.75,128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45"
+              Start="0,0"
+              End="0,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="195,42"
+          Id="Package\DFT - Load DimProduct\LKP - Product Category"
+          TopLeft="416,302" />
+        <EdgeLayout
+          Id="Package\DFT - Load DimProduct.Paths[HasCategory]"
+          TopLeft="513.75,215">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,87"
+              Start="0,0"
+              End="0,79.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,79.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-28.54693359375,34.01611328125,57.0938671875,11.4677734375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="246,42"
+          Id="Package\DFT - Load DimProduct\DER - Unknown Product Category"
+          TopLeft="686,306" />
+        <EdgeLayout
+          Id="Package\DFT - Load DimProduct.Paths[MissingCategory]"
+          TopLeft="549.666666666667,215">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="259.333333333333,91"
+              Start="0,0"
+              End="259.333333333333,83.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.7906976744186" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.7906976744186"
+                    Point2="0,36.7906976744186"
+                    Point3="4,36.7906976744186" />
+                  <mssgle:LineSegment
+                    End="255.333333333333,36.7906976744186" />
+                  <mssgle:CubicBezierSegment
+                    Point1="255.333333333333,36.7906976744186"
+                    Point2="259.333333333333,36.7906976744186"
+                    Point3="259.333333333333,40.7906976744186" />
+                  <mssgle:LineSegment
+                    End="259.333333333333,83.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="93.1897330729167,41.7906976744186,72.9538671875,11.4677734375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="227,42"
+          Id="Package\DFT - Load DimProduct\UA - Product Category Routes"
+          TopLeft="557,424" />
+        <EdgeLayout
+          Id="Package\DFT - Load DimProduct.Paths[Lookup Match Output]"
+          TopLeft="513.5,344">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="157,80"
+              Start="0,0"
+              End="157,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36"
+                    Point2="0,40"
+                    Point3="4,40" />
+                  <mssgle:LineSegment
+                    End="153,40" />
+                  <mssgle:CubicBezierSegment
+                    Point1="153,40"
+                    Point2="157,40"
+                    Point3="157,44" />
+                  <mssgle:LineSegment
+                    End="157,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="30.30861328125,45,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Load DimProduct.Paths[Derived Column Output]"
+          TopLeft="809,348">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-102,76"
+              Start="0,0"
+              End="-102,68.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.2808398950131" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41.2808398950131"
+                    Point2="0,45.2808398950131"
+                    Point3="-4,45.2808398950131" />
+                  <mssgle:LineSegment
+                    End="-98,45.2808398950131" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-98,45.2808398950131"
+                    Point2="-102,45.2808398950131"
+                    Point3="-102,49.2808398950131" />
+                  <mssgle:LineSegment
+                    End="-102,68.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="168,42"
+          Id="Package\DFT - Load DimProduct\DST - DimProduct"
+          TopLeft="582,513" />
+        <EdgeLayout
+          Id="Package\DFT - Load DimProduct.Paths[Union All Output 1]"
+          TopLeft="668.25,466">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47"
+              Start="0,0"
+              End="0,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimProduct\SRC - Products">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimProduct\LKP - Product Category">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimProduct\DST - DimProduct">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
