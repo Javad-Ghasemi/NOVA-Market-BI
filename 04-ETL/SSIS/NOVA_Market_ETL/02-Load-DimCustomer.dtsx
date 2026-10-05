@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="02-Load-DimCustomer"
   DTS:PackageType="5"
-  DTS:VersionBuild="7"
-  DTS:VersionGUID="{3C225D73-337C-4FFC-840C-5F0952F4A229}">
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{3F8C7DF0-C6F9-4A54-AC8F-61EA95984100}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -819,7 +819,7 @@ FROM conformed.Customer;</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.DimCustomer;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimCustomer ON;&#xA;&#xA;INSERT INTO dwh.DimCustomer&#xA;(&#xA;    CustomerKey,&#xA;    CustomerUniqueID,&#xA;    RepresentativeCustomerID,&#xA;    RepresentativeGeographyKey,&#xA;&#xA;    FirstPurchaseTimestamp,&#xA;    LatestPurchaseTimestamp,&#xA;&#xA;    OrderCount,&#xA;    CustomerIDCount,&#xA;&#xA;    ReturningCustomerFlag,&#xA;    MultipleZIPFlag,&#xA;    MultipleCityFlag,&#xA;    MultipleStateFlag,&#xA;    LatestTimestampTieFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;&#xA;    NULL,&#xA;    NULL,&#xA;&#xA;    0,&#xA;    0,&#xA;&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimCustomer OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimCustomer&#xA;    WHERE CustomerKey &lt;&gt; 0&#xA;)&#xA;BEGIN&#xA;    THROW 51042, 'DimCustomer load aborted: business rows already exist. Run the centralized full-refresh reset first.', 1;&#xA;END;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimCustomer&#xA;    WHERE CustomerKey = 0&#xA;)&#xA;BEGIN&#xA;    DELETE FROM dwh.DimCustomer&#xA;    WHERE CustomerKey = 0;&#xA;END;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimCustomer ON;&#xA;&#xA;INSERT INTO dwh.DimCustomer&#xA;(&#xA;    CustomerKey,&#xA;    CustomerUniqueID,&#xA;    RepresentativeCustomerID,&#xA;    RepresentativeGeographyKey,&#xA;    FirstPurchaseTimestamp,&#xA;    LatestPurchaseTimestamp,&#xA;    OrderCount,&#xA;    CustomerIDCount,&#xA;    ReturningCustomerFlag,&#xA;    MultipleZIPFlag,&#xA;    MultipleCityFlag,&#xA;    MultipleStateFlag,&#xA;    LatestTimestampTieFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimCustomer OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -846,13 +846,13 @@ FROM conformed.Customer;</property>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="220,42"
-          Id="Package\SQL - Prepare DimCustomer"
-          TopLeft="343.5,32.5" />
-        <NodeLayout
           Size="205,42"
           Id="Package\DFT - Load DimCustomer"
           TopLeft="463,207" />
+        <NodeLayout
+          Size="220,42"
+          Id="Package\SQL - Prepare DimCustomer"
+          TopLeft="343.5,32.5" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="453.5,74.5">
@@ -994,7 +994,7 @@ FROM conformed.Customer;</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1004,7 +1004,7 @@ FROM conformed.Customer;</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

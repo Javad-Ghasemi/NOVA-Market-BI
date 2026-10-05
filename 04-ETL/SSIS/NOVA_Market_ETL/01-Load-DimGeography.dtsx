@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="01-Load-DimGeography"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{4A7B8A9F-996D-4CCA-8BC6-9E4F9A479BA8}">
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{A4FCEA2C-9BC2-475F-A43B-6A54CBB0F938}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -675,7 +675,7 @@ FROM conformed.Geography;</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.DimGeography;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimGeography ON;&#xA;&#xA;INSERT INTO dwh.DimGeography&#xA;(&#xA;    GeographyKey,&#xA;    ZipCodePrefix,&#xA;    CityName,&#xA;    StateCode,&#xA;    RepresentativeLatitude,&#xA;    RepresentativeLongitude,&#xA;    HasCoordinates,&#xA;    MissingFromGeolocationFlag,&#xA;    StateConflictFlag,&#xA;    StateAmbiguousFlag,&#xA;    StateResolvedByReferenceFlag,&#xA;    CityAmbiguousFlag,&#xA;    CityResolvedByReferenceFlag,&#xA;    ReferenceFallbackFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    N'Unknown',&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimGeography OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimGeography&#xA;    WHERE GeographyKey &lt;&gt; 0&#xA;)&#xA;BEGIN&#xA;    THROW 51041, 'DimGeography load aborted: business rows already exist. Run the centralized full-refresh reset first.', 1;&#xA;END;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimGeography&#xA;    WHERE GeographyKey = 0&#xA;)&#xA;BEGIN&#xA;    DELETE FROM dwh.DimGeography&#xA;    WHERE GeographyKey = 0;&#xA;END;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimGeography ON;&#xA;&#xA;INSERT INTO dwh.DimGeography&#xA;(&#xA;    GeographyKey,&#xA;    ZipCodePrefix,&#xA;    CityName,&#xA;    StateCode,&#xA;    RepresentativeLatitude,&#xA;    RepresentativeLongitude,&#xA;    HasCoordinates,&#xA;    MissingFromGeolocationFlag,&#xA;    StateConflictFlag,&#xA;    StateAmbiguousFlag,&#xA;    StateResolvedByReferenceFlag,&#xA;    CityAmbiguousFlag,&#xA;    CityResolvedByReferenceFlag,&#xA;    ReferenceFallbackFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    N'Unknown',&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimGeography OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>

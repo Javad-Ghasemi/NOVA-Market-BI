@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="03-Load-DimSeller"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{769CE91C-530D-44E8-B4F3-E629F6609023}">
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{47F1315B-861E-4B64-B34F-CAA49C41E021}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -896,7 +896,7 @@ LEFT JOIN conformed.Geography g
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.DimSeller;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimSeller ON;&#xA;&#xA;INSERT INTO dwh.DimSeller&#xA;(&#xA;    SellerKey,&#xA;    SellerID,&#xA;    GeographyKey,&#xA;&#xA;    SourceZipCodePrefix,&#xA;    SourceCityName,&#xA;    SourceStateCode,&#xA;&#xA;    CityMismatchFlag,&#xA;    StateMismatchFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    0,&#xA;&#xA;    NULL,&#xA;    N'Unknown',&#xA;    NULL,&#xA;&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimSeller OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimSeller&#xA;    WHERE SellerKey &lt;&gt; 0&#xA;)&#xA;BEGIN&#xA;    THROW 51043, 'DimSeller load aborted: business rows already exist. Run the centralized full-refresh reset first.', 1;&#xA;END;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimSeller&#xA;    WHERE SellerKey = 0&#xA;)&#xA;BEGIN&#xA;    DELETE FROM dwh.DimSeller&#xA;    WHERE SellerKey = 0;&#xA;END;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimSeller ON;&#xA;&#xA;INSERT INTO dwh.DimSeller&#xA;(&#xA;    SellerKey,&#xA;    SellerID,&#xA;    GeographyKey,&#xA;    SourceZipCodePrefix,&#xA;    SourceCityName,&#xA;    SourceStateCode,&#xA;    CityMismatchFlag,&#xA;    StateMismatchFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    0,&#xA;    NULL,&#xA;    N'Unknown',&#xA;    NULL,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimSeller OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -1084,19 +1084,6 @@ LEFT JOIN conformed.Geography g
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Load DimSeller\DST - DimSeller">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\DFT - Load DimSeller\LKP - Seller Geography">
     <Properties>
       <Property>
@@ -1124,6 +1111,19 @@ LEFT JOIN conformed.Geography g
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimSeller\DST - DimSeller">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

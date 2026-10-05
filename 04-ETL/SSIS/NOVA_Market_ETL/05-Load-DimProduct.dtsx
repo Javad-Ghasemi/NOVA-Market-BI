@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="05-Load-DimProduct"
   DTS:PackageType="5"
-  DTS:VersionBuild="8"
-  DTS:VersionGUID="{82BB2C34-9FD3-4076-A533-DDB2C844C951}">
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{E940FA41-FF3E-4386-A53E-07B0ACE11982}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -1555,7 +1555,7 @@ FROM stg.products;</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.DimProduct;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProduct ON;&#xA;&#xA;INSERT INTO dwh.DimProduct&#xA;(&#xA;    ProductKey,&#xA;    ProductID,&#xA;    ProductCategoryKey,&#xA;    ProductNameLength,&#xA;    ProductDescriptionLength,&#xA;    ProductPhotosQty,&#xA;    ProductWeightG,&#xA;    ProductLengthCm,&#xA;    ProductHeightCm,&#xA;    ProductWidthCm,&#xA;    MissingSourceCategoryFlag,&#xA;    MissingDescriptiveAttributesFlag,&#xA;    MissingPhysicalAttributesFlag,&#xA;    ZeroWeightFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    0,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProduct OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimProduct&#xA;    WHERE ProductKey &lt;&gt; 0&#xA;)&#xA;BEGIN&#xA;    THROW 51045, 'DimProduct load aborted: business rows already exist. Run the centralized full-refresh reset first.', 1;&#xA;END;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimProduct&#xA;    WHERE ProductKey = 0&#xA;)&#xA;BEGIN&#xA;    DELETE FROM dwh.DimProduct&#xA;    WHERE ProductKey = 0;&#xA;END;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProduct ON;&#xA;&#xA;INSERT INTO dwh.DimProduct&#xA;(&#xA;    ProductKey,&#xA;    ProductID,&#xA;    ProductCategoryKey,&#xA;    ProductNameLength,&#xA;    ProductDescriptionLength,&#xA;    ProductPhotosQty,&#xA;    ProductWeightG,&#xA;    ProductLengthCm,&#xA;    ProductHeightCm,&#xA;    ProductWidthCm,&#xA;    MissingSourceCategoryFlag,&#xA;    MissingDescriptiveAttributesFlag,&#xA;    MissingPhysicalAttributesFlag,&#xA;    ZeroWeightFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    0,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    NULL,&#xA;    0,&#xA;    0,&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProduct OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -1582,13 +1582,13 @@ FROM stg.products;</property>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="210,42"
-          Id="Package\SQL - Prepare DimProduct"
-          TopLeft="418,61" />
-        <NodeLayout
           Size="195,42"
           Id="Package\DFT - Load DimProduct"
           TopLeft="450,192" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\SQL - Prepare DimProduct"
+          TopLeft="418,61" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="523,103">
@@ -1841,29 +1841,6 @@ FROM stg.products;</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Load DimProduct\LKP - Product Category">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\DFT - Load DimProduct\DST - DimProduct">
     <Properties>
       <Property>
@@ -1873,6 +1850,29 @@ FROM stg.products;</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimProduct\LKP - Product Category">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="04-Load-DimProductCategory"
   DTS:PackageType="5"
-  DTS:VersionBuild="6"
-  DTS:VersionGUID="{E1DE6AE5-7335-41F8-A043-2CA3551932D0}">
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{627E17CE-54CD-4A12-95B0-DF94A9B31283}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -425,7 +425,7 @@ LEFT JOIN meta.ProductCategoryLocalization AS l
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE dwh.DimProductCategory;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProductCategory ON;&#xA;&#xA;INSERT INTO dwh.DimProductCategory&#xA;(&#xA;    ProductCategoryKey,&#xA;    SourceCategoryName,&#xA;    EnglishCategoryName,&#xA;    PersianCategoryName,&#xA;    MissingEnglishTranslationFlag,&#xA;    MissingPersianLocalizationFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    'Unknown',&#xA;    N'نامشخص',&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProductCategory OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimProductCategory&#xA;    WHERE ProductCategoryKey &lt;&gt; 0&#xA;)&#xA;BEGIN&#xA;    THROW 51044, 'DimProductCategory load aborted: business rows already exist. Run the centralized full-refresh reset first.', 1;&#xA;END;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimProductCategory&#xA;    WHERE ProductCategoryKey = 0&#xA;)&#xA;BEGIN&#xA;    DELETE FROM dwh.DimProductCategory&#xA;    WHERE ProductCategoryKey = 0;&#xA;END;&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProductCategory ON;&#xA;&#xA;INSERT INTO dwh.DimProductCategory&#xA;(&#xA;    ProductCategoryKey,&#xA;    SourceCategoryName,&#xA;    EnglishCategoryName,&#xA;    PersianCategoryName,&#xA;    MissingEnglishTranslationFlag,&#xA;    MissingPersianLocalizationFlag&#xA;)&#xA;VALUES&#xA;(&#xA;    0,&#xA;    NULL,&#xA;    'Unknown',&#xA;    N'نامشخص',&#xA;    0,&#xA;    0&#xA;);&#xA;&#xA;SET IDENTITY_INSERT dwh.DimProductCategory OFF;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -547,14 +547,6 @@ LEFT JOIN meta.ProductCategoryLocalization AS l
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Load DimProductCategory\SRC - Product Categories">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\DFT - Load DimProductCategory\DST - DimProductCategory">
     <Properties>
       <Property>
@@ -564,6 +556,14 @@ LEFT JOIN meta.ProductCategoryLocalization AS l
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load DimProductCategory\SRC - Product Categories">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

@@ -2121,6 +2121,196 @@ Final result:
 
 `FACTREVIEW VALIDATION PASSED.`
 ---
+## DWH Full-Refresh Reset and Restartability
+
+A centralized reset strategy is used before a complete warehouse reload.
+
+The reset script is:
+
+`02-SQL/03-DWH/011-Reset-DWH-Full-Refresh.sql`
+
+### Why the reset was centralized
+
+The warehouse contains physical dimension-to-dimension foreign keys:
+
+- `DimCustomer.RepresentativeGeographyKey -> DimGeography.GeographyKey`
+- `DimSeller.GeographyKey -> DimGeography.GeographyKey`
+- `DimProduct.ProductCategoryKey -> DimProductCategory.ProductCategoryKey`
+
+SQL Server does not allow `TRUNCATE TABLE` on a table referenced by an enabled
+foreign key, even when the referencing child table is empty.
+
+The original dimension packages used `TRUNCATE TABLE` independently. This made
+`DimGeography` and `DimProductCategory` unsafe for full-refresh reruns.
+
+There was also a broader consistency risk: rebuilding a dimension independently
+while existing facts still contain old surrogate keys could create incorrect
+semantic relationships even when the numeric key still exists.
+
+For this reason, destructive dimension reset logic is no longer owned by the
+individual dimension packages.
+
+### Central reset order
+
+The centralized reset uses dependency-safe ordering.
+
+Facts are cleared first:
+
+1. `FactReview`
+2. `FactPayment`
+3. `FactOrderItem`
+4. `FactOrder`
+
+Facts currently have no physical foreign keys to dimensions, so `TRUNCATE TABLE`
+is used for these tables.
+
+Child dimensions are then deleted:
+
+1. `DimCustomer`
+2. `DimSeller`
+3. `DimProduct`
+
+Referenced parent dimensions are deleted afterward:
+
+1. `DimGeography`
+2. `DimProductCategory`
+
+`DELETE` is used for dimensions so the existing physical foreign keys remain
+enabled and trusted throughout the reset.
+
+`DimDate` is not reset. It is treated as a separately managed static
+infrastructure dimension.
+
+### Identity reset
+
+After dimension rows are deleted, identity values are reseeded to `0`.
+
+Affected dimensions:
+
+- `DimGeography`
+- `DimCustomer`
+- `DimSeller`
+- `DimProductCategory`
+- `DimProduct`
+
+Each dimension package recreates its Unknown member explicitly at surrogate
+key `0` using `IDENTITY_INSERT`.
+
+Normal business rows therefore receive surrogate keys beginning at `1`.
+
+### Dimension package safety guards
+
+The dimension packages no longer truncate their destination tables.
+
+Updated packages:
+
+- `01-Load-DimGeography.dtsx`
+- `02-Load-DimCustomer.dtsx`
+- `03-Load-DimSeller.dtsx`
+- `04-Load-DimProductCategory.dtsx`
+- `05-Load-DimProduct.dtsx`
+
+Each package checks whether business rows already exist before loading.
+
+If business rows exist, the package fails intentionally and instructs the
+operator to run the centralized full-refresh reset first.
+
+This prevents an accidental standalone dimension rerun from silently rebuilding
+surrogate keys while facts still reference the previous dimension state.
+
+The package may safely run when:
+
+- the destination table is empty after the centralized reset, or
+- only the Unknown member exists.
+
+### Fact package reset behavior
+
+Fact packages retain their internal `TRUNCATE TABLE` preparation:
+
+- `06-Load-FactOrder.dtsx`
+- `07-Load-FactOrderItem.dtsx`
+- `08-Load-FactPayment.dtsx`
+- `09-Load-FactReview.dtsx`
+
+This supports safe independent fact reloads because facts do not currently have
+physical foreign keys to dimensions.
+
+Surrogate-key resolution is still enforced by SSIS lookups and DQ validation.
+
+### Full-refresh validation
+
+A complete manual full-refresh test was executed using the new architecture:
+
+`Central Reset`
+→ `DimGeography`
+→ `DimCustomer`
+→ `DimSeller`
+→ `DimProductCategory`
+→ `DimProduct`
+→ `FactOrder`
+→ `FactOrderItem`
+→ `FactPayment`
+→ `FactReview`
+
+All dimension packages completed successfully.
+
+All fact packages completed successfully.
+
+Post-load DQ scripts passed for:
+
+- `DimGeography`
+- `DimCustomer`
+- `DimSeller`
+- `DimProductCategory`
+- `DimProduct`
+- `FactOrder`
+- `FactOrderItem`
+- `FactPayment`
+- `FactReview`
+
+All exact source-to-target reconciliation checks remained at zero differences.
+
+No regression was introduced by the new reset architecture.
+
+### Restartability smoke test
+
+The centralized reset was executed successfully a second time immediately after
+a complete warehouse reload.
+
+All five resettable dimensions and all four facts returned to zero rows.
+
+Identity reseeding also returned the dimension identity state to `0`.
+
+`DimGeography` was then reloaded a second time and reproduced the same validated
+state:
+
+- Total rows: `19,178`
+- Unknown members: `1`
+- Minimum GeographyKey: `0`
+- Maximum GeographyKey: `19,177`
+- Current identity value: `19,177`
+
+A second complete end-to-end reload was considered optional and was deferred
+because the first complete reload, second reset, and second dimension reload
+already confirmed the critical restartability behavior.
+
+### Current full-refresh status
+
+Current status:
+
+- Central reset: `PASS`
+- Dimension dependency handling: `PASS`
+- Physical dimension foreign keys preserved: `PASS`
+- Identity reseeding: `PASS`
+- Unknown-member recreation: `PASS`
+- Complete manual full reload: `PASS`
+- Dimension DQ after reload: `PASS`
+- Fact DQ after reload: `PASS`
+- Restartability smoke test: `PASS`
+- Second complete reload: `Deferred / Optional`
+
+This full-refresh design should be used by the future SSIS master orchestration.
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata
