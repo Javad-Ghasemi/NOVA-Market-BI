@@ -2311,6 +2311,294 @@ Current status:
 
 This full-refresh design should be used by the future SSIS master orchestration.
 ---
+## SSIS Master Full-Refresh Orchestration
+
+The warehouse full-refresh workflow is orchestrated by:
+
+`04-ETL/SSIS/NOVA_Market_ETL/00-Master-FullRefresh.dtsx`
+
+The master package coordinates:
+
+- prerequisite validation,
+- centralized DWH reset,
+- dependency-aware dimension loading,
+- dimension completion validation,
+- fact loading,
+- parallel execution where dependencies permit,
+- final warehouse validation.
+
+### Preflight
+
+The master begins with:
+
+`SQL - Preflight Full Refresh`
+
+The preflight runs before any destructive warehouse reset.
+
+It validates:
+
+- the current database is `NOVA_Market`,
+- `dwh.DimDate` exists,
+- exactly one `DimDate` Unknown member exists with `DateKey = 0`,
+- required conformed tables exist,
+- product-category localization metadata exists,
+- all required source dates are covered by `DimDate`.
+
+A preflight failure stops the master before warehouse data is removed.
+
+### Centralized reset
+
+After successful preflight:
+
+`SQL - Reset DWH Full Refresh`
+
+performs the FK-safe warehouse reset.
+
+The reset follows the strategy documented in:
+
+`02-SQL/03-DWH/011-Reset-DWH-Full-Refresh.sql`
+
+The reset process is:
+
+1. Truncate all fact tables.
+2. Delete child dimensions.
+3. Delete referenced parent dimensions.
+4. Reseed dimension identity values to `0`.
+5. Preserve `DimDate`.
+
+The reset keeps the physical dimension foreign keys enabled and trusted.
+
+### Dimension orchestration
+
+Dimension packages are not executed as one fully serial chain.
+
+Independent branches are allowed to run concurrently.
+
+The dimension dependency graph is:
+
+```text
+SQL - Reset DWH Full Refresh
+        |
+        +--> PKG - Load DimGeography
+        |        |
+        |        +--> PKG - Load DimCustomer
+        |        |
+        |        +--> PKG - Load DimSeller
+        |
+        +--> PKG - Load DimProductCategory
+                 |
+                 +--> PKG - Load DimProduct
+```
+
+This allows:
+
+- `DimGeography` and `DimProductCategory` to load concurrently.
+- `DimCustomer` and `DimSeller` to load concurrently after `DimGeography`.
+- `DimProduct` to start only after `DimProductCategory`.
+
+The master execution log confirmed that these independent branches execute concurrently.
+
+### Dimension completion gate
+
+The terminal dimension packages are:
+
+- `PKG - Load DimCustomer`
+- `PKG - Load DimSeller`
+- `PKG - Load DimProduct`
+
+All three connect to:
+
+`SQL - Validate Dimension Load`
+
+using logical AND success constraints.
+
+Therefore, the dimension validation gate runs only after all dimension branches complete successfully.
+
+The gate validates:
+
+- exactly one Unknown member exists in each resettable dimension,
+- business row counts match the expected source or conformed row counts,
+- dimension-to-dimension relationships remain valid,
+- all terminal dimension branches completed successfully.
+
+Facts cannot begin if this gate fails.
+
+### Fact orchestration
+
+After the dimension gate passes:
+
+`PKG - Load FactOrder`
+
+runs first.
+
+`FactOrder` acts as the order-level anchor for downstream fact validation.
+
+After `FactOrder` succeeds, three independent fact packages run concurrently:
+
+```text
+PKG - Load FactOrder
+        |
+        +--> PKG - Load FactOrderItem
+        |
+        +--> PKG - Load FactPayment
+        |
+        +--> PKG - Load FactReview
+```
+
+These facts remain separate because they have different grains:
+
+- `FactOrderItem`: one row per order item
+- `FactPayment`: one row per payment sequence
+- `FactReview`: one row per source review record
+
+No direct fact-to-fact fan-out joins are used.
+
+### Final fact gate
+
+The terminal fact packages are:
+
+- `PKG - Load FactOrderItem`
+- `PKG - Load FactPayment`
+- `PKG - Load FactReview`
+
+All three connect to:
+
+`SQL - Validate Fact Load`
+
+using logical AND success constraints.
+
+The final fact gate validates:
+
+- source-to-fact row-count completeness,
+- child-fact `OrderID` coverage against `FactOrder`,
+- additive row-count fields equal `1`,
+- physical dimension foreign keys remain enabled and trusted.
+
+The master package completes successfully only after this final gate passes.
+
+### Final orchestration flow
+
+The complete master workflow is:
+
+```text
+SQL - Preflight Full Refresh
+            |
+            v
+SQL - Reset DWH Full Refresh
+            |
+            +-----------------------------+
+            |                             |
+            v                             v
+PKG - Load DimGeography       PKG - Load DimProductCategory
+       |                                  |
+       +------------+                     v
+       |            |              PKG - Load DimProduct
+       v            v
+PKG - Load      PKG - Load
+DimCustomer     DimSeller
+       \            |                     /
+        \           |                    /
+         +----------+-------------------+
+                    |
+                    v
+        SQL - Validate Dimension Load
+                    |
+                    v
+           PKG - Load FactOrder
+                    |
+        +-----------+-----------+
+        |           |           |
+        v           v           v
+PKG - Load     PKG - Load   PKG - Load
+FactOrderItem  FactPayment  FactReview
+        \           |           /
+         \          |          /
+          +---------+---------+
+                    |
+                    v
+          SQL - Validate Fact Load
+                    |
+                    v
+                 SUCCESS
+```
+
+### Validated full-refresh result
+
+A complete execution of:
+
+`00-Master-FullRefresh.dtsx`
+
+completed successfully.
+
+Final warehouse row counts were:
+
+| Table | Rows |
+|---|---:|
+| DimGeography | 19,178 |
+| DimCustomer | 96,097 |
+| DimSeller | 3,096 |
+| DimProductCategory | 74 |
+| DimProduct | 32,952 |
+| FactOrder | 99,441 |
+| FactOrderItem | 112,650 |
+| FactPayment | 103,886 |
+| FactReview | 99,224 |
+
+The execution log confirmed parallel execution of independent dimension branches.
+
+The execution log also confirmed parallel execution of:
+
+- `FactOrderItem`
+- `FactPayment`
+- `FactReview`
+
+after successful completion of `FactOrder`.
+
+### Current master orchestration status
+
+Current status:
+
+- Preflight validation: `PASS`
+- Centralized reset: `PASS`
+- Dimension dependency graph: `PASS`
+- Parallel dimension execution: `PASS`
+- Dimension completion gate: `PASS`
+- FactOrder load: `PASS`
+- Parallel child-fact execution: `PASS`
+- Final fact gate: `PASS`
+- Final warehouse row counts: `PASS`
+- Full master execution: `PASS`
+
+### Scalability note
+
+The current project intentionally uses a full-refresh strategy because the Olist dataset is relatively small and static.
+
+The orchestration graph is dependency-aware and parallel-friendly, but the current load strategy is not intended as the final architecture for hundreds of millions of changing production rows.
+
+At substantially larger scale, the architecture should evolve toward:
+
+- incremental loading,
+- source watermarks,
+- CDC or equivalent change detection,
+- incremental dimension upserts,
+- append or incremental fact loading,
+- partitioning where justified,
+- batch-oriented commit sizing,
+- lookup-cache strategy review,
+- index and storage optimization.
+
+Sequence Containers and Foreach Containers do not by themselves solve large-volume scalability.
+
+The main scaling concerns are:
+
+- data movement,
+- incremental processing,
+- cache size,
+- transaction size,
+- partitioning,
+- indexing,
+- and set-based processing.
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata

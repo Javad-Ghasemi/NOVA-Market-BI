@@ -1,0 +1,924 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/5/2026 12:02:56 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="GHASEMI"
+  DTS:CreatorName="GHASEMI\j-ghasemi"
+  DTS:DTSID="{3ED80FC0-18E4-4310-9CD0-5E0EAA640663}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="00-Master-FullRefresh"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{557CB010-F5C9-4A49-A25B-4DCBB6E0DFE5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load DimCustomer"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{0108402B-7023-492E-8A82-B0CDC05930B0}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load DimCustomer"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>02-Load-DimCustomer.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load DimGeography"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{5C19DCB3-9E33-4050-A4D6-70A40C634A7A}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load DimGeography"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>01-Load-DimGeography.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load DimProduct"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{E8DAC492-5B26-4ED6-AACD-ABBEC9679823}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load DimProduct"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>05-Load-DimProduct.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load DimProductCategory"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{FD97A308-47BB-48A8-96AC-7C98DFEDC44C}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load DimProductCategory"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>04-Load-DimProductCategory.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load DimSeller"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{A02D2EEA-3F02-40D3-88AA-065E28C2DA83}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load DimSeller"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>03-Load-DimSeller.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load FactOrder"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{3D9C6CBF-F585-4897-BDE9-6F37E2C83FAF}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load FactOrder"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>06-Load-FactOrder.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load FactOrderItem"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{B06CC539-64E9-4EE3-9FD9-BA24ED7AD879}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load FactOrderItem"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>07-Load-FactOrderItem.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load FactPayment"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{d01a3e19-f26c-4384-9837-37830f9c4648}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load FactPayment"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>08-Load-FactPayment.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PKG - Load FactReview"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{32f98cca-879d-4b89-bb13-2bfc04ca2d99}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PKG - Load FactReview"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>09-Load-FactReview.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Preflight Full Refresh"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BAF8AA9D-9FFE-454B-A181-532A5E530F4B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Preflight Full Refresh"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;/* =========================================================&#xA;   MASTER FULL-REFRESH PREFLIGHT&#xA;&#xA;   Purpose:&#xA;   Fail before destructive reset if core prerequisites are&#xA;   not ready.&#xA;   ========================================================= */&#xA;&#xA;IF DB_NAME() &lt;&gt; N'NOVA_Market'&#xA;BEGIN&#xA;    THROW 51050,&#xA;        'Master preflight failed: current database is not NOVA_Market.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   Required static date dimension&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF OBJECT_ID(N'dwh.DimDate', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51051,&#xA;        'Master preflight failed: dwh.DimDate does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF&#xA;(&#xA;    SELECT COUNT(*)&#xA;    FROM dwh.DimDate&#xA;    WHERE DateKey = 0&#xA;) &lt;&gt; 1&#xA;BEGIN&#xA;    THROW 51052,&#xA;        'Master preflight failed: DimDate must contain exactly one Unknown member with DateKey = 0.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   Required conformed / metadata prerequisites&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF OBJECT_ID(N'conformed.Geography', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51053,&#xA;        'Master preflight failed: conformed.Geography does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'conformed.Customer', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51054,&#xA;        'Master preflight failed: conformed.Customer does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'conformed.ProductCategory', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51055,&#xA;        'Master preflight failed: conformed.ProductCategory does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'meta.ProductCategoryLocalization', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51056,&#xA;        'Master preflight failed: product-category localization metadata does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   DimDate coverage for date roles required by the core&#xA;   order/order-item facts.&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM&#xA;    (&#xA;        SELECT CAST(order_purchase_timestamp AS date) AS SourceDate&#xA;        FROM stg.orders&#xA;        WHERE order_purchase_timestamp IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_approved_at AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_approved_at IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_delivered_carrier_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_delivered_carrier_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_delivered_customer_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_delivered_customer_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_estimated_delivery_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_estimated_delivery_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(shipping_limit_date AS date)&#xA;        FROM stg.order_items&#xA;        WHERE shipping_limit_date IS NOT NULL&#xA;    ) AS sd&#xA;    LEFT JOIN dwh.DimDate AS dd&#xA;        ON dd.DateKey =&#xA;           CONVERT(int, CONVERT(char(8), sd.SourceDate, 112))&#xA;    WHERE dd.DateKey IS NULL&#xA;)&#xA;BEGIN&#xA;    THROW 51057,&#xA;        'Master preflight failed: one or more required source dates are missing from DimDate.',&#xA;        1;&#xA;END;&#xA;&#xA;PRINT 'MASTER FULL-REFRESH PREFLIGHT PASSED.';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Reset DWH Full Refresh"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{33D7817D-0A23-405D-8CC9-18F7D86DD43C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Reset DWH Full Refresh"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;IF DB_NAME() &lt;&gt; N'NOVA_Market'&#xA;BEGIN&#xA;    THROW 51040,&#xA;        'Full-refresh reset aborted: current database is not NOVA_Market.',&#xA;        1;&#xA;END;&#xA;&#xA;BEGIN TRY&#xA;    BEGIN TRANSACTION;&#xA;&#xA;    /* Facts */&#xA;    TRUNCATE TABLE dwh.FactReview;&#xA;    TRUNCATE TABLE dwh.FactPayment;&#xA;    TRUNCATE TABLE dwh.FactOrderItem;&#xA;    TRUNCATE TABLE dwh.FactOrder;&#xA;&#xA;    /* Child dimensions */&#xA;    DELETE FROM dwh.DimCustomer;&#xA;    DELETE FROM dwh.DimSeller;&#xA;    DELETE FROM dwh.DimProduct;&#xA;&#xA;    /* Parent dimensions */&#xA;    DELETE FROM dwh.DimGeography;&#xA;    DELETE FROM dwh.DimProductCategory;&#xA;&#xA;    /* Reset dimension identities */&#xA;    DBCC CHECKIDENT ('dwh.DimGeography', RESEED, 0);&#xA;    DBCC CHECKIDENT ('dwh.DimCustomer', RESEED, 0);&#xA;    DBCC CHECKIDENT ('dwh.DimSeller', RESEED, 0);&#xA;    DBCC CHECKIDENT ('dwh.DimProductCategory', RESEED, 0);&#xA;    DBCC CHECKIDENT ('dwh.DimProduct', RESEED, 0);&#xA;&#xA;    COMMIT TRANSACTION;&#xA;&#xA;    PRINT 'DWH FULL-REFRESH RESET COMPLETED SUCCESSFULLY.';&#xA;END TRY&#xA;BEGIN CATCH&#xA;    IF XACT_STATE() &lt;&gt; 0&#xA;        ROLLBACK TRANSACTION;&#xA;&#xA;    THROW;&#xA;END CATCH;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Validate Dimension Load"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A66E2CA0-F362-41D7-89EA-052202E4DECA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Validate Dimension Load"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;&#xA;/* =========================================================&#xA;   DIMENSION LOAD COMPLETION GATE&#xA;   ========================================================= */&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimGeography WHERE GeographyKey = 0) &lt;&gt; 1&#xA;    THROW 51060, 'Dimension gate failed: invalid DimGeography Unknown member.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimCustomer WHERE CustomerKey = 0) &lt;&gt; 1&#xA;    THROW 51061, 'Dimension gate failed: invalid DimCustomer Unknown member.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimSeller WHERE SellerKey = 0) &lt;&gt; 1&#xA;    THROW 51062, 'Dimension gate failed: invalid DimSeller Unknown member.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimProductCategory WHERE ProductCategoryKey = 0) &lt;&gt; 1&#xA;    THROW 51063, 'Dimension gate failed: invalid DimProductCategory Unknown member.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimProduct WHERE ProductKey = 0) &lt;&gt; 1&#xA;    THROW 51064, 'Dimension gate failed: invalid DimProduct Unknown member.', 1;&#xA;&#xA;&#xA;/* Business-row completeness */&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimGeography WHERE GeographyKey &lt;&gt; 0)&#xA;   &lt;&gt; (SELECT COUNT(*) FROM conformed.Geography)&#xA;    THROW 51065, 'Dimension gate failed: DimGeography row count mismatch.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimCustomer WHERE CustomerKey &lt;&gt; 0)&#xA;   &lt;&gt; (SELECT COUNT(*) FROM conformed.Customer)&#xA;    THROW 51066, 'Dimension gate failed: DimCustomer row count mismatch.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimSeller WHERE SellerKey &lt;&gt; 0)&#xA;   &lt;&gt; (SELECT COUNT(*) FROM stg.sellers)&#xA;    THROW 51067, 'Dimension gate failed: DimSeller row count mismatch.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimProductCategory WHERE ProductCategoryKey &lt;&gt; 0)&#xA;   &lt;&gt; (SELECT COUNT(*) FROM conformed.ProductCategory)&#xA;    THROW 51068, 'Dimension gate failed: DimProductCategory row count mismatch.', 1;&#xA;&#xA;IF (SELECT COUNT(*) FROM dwh.DimProduct WHERE ProductKey &lt;&gt; 0)&#xA;   &lt;&gt; (SELECT COUNT(*) FROM stg.products)&#xA;    THROW 51069, 'Dimension gate failed: DimProduct row count mismatch.', 1;&#xA;&#xA;&#xA;/* Physical dimension FK integrity */&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimCustomer AS c&#xA;    LEFT JOIN dwh.DimGeography AS g&#xA;        ON c.RepresentativeGeographyKey = g.GeographyKey&#xA;    WHERE g.GeographyKey IS NULL&#xA;)&#xA;    THROW 51070, 'Dimension gate failed: invalid DimCustomer geography key.', 1;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimSeller AS s&#xA;    LEFT JOIN dwh.DimGeography AS g&#xA;        ON s.GeographyKey = g.GeographyKey&#xA;    WHERE g.GeographyKey IS NULL&#xA;)&#xA;    THROW 51071, 'Dimension gate failed: invalid DimSeller geography key.', 1;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.DimProduct AS p&#xA;    LEFT JOIN dwh.DimProductCategory AS pc&#xA;        ON p.ProductCategoryKey = pc.ProductCategoryKey&#xA;    WHERE pc.ProductCategoryKey IS NULL&#xA;)&#xA;    THROW 51072, 'Dimension gate failed: invalid DimProduct category key.', 1;&#xA;&#xA;PRINT 'DIMENSION LOAD GATE PASSED.';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Validate Fact Load"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{83358346-CC93-4E8B-BF40-267D3CF3840C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Validate Fact Load"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;&#xA;/* =========================================================&#xA;   FINAL FACT LOAD COMPLETION GATE&#xA;   ========================================================= */&#xA;&#xA;/* ---------------------------------------------------------&#xA;   Fact row-count completeness&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF (SELECT COUNT_BIG(*) FROM dwh.FactOrder)&#xA;   &lt;&gt; (SELECT COUNT_BIG(*) FROM stg.orders)&#xA;BEGIN&#xA;    THROW 51080,&#xA;        'Fact gate failed: FactOrder row count does not match stg.orders.',&#xA;        1;&#xA;END;&#xA;&#xA;IF (SELECT COUNT_BIG(*) FROM dwh.FactOrderItem)&#xA;   &lt;&gt; (SELECT COUNT_BIG(*) FROM stg.order_items)&#xA;BEGIN&#xA;    THROW 51081,&#xA;        'Fact gate failed: FactOrderItem row count does not match stg.order_items.',&#xA;        1;&#xA;END;&#xA;&#xA;IF (SELECT COUNT_BIG(*) FROM dwh.FactPayment)&#xA;   &lt;&gt; (SELECT COUNT_BIG(*) FROM stg.payments)&#xA;BEGIN&#xA;    THROW 51082,&#xA;        'Fact gate failed: FactPayment row count does not match stg.payments.',&#xA;        1;&#xA;END;&#xA;&#xA;IF (SELECT COUNT_BIG(*) FROM dwh.FactReview)&#xA;   &lt;&gt; (SELECT COUNT_BIG(*) FROM stg.reviews)&#xA;BEGIN&#xA;    THROW 51083,&#xA;        'Fact gate failed: FactReview row count does not match stg.reviews.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   FactOrder coverage for child facts&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.FactOrderItem AS oi&#xA;    LEFT JOIN dwh.FactOrder AS o&#xA;        ON oi.OrderID = o.OrderID&#xA;    WHERE o.OrderID IS NULL&#xA;)&#xA;BEGIN&#xA;    THROW 51084,&#xA;        'Fact gate failed: FactOrderItem contains OrderID values missing from FactOrder.',&#xA;        1;&#xA;END;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.FactPayment AS p&#xA;    LEFT JOIN dwh.FactOrder AS o&#xA;        ON p.OrderID = o.OrderID&#xA;    WHERE o.OrderID IS NULL&#xA;)&#xA;BEGIN&#xA;    THROW 51085,&#xA;        'Fact gate failed: FactPayment contains OrderID values missing from FactOrder.',&#xA;        1;&#xA;END;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.FactReview AS r&#xA;    LEFT JOIN dwh.FactOrder AS o&#xA;        ON r.OrderID = o.OrderID&#xA;    WHERE o.OrderID IS NULL&#xA;)&#xA;BEGIN&#xA;    THROW 51086,&#xA;        'Fact gate failed: FactReview contains OrderID values missing from FactOrder.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   Fact additive row counters&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.FactOrder&#xA;    WHERE OrderCount &lt;&gt; 1&#xA;)&#xA;    THROW 51087, 'Fact gate failed: invalid FactOrder OrderCount.', 1;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.FactOrderItem&#xA;    WHERE OrderItemCount &lt;&gt; 1&#xA;)&#xA;    THROW 51088, 'Fact gate failed: invalid FactOrderItem OrderItemCount.', 1;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.FactPayment&#xA;    WHERE PaymentCount &lt;&gt; 1&#xA;)&#xA;    THROW 51089, 'Fact gate failed: invalid FactPayment PaymentCount.', 1;&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM dwh.FactReview&#xA;    WHERE ReviewCount &lt;&gt; 1&#xA;)&#xA;    THROW 51090, 'Fact gate failed: invalid FactReview ReviewCount.', 1;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   Final physical dimension FK state&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM sys.foreign_keys&#xA;    WHERE parent_object_id IN&#xA;    (&#xA;        OBJECT_ID(N'dwh.DimCustomer'),&#xA;        OBJECT_ID(N'dwh.DimSeller'),&#xA;        OBJECT_ID(N'dwh.DimProduct')&#xA;    )&#xA;      AND (is_disabled = 1 OR is_not_trusted = 1)&#xA;)&#xA;BEGIN&#xA;    THROW 51091,&#xA;        'Fact gate failed: one or more DWH dimension foreign keys are disabled or untrusted.',&#xA;        1;&#xA;END;&#xA;&#xA;PRINT 'FINAL FACT LOAD GATE PASSED.';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C31DB7A5-856C-4E2F-8EEB-4E838AD99245}"
+      DTS:From="Package\SQL - Preflight Full Refresh"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SQL - Reset DWH Full Refresh" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{940D3CFB-18CA-42AE-A6C8-C9D59484CCF3}"
+      DTS:From="Package\SQL - Reset DWH Full Refresh"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\PKG - Load DimGeography" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{422B1898-C3E4-4101-896E-312F49070EB8}"
+      DTS:From="Package\PKG - Load FactOrder"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\PKG - Load FactOrderItem" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
+      DTS:CreationName=""
+      DTS:DTSID="{7D837066-C988-4F78-87FE-3438DBB2530A}"
+      DTS:From="Package\PKG - Load FactOrder"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 11"
+      DTS:To="Package\PKG - Load FactPayment" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
+      DTS:CreationName=""
+      DTS:DTSID="{28C194F8-C4AF-4AA7-9DFC-70F91DEA6249}"
+      DTS:From="Package\PKG - Load FactOrder"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 12"
+      DTS:To="Package\PKG - Load FactReview" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
+      DTS:CreationName=""
+      DTS:DTSID="{9FA69896-8B1D-43CD-B455-9255E23576C1}"
+      DTS:From="Package\PKG - Load FactOrderItem"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 13"
+      DTS:To="Package\SQL - Validate Fact Load" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 14]"
+      DTS:CreationName=""
+      DTS:DTSID="{AF389131-8EF9-41F7-AA4A-D898B36169BE}"
+      DTS:From="Package\PKG - Load FactPayment"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 14"
+      DTS:To="Package\SQL - Validate Fact Load" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 15]"
+      DTS:CreationName=""
+      DTS:DTSID="{CF90ABD3-1F15-4334-80E7-02925C14A44B}"
+      DTS:From="Package\PKG - Load FactReview"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 15"
+      DTS:To="Package\SQL - Validate Fact Load" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{3192F7EF-4DB8-442E-9E38-136DFD666695}"
+      DTS:From="Package\PKG - Load DimGeography"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\PKG - Load DimCustomer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{8A68E4FB-3162-4D71-97A7-488854E5F764}"
+      DTS:From="Package\PKG - Load DimGeography"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\PKG - Load DimSeller" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{7FD0CF0B-B12B-42E0-AA7C-F3C6DBC576E3}"
+      DTS:From="Package\SQL - Reset DWH Full Refresh"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\PKG - Load DimProductCategory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{99405B31-ADFA-400B-8FC9-33018071A773}"
+      DTS:From="Package\PKG - Load DimProductCategory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\PKG - Load DimProduct" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{F0109943-FA09-4E3D-B8F7-41E75CC1B451}"
+      DTS:From="Package\PKG - Load DimCustomer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\SQL - Validate Dimension Load" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{0CD89254-E4A2-4A7B-A4BE-9F96566F8FF4}"
+      DTS:From="Package\PKG - Load DimSeller"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\SQL - Validate Dimension Load" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{51E4B629-76AC-4640-B6B8-046377033BB1}"
+      DTS:From="Package\PKG - Load DimProduct"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\SQL - Validate Dimension Load" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{C56D03D6-B4E6-4F0A-A4CF-D33A8CC43332}"
+      DTS:From="Package\SQL - Validate Dimension Load"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\PKG - Load FactOrder" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="206,42"
+          Id="Package\PKG - Load DimCustomer"
+          TopLeft="12,324" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\PKG - Load DimGeography"
+          TopLeft="107,219" />
+        <NodeLayout
+          Size="241,42"
+          Id="Package\PKG - Load DimProductCategory"
+          TopLeft="605,227" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\PKG - Load DimSeller"
+          TopLeft="248,324" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\SQL - Preflight Full Refresh"
+          TopLeft="352,49" />
+        <NodeLayout
+          Size="231,42"
+          Id="Package\SQL - Reset DWH Full Refresh"
+          TopLeft="339,132" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="456.5,91">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="454.5,174">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-241,45"
+              Start="0,0"
+              End="-241,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5"
+                    Point2="0,22.5"
+                    Point3="-4,22.5" />
+                  <mssgle:LineSegment
+                    End="-237,22.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-237,22.5"
+                    Point2="-241,22.5"
+                    Point3="-241,26.5" />
+                  <mssgle:LineSegment
+                    End="-241,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="179.333333333333,261">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-64.3333333333333,63"
+              Start="0,0"
+              End="-64.3333333333333,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.4818266542404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.4818266542404"
+                    Point2="0,25.4818266542404"
+                    Point3="-4,25.4818266542404" />
+                  <mssgle:LineSegment
+                    End="-60.3333333333333,25.4818266542404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-60.3333333333333,25.4818266542404"
+                    Point2="-64.3333333333333,25.4818266542404"
+                    Point3="-64.3333333333333,29.4818266542404" />
+                  <mssgle:LineSegment
+                    End="-64.3333333333333,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="247.666666666667,261">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="93.8333333333333,63"
+              Start="0,0"
+              End="93.8333333333333,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.4818266542404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.4818266542404"
+                    Point2="0,25.4818266542404"
+                    Point3="4,25.4818266542404" />
+                  <mssgle:LineSegment
+                    End="89.8333333333333,25.4818266542404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="89.8333333333333,25.4818266542404"
+                    Point2="93.8333333333333,25.4818266542404"
+                    Point3="93.8333333333333,29.4818266542404" />
+                  <mssgle:LineSegment
+                    End="93.8333333333333,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="491.666666666667,174">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="233.833333333333,53"
+              Start="0,0"
+              End="233.833333333333,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.4187446259673" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.4187446259673"
+                    Point2="0,21.4187446259673"
+                    Point3="4,21.4187446259673" />
+                  <mssgle:LineSegment
+                    End="229.833333333333,21.4187446259673" />
+                  <mssgle:CubicBezierSegment
+                    Point1="229.833333333333,21.4187446259673"
+                    Point2="233.833333333333,21.4187446259673"
+                    Point3="233.833333333333,25.4187446259673" />
+                  <mssgle:LineSegment
+                    End="233.833333333333,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="197,42"
+          Id="Package\PKG - Load DimProduct"
+          TopLeft="630,328" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="727,269">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59"
+              Start="0,0"
+              End="0,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="233,42"
+          Id="Package\SQL - Validate Dimension Load"
+          TopLeft="325,488" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="115,366">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="270.25,122"
+              Start="0,0"
+              End="270.25,114.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,76.4130127298444" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,76.4130127298444"
+                    Point2="0,80.4130127298444"
+                    Point3="4,80.4130127298444" />
+                  <mssgle:LineSegment
+                    End="266.25,80.4130127298444" />
+                  <mssgle:CubicBezierSegment
+                    Point1="266.25,80.4130127298444"
+                    Point2="270.25,80.4130127298444"
+                    Point3="270.25,84.4130127298444" />
+                  <mssgle:LineSegment
+                    End="270.25,114.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="341.5,366">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="100,122"
+              Start="0,0"
+              End="100,114.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,57"
+                    Point2="0,61"
+                    Point3="4,61" />
+                  <mssgle:LineSegment
+                    End="96,61" />
+                  <mssgle:CubicBezierSegment
+                    Point1="96,61"
+                    Point2="100,61"
+                    Point3="100,65" />
+                  <mssgle:LineSegment
+                    End="100,114.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="728.5,370">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-230.75,118"
+              Start="0,0"
+              End="-230.75,110.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,73.7765205091938" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,73.7765205091938"
+                    Point2="0,77.7765205091938"
+                    Point3="-4,77.7765205091938" />
+                  <mssgle:LineSegment
+                    End="-226.75,77.7765205091938" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-226.75,77.7765205091938"
+                    Point2="-230.75,77.7765205091938"
+                    Point3="-230.75,81.7765205091938" />
+                  <mssgle:LineSegment
+                    End="-230.75,110.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="189,42"
+          Id="Package\PKG - Load FactOrder"
+          TopLeft="344,574" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="440,530">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="210,42"
+          Id="Package\PKG - Load FactOrderItem"
+          TopLeft="18,707" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\PKG - Load FactPayment"
+          TopLeft="330,712" />
+        <NodeLayout
+          Size="197,42"
+          Id="Package\PKG - Load FactReview"
+          TopLeft="673,713" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="393.25,616">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-270.25,91"
+              Start="0,0"
+              End="-270.25,83.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.1773913043478" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.1773913043478"
+                    Point2="0,31.1773913043478"
+                    Point3="-4,31.1773913043478" />
+                  <mssgle:LineSegment
+                    End="-266.25,31.1773913043478" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-266.25,31.1773913043478"
+                    Point2="-270.25,31.1773913043478"
+                    Point3="-270.25,35.1773913043478" />
+                  <mssgle:LineSegment
+                    End="-270.25,83.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="435.25,616">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,96"
+              Start="0,0"
+              End="0,88.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,88.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="483.75,616">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="287.75,97"
+              Start="0,0"
+              End="287.75,89.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.2330434782609" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.2330434782609"
+                    Point2="0,33.2330434782609"
+                    Point3="4,33.2330434782609" />
+                  <mssgle:LineSegment
+                    End="283.75,33.2330434782609" />
+                  <mssgle:CubicBezierSegment
+                    Point1="283.75,33.2330434782609"
+                    Point2="287.75,33.2330434782609"
+                    Point3="287.75,37.2330434782609" />
+                  <mssgle:LineSegment
+                    End="287.75,89.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="202,42"
+          Id="Package\SQL - Validate Fact Load"
+          TopLeft="332,848" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="123,749">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="261.5,99"
+              Start="0,0"
+              End="261.5,91.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61.1400651465798" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,61.1400651465798"
+                    Point2="0,65.1400651465798"
+                    Point3="4,65.1400651465798" />
+                  <mssgle:LineSegment
+                    End="257.5,65.1400651465798" />
+                  <mssgle:CubicBezierSegment
+                    Point1="257.5,65.1400651465798"
+                    Point2="261.5,65.1400651465798"
+                    Point3="261.5,69.1400651465798" />
+                  <mssgle:LineSegment
+                    End="261.5,91.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="432.5,754">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,94"
+              Start="0,0"
+              End="0,86.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 15]"
+          TopLeft="771.5,755">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-290,93"
+              Start="0,0"
+              End="-290,85.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.1921824104234" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,57.1921824104234"
+                    Point2="0,61.1921824104234"
+                    Point3="-4,61.1921824104234" />
+                  <mssgle:LineSegment
+                    End="-286,61.1921824104234" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-286,61.1921824104234"
+                    Point2="-290,61.1921824104234"
+                    Point3="-290,65.1921824104234" />
+                  <mssgle:LineSegment
+                    End="-290,85.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
