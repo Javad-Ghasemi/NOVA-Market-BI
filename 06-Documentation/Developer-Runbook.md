@@ -2599,6 +2599,323 @@ The main scaling concerns are:
 - indexing,
 - and set-based processing.
 ---
+## Centralized Warehouse Data Quality Framework
+
+Warehouse data-quality validation is centralized in SQL Server stored procedures under the `dq` schema.
+
+The purpose of this design is to maintain one authoritative implementation of each DQ rule while supporting both:
+
+- manual validation from SSMS,
+- automated validation from the SSIS master package.
+
+### Architecture
+
+The DQ architecture is:
+
+```text
+Source / Conformed / DWH
+          |
+          v
+Individual dq.usp_Validate* procedures
+          |
+          v
+dq.usp_ValidateWarehouse
+          |
+          +--> Manual SSMS execution
+          |
+          +--> SSIS Master Full Refresh
+```
+
+The existing numbered validation scripts remain in source control as lightweight wrappers.
+
+They no longer duplicate the validation logic.
+
+### DQ procedure deployment
+
+DQ stored procedures are deployed from:
+
+```text
+02-SQL/04-DQ/00-Procedures/
+```
+
+Run these scripts in numeric order before executing the DWH validation wrappers:
+
+```text
+001-Create-usp-Validate-DimGeography.sql
+002-Create-usp-Validate-DimCustomer.sql
+003-Create-usp-Validate-DimSeller.sql
+004-Create-usp-Validate-DimProductCategory.sql
+005-Create-usp-Validate-DimProduct.sql
+006-Create-usp-Validate-FactOrder.sql
+007-Create-usp-Validate-FactOrderItem.sql
+008-Create-usp-Validate-FactPayment.sql
+009-Create-usp-Validate-FactReview.sql
+010-Create-usp-Validate-Warehouse.sql
+```
+
+The first nine scripts create the table-specific validation procedures.
+
+The final script creates:
+
+```text
+dq.usp_ValidateWarehouse
+```
+
+which orchestrates all nine validations.
+
+The numbered validation scripts in the parent `04-DQ` directory remain manual execution wrappers and therefore depend on these procedures already being deployed.
+
+### Dimension DQ procedures
+
+The following dimension procedures are implemented:
+
+```text
+dq.usp_ValidateDimGeography
+dq.usp_ValidateDimCustomer
+dq.usp_ValidateDimSeller
+dq.usp_ValidateDimProductCategory
+dq.usp_ValidateDimProduct
+```
+
+Creation scripts:
+
+```text
+02-SQL/04-DQ/024-Create-usp-Validate-DimGeography.sql
+02-SQL/04-DQ/025-Create-usp-Validate-DimCustomer.sql
+02-SQL/04-DQ/026-Create-usp-Validate-DimSeller.sql
+02-SQL/04-DQ/027-Create-usp-Validate-DimProductCategory.sql
+02-SQL/04-DQ/028-Create-usp-Validate-DimProduct.sql
+```
+
+### Fact DQ procedures
+
+The following fact procedures are implemented:
+
+```text
+dq.usp_ValidateFactOrder
+dq.usp_ValidateFactOrderItem
+dq.usp_ValidateFactPayment
+dq.usp_ValidateFactReview
+```
+
+Creation scripts:
+
+```text
+02-SQL/04-DQ/029-Create-usp-Validate-FactOrder.sql
+02-SQL/04-DQ/030-Create-usp-Validate-FactOrderItem.sql
+02-SQL/04-DQ/031-Create-usp-Validate-FactPayment.sql
+02-SQL/04-DQ/032-Create-usp-Validate-FactReview.sql
+```
+
+### Warehouse DQ orchestrator
+
+The warehouse-level entry point is:
+
+```text
+dq.usp_ValidateWarehouse
+```
+
+Creation script:
+
+```text
+02-SQL/04-DQ/033-Create-usp-Validate-Warehouse.sql
+```
+
+It executes all nine DQ procedures in dependency order:
+
+```text
+1. DimGeography
+2. DimCustomer
+3. DimSeller
+4. DimProductCategory
+5. DimProduct
+6. FactOrder
+7. FactOrderItem
+8. FactPayment
+9. FactReview
+```
+
+If any validation procedure throws an error, warehouse validation stops immediately and the original SQL Server error is propagated to the caller.
+
+Successful completion prints:
+
+```text
+WAREHOUSE DATA QUALITY VALIDATION PASSED.
+```
+
+### Validation behavior
+
+The centralized DQ procedures validate more than row counts.
+
+Depending on the table, checks include:
+
+- source-to-target row-count completeness,
+- natural-grain uniqueness,
+- business-key uniqueness,
+- Unknown-member correctness,
+- dimension-key resolution,
+- surrogate-key integrity,
+- DimDate coverage,
+- fact-to-order coverage,
+- additive counter integrity,
+- exact source-to-target comparison,
+- exact target-to-source comparison,
+- known source anomaly profiles,
+- temporal anomaly semantics,
+- preservation of source NULL behavior.
+
+The procedures use `THROW` for hard validation failures.
+
+Therefore a validation failure can directly fail an SSIS Execute SQL Task.
+
+### Exact comparison
+
+Where applicable, validation uses two-way `EXCEPT` comparisons:
+
+```text
+Expected Source Representation
+            EXCEPT
+Warehouse Target
+```
+
+and:
+
+```text
+Warehouse Target
+            EXCEPT
+Expected Source Representation
+```
+
+Both result sets must be empty.
+
+This protects against:
+
+- missing target rows,
+- unexpected target rows,
+- changed attribute values,
+- incorrect surrogate-key resolution,
+- transformation drift.
+
+### Known source anomalies
+
+Known Olist source anomalies are preserved rather than silently corrected.
+
+The DQ framework validates the expected anomaly profile for the current dataset.
+
+Examples include:
+
+- geography resolution anomalies,
+- returning and multi-location customers,
+- seller city/state mismatches,
+- products with missing source categories,
+- missing product attributes,
+- zero product weights,
+- order temporal anomalies,
+- zero-freight order items,
+- payment sequence anomalies,
+- undefined payment types,
+- zero installments,
+- zero payment values,
+- duplicate ReviewID values,
+- review timing anomalies.
+
+These are treated as documented source characteristics unless the underlying source dataset changes.
+
+### Review grain
+
+`FactReview` uses:
+
+```text
+ReviewID + OrderID
+```
+
+as its natural grain.
+
+`ReviewID` alone is not unique in the Olist source.
+
+Repeated ReviewID values are preserved and flagged rather than deduplicated.
+
+### Review temporal semantics
+
+Review temporal rules intentionally use two different comparison semantics.
+
+`review_creation_date` behaves primarily as a business date, so creation-related comparisons use date-level semantics.
+
+`review_answer_timestamp` contains meaningful time-of-day information, so answer-related comparisons preserve timestamp semantics.
+
+For delivery-relative review flags, `NULL` means that the source order was not delivered and therefore the condition cannot be evaluated.
+
+### Wrapper scripts
+
+The original validation scripts remain available for manual execution:
+
+```text
+012-Validate-DimGeography.sql
+014-Validate-DimCustomer.sql
+015-Validate-DimSeller.sql
+018-Validate-DimProductCategory.sql
+019-Validate-DimProduct.sql
+020-Validate-FactOrder.sql
+021-Validate-FactOrderItem.sql
+022-Validate-FactPayment.sql
+023-Validate-FactReview.sql
+```
+
+Each wrapper now delegates to its corresponding `dq.usp_Validate*` procedure.
+
+For example:
+
+```sql
+EXEC dq.usp_ValidateFactOrder;
+```
+
+This prevents validation logic from being duplicated between manual scripts and automated orchestration.
+
+### SSIS Master integration
+
+The master package contains the final task:
+
+```text
+SQL - Run Warehouse DQ
+```
+
+It runs only after:
+
+```text
+SQL - Validate Fact Load
+```
+
+succeeds.
+
+The task executes:
+
+```sql
+SET NOCOUNT ON;
+
+EXEC dq.usp_ValidateWarehouse;
+```
+
+The final section of the master workflow is therefore:
+
+```text
+FactOrderItem ─┐
+FactPayment   ─┼─ AND --> SQL - Validate Fact Load
+FactReview    ─┘
+                           |
+                           v
+                   SQL - Run Warehouse DQ
+                           |
+                           v
+                        SUCCESS
+```
+
+A full execution of `00-Master-FullRefresh.dtsx` completed successfully with the warehouse DQ task enabled.
+
+Therefore master-package success now requires both:
+
+1. successful ETL completion,
+2. successful full warehouse DQ validation.
+---
 # Metadata Validation
 
 ## 10. Inspect Dataset Metadata
