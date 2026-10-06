@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="09-Load-FactReview"
   DTS:PackageType="5"
-  DTS:VersionBuild="3"
-  DTS:VersionGUID="{56399205-7E87-4008-8BDE-CA376E0D9790}">
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{A5697FE9-D99E-4C49-AADB-B925D3A976BD}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -81,11 +81,11 @@
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,ROWS_PER_BATCH = 50000</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
-                  name="FastLoadMaxInsertCommitSize">0</property>
+                  name="FastLoadMaxInsertCommitSize">50000</property>
               </properties>
               <connections>
                 <connection
@@ -1364,13 +1364,13 @@ INNER JOIN stg.customers AS c
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="210,42"
-          Id="Package\SQL - Prepare FactReview"
-          TopLeft="511,64" />
-        <NodeLayout
           Size="195,42"
           Id="Package\DFT - Load FactReview"
           TopLeft="624,183" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\SQL - Prepare FactReview"
+          TopLeft="511,64" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="616,106">
@@ -1421,6 +1421,14 @@ INNER JOIN stg.customers AS c
           Size="157,42"
           Id="Package\DFT - Load FactReview\LKP - Customer"
           TopLeft="514,185" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\DFT - Load FactReview\DST - FactReview"
+          TopLeft="688,445" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\DFT - Load FactReview\LKP - Customer Geography"
+          TopLeft="597,315" />
         <EdgeLayout
           Id="Package\DFT - Load FactReview.Paths[OLE DB Source Output]"
           TopLeft="532.5,122">
@@ -1455,50 +1463,6 @@ INNER JOIN stg.customers AS c
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="214,42"
-          Id="Package\DFT - Load FactReview\LKP - Customer Geography"
-          TopLeft="597,315" />
-        <EdgeLayout
-          Id="Package\DFT - Load FactReview.Paths[Lookup Match Output]"
-          TopLeft="592.5,227">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="111.5,88"
-              Start="0,0"
-              End="111.5,80.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,40" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,40"
-                    Point2="0,44"
-                    Point3="4,44" />
-                  <mssgle:LineSegment
-                    End="107.5,44" />
-                  <mssgle:CubicBezierSegment
-                    Point1="107.5,44"
-                    Point2="111.5,44"
-                    Point3="111.5,48" />
-                  <mssgle:LineSegment
-                    End="111.5,80.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="7.55861328125,49,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="168,42"
-          Id="Package\DFT - Load FactReview\DST - FactReview"
-          TopLeft="688,445" />
         <EdgeLayout
           Id="Package\DFT - Load FactReview.Paths[Lookup Match Output1]"
           TopLeft="704,357">
@@ -1535,6 +1499,42 @@ INNER JOIN stg.customers AS c
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Load FactReview.Paths[Lookup Match Output]"
+          TopLeft="592.5,227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="111.5,88"
+              Start="0,0"
+              End="111.5,80.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40"
+                    Point2="0,44"
+                    Point3="4,44" />
+                  <mssgle:LineSegment
+                    End="107.5,44" />
+                  <mssgle:CubicBezierSegment
+                    Point1="107.5,44"
+                    Point2="111.5,44"
+                    Point3="111.5,48" />
+                  <mssgle:LineSegment
+                    End="111.5,80.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="7.55861328125,49,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -1552,7 +1552,7 @@ INNER JOIN stg.customers AS c
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1562,30 +1562,7 @@ INNER JOIN stg.customers AS c
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Load FactReview\LKP - Customer Geography">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1602,6 +1579,29 @@ INNER JOIN stg.customers AS c
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactReview\LKP - Customer Geography">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="00-Master-FullRefresh"
   DTS:PackageType="5"
-  DTS:VersionBuild="13"
-  DTS:VersionGUID="{3B6F9593-300E-4E16-BEB7-05892073BC10}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{B65406BE-EB03-4A57-9F1D-7F6B387C10A1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -184,7 +184,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{55243E60-4806-418B-9E2C-693FE1AB8592}"
-          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;/* =========================================================&#xA;   MASTER FULL-REFRESH PREFLIGHT&#xA;&#xA;   Purpose:&#xA;   Fail before destructive reset if core prerequisites are&#xA;   not ready.&#xA;   ========================================================= */&#xA;&#xA;IF DB_NAME() &lt;&gt; N'NOVA_Market'&#xA;BEGIN&#xA;    THROW 51050,&#xA;        'Master preflight failed: current database is not NOVA_Market.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   Required static date dimension&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF OBJECT_ID(N'dwh.DimDate', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51051,&#xA;        'Master preflight failed: dwh.DimDate does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF&#xA;(&#xA;    SELECT COUNT(*)&#xA;    FROM dwh.DimDate&#xA;    WHERE DateKey = 0&#xA;) &lt;&gt; 1&#xA;BEGIN&#xA;    THROW 51052,&#xA;        'Master preflight failed: DimDate must contain exactly one Unknown member with DateKey = 0.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   Required conformed / metadata prerequisites&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF OBJECT_ID(N'conformed.Geography', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51053,&#xA;        'Master preflight failed: conformed.Geography does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'conformed.Customer', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51054,&#xA;        'Master preflight failed: conformed.Customer does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'conformed.ProductCategory', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51055,&#xA;        'Master preflight failed: conformed.ProductCategory does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'meta.ProductCategoryLocalization', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51056,&#xA;        'Master preflight failed: product-category localization metadata does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   DimDate coverage for date roles required by the core&#xA;   order/order-item facts.&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM&#xA;    (&#xA;        SELECT CAST(order_purchase_timestamp AS date) AS SourceDate&#xA;        FROM stg.orders&#xA;        WHERE order_purchase_timestamp IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_approved_at AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_approved_at IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_delivered_carrier_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_delivered_carrier_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_delivered_customer_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_delivered_customer_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_estimated_delivery_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_estimated_delivery_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(shipping_limit_date AS date)&#xA;        FROM stg.order_items&#xA;        WHERE shipping_limit_date IS NOT NULL&#xA;    ) AS sd&#xA;    LEFT JOIN dwh.DimDate AS dd&#xA;        ON dd.DateKey =&#xA;           CONVERT(int, CONVERT(char(8), sd.SourceDate, 112))&#xA;    WHERE dd.DateKey IS NULL&#xA;)&#xA;BEGIN&#xA;    THROW 51057,&#xA;        'Master preflight failed: one or more required source dates are missing from DimDate.',&#xA;        1;&#xA;END;&#xA;&#xA;PRINT 'MASTER FULL-REFRESH PREFLIGHT PASSED.';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="SET NOCOUNT ON;&#xA;SET XACT_ABORT ON;&#xA;&#xA;/* =========================================================&#xA;   MASTER FULL-REFRESH PREFLIGHT&#xA;&#xA;   Purpose:&#xA;   Fail before destructive reset if critical prerequisites&#xA;   are not ready.&#xA;   ========================================================= */&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   1. Database safety&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF DB_NAME() &lt;&gt; N'NOVA_Market'&#xA;BEGIN&#xA;    THROW 51050,&#xA;        'Master preflight failed: current database is not NOVA_Market.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   2. Required static date dimension&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF OBJECT_ID(N'dwh.DimDate', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51051,&#xA;        'Master preflight failed: dwh.DimDate does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF&#xA;(&#xA;    SELECT COUNT(*)&#xA;    FROM dwh.DimDate&#xA;    WHERE DateKey = 0&#xA;) &lt;&gt; 1&#xA;BEGIN&#xA;    THROW 51052,&#xA;        'Master preflight failed: DimDate must contain exactly one Unknown member with DateKey = 0.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   3. Required conformed / metadata prerequisites&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF OBJECT_ID(N'conformed.Geography', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51053,&#xA;        'Master preflight failed: conformed.Geography does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'conformed.Customer', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51054,&#xA;        'Master preflight failed: conformed.Customer does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'conformed.ProductCategory', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51055,&#xA;        'Master preflight failed: conformed.ProductCategory does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;IF OBJECT_ID(N'meta.ProductCategoryLocalization', N'U') IS NULL&#xA;BEGIN&#xA;    THROW 51056,&#xA;        'Master preflight failed: product-category localization metadata does not exist.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   4. Critical input readiness&#xA;&#xA;   Do not destroy a valid warehouse if the load inputs are&#xA;   unexpectedly empty.&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF NOT EXISTS (SELECT TOP (1) 1 FROM conformed.Geography)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM conformed.Customer)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM conformed.ProductCategory)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM meta.ProductCategoryLocalization)&#xA;&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM stg.orders)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM stg.order_items)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM stg.products)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM stg.customers)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM stg.sellers)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM stg.payments)&#xA;   OR NOT EXISTS (SELECT TOP (1) 1 FROM stg.reviews)&#xA;BEGIN&#xA;    THROW 51058,&#xA;        'Master preflight failed: one or more required load inputs are empty.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   5. Centralized warehouse DQ framework&#xA;&#xA;   Check all procedures before reset so a missing deployment&#xA;   is never discovered only after the warehouse is rebuilt.&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF&#xA;(&#xA;    SELECT COUNT(*)&#xA;    FROM sys.procedures AS p&#xA;    INNER JOIN sys.schemas AS s&#xA;        ON p.schema_id = s.schema_id&#xA;    WHERE s.name = N'dq'&#xA;      AND p.name IN&#xA;      (&#xA;          N'usp_ValidateDimGeography',&#xA;          N'usp_ValidateDimCustomer',&#xA;          N'usp_ValidateDimSeller',&#xA;          N'usp_ValidateDimProductCategory',&#xA;          N'usp_ValidateDimProduct',&#xA;          N'usp_ValidateFactOrder',&#xA;          N'usp_ValidateFactOrderItem',&#xA;          N'usp_ValidateFactPayment',&#xA;          N'usp_ValidateFactReview',&#xA;          N'usp_ValidateWarehouse'&#xA;      )&#xA;) &lt;&gt; 10&#xA;BEGIN&#xA;    THROW 51059,&#xA;        'Master preflight failed: centralized warehouse DQ procedures are not fully deployed.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;/* ---------------------------------------------------------&#xA;   6. DimDate coverage for every date role currently loaded&#xA;   into warehouse facts.&#xA;   --------------------------------------------------------- */&#xA;&#xA;IF EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM&#xA;    (&#xA;        /* FactOrder */&#xA;        SELECT CAST(order_purchase_timestamp AS date) AS SourceDate&#xA;        FROM stg.orders&#xA;        WHERE order_purchase_timestamp IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_approved_at AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_approved_at IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_delivered_carrier_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_delivered_carrier_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_delivered_customer_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_delivered_customer_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(order_estimated_delivery_date AS date)&#xA;        FROM stg.orders&#xA;        WHERE order_estimated_delivery_date IS NOT NULL&#xA;&#xA;        /* FactOrderItem */&#xA;        UNION&#xA;&#xA;        SELECT CAST(shipping_limit_date AS date)&#xA;        FROM stg.order_items&#xA;        WHERE shipping_limit_date IS NOT NULL&#xA;&#xA;        /* FactReview */&#xA;        UNION&#xA;&#xA;        SELECT CAST(review_creation_date AS date)&#xA;        FROM stg.reviews&#xA;        WHERE review_creation_date IS NOT NULL&#xA;&#xA;        UNION&#xA;&#xA;        SELECT CAST(review_answer_timestamp AS date)&#xA;        FROM stg.reviews&#xA;        WHERE review_answer_timestamp IS NOT NULL&#xA;&#xA;    ) AS sd&#xA;&#xA;    LEFT JOIN dwh.DimDate AS dd&#xA;        ON dd.DateKey =&#xA;           CONVERT(int, CONVERT(char(8), sd.SourceDate, 112))&#xA;&#xA;    WHERE dd.DateKey IS NULL&#xA;)&#xA;BEGIN&#xA;    THROW 51057,&#xA;        'Master preflight failed: one or more required source dates are missing from DimDate.',&#xA;        1;&#xA;END;&#xA;&#xA;&#xA;PRINT 'MASTER FULL-REFRESH PREFLIGHT PASSED.';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -415,6 +415,10 @@
           Id="Package\PKG - Load DimGeography"
           TopLeft="107,219" />
         <NodeLayout
+          Size="197,42"
+          Id="Package\PKG - Load DimProduct"
+          TopLeft="630,328" />
+        <NodeLayout
           Size="241,42"
           Id="Package\PKG - Load DimProductCategory"
           TopLeft="605,227" />
@@ -423,6 +427,22 @@
           Id="Package\PKG - Load DimSeller"
           TopLeft="248,324" />
         <NodeLayout
+          Size="189,42"
+          Id="Package\PKG - Load FactOrder"
+          TopLeft="344,574" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\PKG - Load FactOrderItem"
+          TopLeft="18,707" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\PKG - Load FactPayment"
+          TopLeft="330,712" />
+        <NodeLayout
+          Size="197,42"
+          Id="Package\PKG - Load FactReview"
+          TopLeft="673,713" />
+        <NodeLayout
           Size="213,42"
           Id="Package\SQL - Preflight Full Refresh"
           TopLeft="352,49" />
@@ -430,6 +450,18 @@
           Size="231,42"
           Id="Package\SQL - Reset DWH Full Refresh"
           TopLeft="339,132" />
+        <NodeLayout
+          Size="209,42"
+          Id="Package\SQL - Run Warehouse DQ"
+          TopLeft="325,942" />
+        <NodeLayout
+          Size="233,42"
+          Id="Package\SQL - Validate Dimension Load"
+          TopLeft="325,488" />
+        <NodeLayout
+          Size="202,42"
+          Id="Package\SQL - Validate Fact Load"
+          TopLeft="332,848" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="456.5,91">
@@ -478,6 +510,208 @@
                     Point3="-241,26.5" />
                   <mssgle:LineSegment
                     End="-241,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="393.25,616">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-270.25,91"
+              Start="0,0"
+              End="-270.25,83.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.1773913043478" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.1773913043478"
+                    Point2="0,31.1773913043478"
+                    Point3="-4,31.1773913043478" />
+                  <mssgle:LineSegment
+                    End="-266.25,31.1773913043478" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-266.25,31.1773913043478"
+                    Point2="-270.25,31.1773913043478"
+                    Point3="-270.25,35.1773913043478" />
+                  <mssgle:LineSegment
+                    End="-270.25,83.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="435.25,616">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,96"
+              Start="0,0"
+              End="0,88.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,88.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="483.75,616">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="287.75,97"
+              Start="0,0"
+              End="287.75,89.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.2330434782609" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.2330434782609"
+                    Point2="0,33.2330434782609"
+                    Point3="4,33.2330434782609" />
+                  <mssgle:LineSegment
+                    End="283.75,33.2330434782609" />
+                  <mssgle:CubicBezierSegment
+                    Point1="283.75,33.2330434782609"
+                    Point2="287.75,33.2330434782609"
+                    Point3="287.75,37.2330434782609" />
+                  <mssgle:LineSegment
+                    End="287.75,89.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="123,749">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="261.5,99"
+              Start="0,0"
+              End="261.5,91.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61.1400651465798" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,61.1400651465798"
+                    Point2="0,65.1400651465798"
+                    Point3="4,65.1400651465798" />
+                  <mssgle:LineSegment
+                    End="257.5,65.1400651465798" />
+                  <mssgle:CubicBezierSegment
+                    Point1="257.5,65.1400651465798"
+                    Point2="261.5,65.1400651465798"
+                    Point3="261.5,69.1400651465798" />
+                  <mssgle:LineSegment
+                    End="261.5,91.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="432.5,754">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,94"
+              Start="0,0"
+              End="0,86.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 15]"
+          TopLeft="771.5,755">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-290,93"
+              Start="0,0"
+              End="-290,85.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.1921824104234" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,57.1921824104234"
+                    Point2="0,61.1921824104234"
+                    Point3="-4,61.1921824104234" />
+                  <mssgle:LineSegment
+                    End="-286,61.1921824104234" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-286,61.1921824104234"
+                    Point2="-290,61.1921824104234"
+                    Point3="-290,65.1921824104234" />
+                  <mssgle:LineSegment
+                    End="-290,85.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 16]"
+          TopLeft="431.25,890">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52"
+              Start="0,0"
+              End="0,44.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -588,10 +822,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="197,42"
-          Id="Package\PKG - Load DimProduct"
-          TopLeft="630,328" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
           TopLeft="727,269">
@@ -614,10 +844,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="233,42"
-          Id="Package\SQL - Validate Dimension Load"
-          TopLeft="325,488" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 6]"
           TopLeft="115,366">
@@ -720,10 +946,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="189,42"
-          Id="Package\PKG - Load FactOrder"
-          TopLeft="344,574" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 9]"
           TopLeft="440,530">
@@ -738,228 +960,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,36.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="210,42"
-          Id="Package\PKG - Load FactOrderItem"
-          TopLeft="18,707" />
-        <NodeLayout
-          Size="204,42"
-          Id="Package\PKG - Load FactPayment"
-          TopLeft="330,712" />
-        <NodeLayout
-          Size="197,42"
-          Id="Package\PKG - Load FactReview"
-          TopLeft="673,713" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 10]"
-          TopLeft="393.25,616">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-270.25,91"
-              Start="0,0"
-              End="-270.25,83.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.1773913043478" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,27.1773913043478"
-                    Point2="0,31.1773913043478"
-                    Point3="-4,31.1773913043478" />
-                  <mssgle:LineSegment
-                    End="-266.25,31.1773913043478" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-266.25,31.1773913043478"
-                    Point2="-270.25,31.1773913043478"
-                    Point3="-270.25,35.1773913043478" />
-                  <mssgle:LineSegment
-                    End="-270.25,83.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 11]"
-          TopLeft="435.25,616">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,96"
-              Start="0,0"
-              End="0,88.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,88.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 12]"
-          TopLeft="483.75,616">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="287.75,97"
-              Start="0,0"
-              End="287.75,89.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,29.2330434782609" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,29.2330434782609"
-                    Point2="0,33.2330434782609"
-                    Point3="4,33.2330434782609" />
-                  <mssgle:LineSegment
-                    End="283.75,33.2330434782609" />
-                  <mssgle:CubicBezierSegment
-                    Point1="283.75,33.2330434782609"
-                    Point2="287.75,33.2330434782609"
-                    Point3="287.75,37.2330434782609" />
-                  <mssgle:LineSegment
-                    End="287.75,89.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="202,42"
-          Id="Package\SQL - Validate Fact Load"
-          TopLeft="332,848" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 13]"
-          TopLeft="123,749">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="261.5,99"
-              Start="0,0"
-              End="261.5,91.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,61.1400651465798" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,61.1400651465798"
-                    Point2="0,65.1400651465798"
-                    Point3="4,65.1400651465798" />
-                  <mssgle:LineSegment
-                    End="257.5,65.1400651465798" />
-                  <mssgle:CubicBezierSegment
-                    Point1="257.5,65.1400651465798"
-                    Point2="261.5,65.1400651465798"
-                    Point3="261.5,69.1400651465798" />
-                  <mssgle:LineSegment
-                    End="261.5,91.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 14]"
-          TopLeft="432.5,754">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,94"
-              Start="0,0"
-              End="0,86.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,86.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 15]"
-          TopLeft="771.5,755">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-290,93"
-              Start="0,0"
-              End="-290,85.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,57.1921824104234" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,57.1921824104234"
-                    Point2="0,61.1921824104234"
-                    Point3="-4,61.1921824104234" />
-                  <mssgle:LineSegment
-                    End="-286,61.1921824104234" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-286,61.1921824104234"
-                    Point2="-290,61.1921824104234"
-                    Point3="-290,65.1921824104234" />
-                  <mssgle:LineSegment
-                    End="-290,85.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="209,42"
-          Id="Package\SQL - Run Warehouse DQ"
-          TopLeft="325,942" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 16]"
-          TopLeft="431.25,890">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,52"
-              Start="0,0"
-              End="0,44.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,44.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

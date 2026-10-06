@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="08-Load-FactPayment"
   DTS:PackageType="5"
-  DTS:VersionBuild="3"
-  DTS:VersionGUID="{BF79C8B8-AE9F-43EA-A79D-3CB52A6AEDEA}">
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{0F289AE9-E63A-4AA0-A539-5BB679EFA18B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -81,11 +81,11 @@
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,ROWS_PER_BATCH = 50000</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
-                  name="FastLoadMaxInsertCommitSize">0</property>
+                  name="FastLoadMaxInsertCommitSize">50000</property>
               </properties>
               <connections>
                 <connection
@@ -1141,13 +1141,13 @@ INNER JOIN stg.customers AS c
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="217,42"
-          Id="Package\SQL - Prepare FactPayment"
-          TopLeft="417,56" />
-        <NodeLayout
           Size="202,42"
           Id="Package\DFT - Load FactPayment"
           TopLeft="455,163" />
+        <NodeLayout
+          Size="217,42"
+          Id="Package\SQL - Prepare FactPayment"
+          TopLeft="417,56" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="525.5,98">
@@ -1191,13 +1191,21 @@ INNER JOIN stg.customers AS c
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="161,42"
-          Id="Package\DFT - Load FactPayment\SRC - Payments"
-          TopLeft="454,93" />
-        <NodeLayout
           Size="157,42"
           Id="Package\DFT - Load FactPayment\LKP - Customer"
           TopLeft="520,225" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\DFT - Load FactPayment\LKP - Customer Geography"
+          TopLeft="546,325" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\DFT - Load FactPayment\DST - FactPayment"
+          TopLeft="588,425" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\DFT - Load FactPayment\SRC - Payments"
+          TopLeft="454,93" />
         <EdgeLayout
           Id="Package\DFT - Load FactPayment.Paths[OLE DB Source Output]"
           TopLeft="534.5,135">
@@ -1232,50 +1240,6 @@ INNER JOIN stg.customers AS c
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="214,42"
-          Id="Package\DFT - Load FactPayment\LKP - Customer Geography"
-          TopLeft="546,325" />
-        <EdgeLayout
-          Id="Package\DFT - Load FactPayment.Paths[Lookup Match Output]"
-          TopLeft="598.5,267">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="54.5,58"
-              Start="0,0"
-              End="54.5,50.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,25" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,25"
-                    Point2="0,29"
-                    Point3="4,29" />
-                  <mssgle:LineSegment
-                    End="50.5,29" />
-                  <mssgle:CubicBezierSegment
-                    Point1="50.5,29"
-                    Point2="54.5,29"
-                    Point3="54.5,33" />
-                  <mssgle:LineSegment
-                    End="54.5,50.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-20.94138671875,34,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="175,42"
-          Id="Package\DFT - Load FactPayment\DST - FactPayment"
-          TopLeft="588,425" />
         <EdgeLayout
           Id="Package\DFT - Load FactPayment.Paths[Lookup Match Output1]"
           TopLeft="653,367">
@@ -1312,24 +1276,52 @@ INNER JOIN stg.customers AS c
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Load FactPayment.Paths[Lookup Match Output]"
+          TopLeft="598.5,267">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="54.5,58"
+              Start="0,0"
+              End="54.5,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25"
+                    Point2="0,29"
+                    Point3="4,29" />
+                  <mssgle:LineSegment
+                    End="50.5,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="50.5,29"
+                    Point2="54.5,29"
+                    Point3="54.5,33" />
+                  <mssgle:LineSegment
+                    End="54.5,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-20.94138671875,34,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Load FactPayment\SRC - Payments">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\DFT - Load FactPayment\LKP - Customer">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1339,7 +1331,7 @@ INNER JOIN stg.customers AS c
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1352,7 +1344,7 @@ INNER JOIN stg.customers AS c
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1362,7 +1354,7 @@ INNER JOIN stg.customers AS c
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1379,6 +1371,14 @@ INNER JOIN stg.customers AS c
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Load FactPayment\SRC - Payments">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

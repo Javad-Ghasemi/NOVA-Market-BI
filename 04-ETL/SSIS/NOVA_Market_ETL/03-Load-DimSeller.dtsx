@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="03-Load-DimSeller"
   DTS:PackageType="5"
-  DTS:VersionBuild="11"
-  DTS:VersionGUID="{47F1315B-861E-4B64-B34F-CAA49C41E021}">
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{DE140D66-056E-4C5E-947C-5F4BF6D8F354}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -339,27 +339,7 @@
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
     GeographyKey,
-    ZipCodePrefix,
-    StateCode AS GeographyStateCode,
-
-    REPLACE(
-        REPLACE(
-            REPLACE(
-                LOWER(
-                    LTRIM(
-                        RTRIM(CityName)
-                    )
-                ) COLLATE Latin1_General_100_CI_AI,
-                N' ',
-                N''
-            ),
-            N'-',
-            N''
-        ),
-        N'''',
-        N''
-    ) AS GeographyCityMatchKey
-
+    ZipCodePrefix
 FROM dwh.DimGeography
 WHERE GeographyKey &lt;&gt; 0;</property>
                 <property
@@ -369,27 +349,7 @@ WHERE GeographyKey &lt;&gt; 0;</property>
                   name="SqlCommandParam"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
     GeographyKey,
-    ZipCodePrefix,
-    StateCode AS GeographyStateCode,
-
-    REPLACE(
-        REPLACE(
-            REPLACE(
-                LOWER(
-                    LTRIM(
-                        RTRIM(CityName)
-                    )
-                ) COLLATE Latin1_General_100_CI_AI,
-                N' ',
-                N''
-            ),
-            N'-',
-            N''
-        ),
-        N'''',
-        N''
-    ) AS GeographyCityMatchKey
-
+    ZipCodePrefix
 FROM dwh.DimGeography
 WHERE GeographyKey &lt;&gt; 0;) [refTable]
 where [refTable].[ZipCodePrefix] = ?</property>
@@ -423,7 +383,7 @@ where [refTable].[ZipCodePrefix] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GeographyKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ZipCodePrefix" dataType="DT_WSTR" length="5" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="GeographyStateCode" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="GeographyCityMatchKey" dataType="DT_WSTR" length="4000" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="GeographyKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ZipCodePrefix" dataType="DT_WSTR" length="5" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -493,36 +453,6 @@ where [refTable].[ZipCodePrefix] = ?</property>
                           dataType="System.String"
                           description="Specifies the column in the reference table from which a column is copied."
                           name="CopyFromReferenceColumn">GeographyKey</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\DFT - Load DimSeller\LKP - Seller Geography.Outputs[Lookup Match Output].Columns[GeographyStateCode]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Copy Column"
-                      length="2"
-                      lineageId="Package\DFT - Load DimSeller\LKP - Seller Geography.Outputs[Lookup Match Output].Columns[GeographyStateCode]"
-                      name="GeographyStateCode"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">GeographyStateCode</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\DFT - Load DimSeller\LKP - Seller Geography.Outputs[Lookup Match Output].Columns[GeographyCityMatchKey]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Copy Column"
-                      length="4000"
-                      lineageId="Package\DFT - Load DimSeller\LKP - Seller Geography.Outputs[Lookup Match Output].Columns[GeographyCityMatchKey]"
-                      name="GeographyCityMatchKey"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">GeographyCityMatchKey</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -973,14 +903,6 @@ LEFT JOIN conformed.Geography g
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="158,42"
-          Id="Package\DFT - Load DimSeller\DST - DimSeller"
-          TopLeft="399,356" />
-        <NodeLayout
-          Size="227,42"
-          Id="Package\DFT - Load DimSeller\DER - Seller Geography Flags"
-          TopLeft="374,255" />
-        <NodeLayout
           Size="195,42"
           Id="Package\DFT - Load DimSeller\LKP - Seller Geography"
           TopLeft="396,144" />
@@ -988,6 +910,14 @@ LEFT JOIN conformed.Geography g
           Size="145,42"
           Id="Package\DFT - Load DimSeller\SRC - Sellers"
           TopLeft="411,47" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\DFT - Load DimSeller\DST - DimSeller"
+          TopLeft="399,356" />
+        <NodeLayout
+          Size="227,42"
+          Id="Package\DFT - Load DimSeller\DER - Seller Geography Flags"
+          TopLeft="374,255" />
         <EdgeLayout
           Id="Package\DFT - Load DimSeller.Paths[OLE DB Source Output]"
           TopLeft="483.5,89">
@@ -1089,7 +1019,7 @@ LEFT JOIN conformed.Geography g
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1099,7 +1029,7 @@ LEFT JOIN conformed.Geography g
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
