@@ -46,6 +46,9 @@ CREATE UNIQUE INDEX UX_DimProduct_ProductID
     WHERE ProductID IS NOT NULL;
 GO
 
+CREATE NONCLUSTERED INDEX IX_DimProduct_ProductCategoryKey
+ON dwh.DimProduct (ProductCategoryKey);
+GO
 
 SELECT
     COUNT(*) AS [RowCount]

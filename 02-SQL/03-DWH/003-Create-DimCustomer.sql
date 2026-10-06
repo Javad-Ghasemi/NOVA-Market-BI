@@ -68,6 +68,10 @@ CREATE UNIQUE INDEX UX_DimCustomer_CustomerUniqueID
     WHERE CustomerUniqueID IS NOT NULL;
 GO
 
+CREATE NONCLUSTERED INDEX IX_DimCustomer_RepresentativeGeographyKey
+ON dwh.DimCustomer (RepresentativeGeographyKey);
+GO
+
 
 /* =========================================================
    Validation

@@ -61,6 +61,9 @@ CREATE UNIQUE INDEX UX_DimSeller_SellerID
     WHERE SellerID IS NOT NULL;
 GO
 
+CREATE NONCLUSTERED INDEX IX_DimSeller_GeographyKey
+ON dwh.DimSeller (GeographyKey);
+GO
 
 /* =========================================================
    Validation
